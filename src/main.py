@@ -9,24 +9,26 @@
 import logging
 import schedule
 import time
-import yaml
 from pathlib import Path
+from config import ConfigManager
+
 
 def load_config(config_path="config.yaml"):
     """
-    加载配置文件
+    加载配置文件（兼容旧版本）
     Args:
         config_path: 配置文件路径
     Returns:
         dict: 配置字典
     """
     try:
-        with open(config_path, 'r', encoding='utf-8') as f:
-            config = yaml.safe_load(f)
-        logging.info(f"配置文件加载成功: {config_path}")
-        return config
+        # 使用ConfigManager加载配置
+        with ConfigManager(config_path) as config_manager:
+            config = config_manager.get_config_snapshot()
+            logging.info("配置文件加载成功: %s", config_path)
+            return config
     except Exception as e:
-        logging.error(f"配置文件加载失败: {e}")
+        logging.error("配置文件加载失败: %s", e)
         raise
 
 def main():

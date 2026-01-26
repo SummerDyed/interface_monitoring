@@ -10,8 +10,8 @@ schedule>=1.2.0
 # YAML解析库
 pyyaml>=6.0
 
-# 线程池管理
-concurrent-futures>=3.1.1
+# 文件监控（配置热更新）
+watchdog>=3.0.0
 
 # 日志轮转
 loguru>=0.7.0
