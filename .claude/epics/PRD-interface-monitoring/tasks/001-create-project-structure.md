@@ -17,20 +17,20 @@ deprecated: false
 **Requirements**: PRD-4.1-配置文件需求
 **Prompt**: Role: 后端开发工程师 | Task: 创建完整的项目目录结构和配置文件模板，包括Interface-pool目录结构、config.yaml配置模板、日志目录设置和requirements.txt依赖文件 | Restrictions: 必须遵循PEP8规范，配置文件格式为YAML，目录结构清晰便于维护 | Success: 项目结构创建完成，配置文件模板完整，日志目录设置正确，依赖文件生成
 
-## Features (WHAT)
+## 功能特性
 
 建立接口监控脚本的基础项目结构，包括配置文件模板、接口文档目录示例和日志目录设置，为后续开发奠定基础。
 
-### Core Features
+### 核心功能
 - 建立Interface-pool目录结构示例（user/nurse/admin服务及模块）
 - 创建config.yaml配置模板（监控间隔、超时、并发数、企业微信等配置项）
 - 设置日志目录和基础日志文件
 - 创建requirements.txt依赖文件
 
-### User Value (WHY)
+### 用户价值
 为开发团队提供标准化的项目结构，简化配置管理和部署流程，提高开发效率。
 
-## User Workflow (HOW - User Perspective)
+## 用户工作流
 
 1. 克隆或下载项目代码
 2. 自动创建Interface-pool目录结构（user/nurse/admin服务目录）
@@ -38,31 +38,31 @@ deprecated: false
 4. 安装依赖：pip install -r requirements.txt
 5. 验证配置文件：运行脚本检查配置正确性
 
-## UI Elements Checklist
+## UI元素检查清单
 
 无前端界面，纯后端脚本项目。
 
-## Acceptance Criteria
+## 验收标准
 
-### Feature Acceptance
+### 功能验收
 - [ ] Interface-pool目录结构完整（包含user/nurse/admin服务及示例模块）
 - [ ] config.yaml配置模板完整（包含所有必需配置项）
 - [ ] 日志目录和文件设置正确
 - [ ] requirements.txt包含所有依赖库
 
-### Interaction Acceptance
+### 交互验收
 - [ ] 配置文件格式验证正确
 - [ ] 目录结构自动创建
 - [ ] 依赖安装流程顺畅
 
-### Quality Acceptance
+### 质量验收
 - [ ] 目录权限设置正确
 - [ ] 配置文件注释清晰
 - [ ] 代码结构符合PEP8规范
 
-## Technical Details
+## 技术细节
 
-### Implementation Plan
+### 实施计划
 
 **Phase 1: 创建基础目录结构**
 1. 使用Python os.makedirs()创建多级目录
