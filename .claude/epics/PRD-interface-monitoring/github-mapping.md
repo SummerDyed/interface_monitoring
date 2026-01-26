@@ -3,7 +3,7 @@
 ## File-to-Issue Mapping
 
 1-创建项目结构.md → #1 ✅
-002-配置管理模块.md → 待创建 ⏳
+2-配置管理模块.md → #2 ✅
 003-日志系统.md → 待创建 ⏳
 004-接口扫描模块.md → 待创建 ⏳
 005-认证管理模块.md → 待创建 ⏳
@@ -46,6 +46,7 @@
 - **Changes**:
   - ✅ Epic sync completed
   - ✅ Created new Issue: #1 (001-创建项目结构)
+  - ✅ Created new Issue: #2 (002-配置管理模块)
 
 ## Next Steps
 
