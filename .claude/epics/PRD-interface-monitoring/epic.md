@@ -1,11 +1,11 @@
 ---
 name: PRD-interface-monitoring
-status: backlog
+status: in-progress
 created: 2026-01-26T08:08:45Z
-progress: 0%
+progress: 10%
 prd: .claude/prds/PRD-interface-monitoring.md
 github: [Placeholder - updated during sync]
-last_sync: 2026-01-26T08:47:10Z
+last_sync: 2026-01-26T10:07:47Z
 ---
 
 # 接口监控脚本技术实施Epic
