@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell:*)",
+      "Bash(git clone:*)",
+      "Bash(python -m pytest:*)",
+      "Bash(git push:*)",
+      "Bash(python:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m:*)",
+      "Bash(ls:*)",
+      "Bash(dir:*)",
+      "Bash(git reset)",
+      "Bash(if not exist \"config\" mkdir:*)",
+      "Bash(timeout:*)",
+      "Bash(git cherry-pick:*)",
+      "Bash(findstr:*)",
+      "Bash(git worktree:*)",
+      "Bash(cd:*)",
+      "Bash(find:*)",
+      "Bash(tee:*)",
+      "Bash(set:*)",
+      "Bash(Select-Object Count, Name \")",
+      "Bash(python -c:*)"
+    ]
+  }
+}
