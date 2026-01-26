@@ -1,0 +1,258 @@
+---
+name: 008-开发企业微信推送模块
+status: open
+created: 2026-01-26T08:16:58Z
+updated: 2026-01-26T08:16:58Z
+github: ""
+depends_on: ["002", "007"]
+parallel: true
+deprecated: false
+---
+
+# 008 - 开发企业微信推送模块
+
+**File**: `src/notifier/wechat_notifier.py`
+**Purpose**: 实现企业微信机器人推送功能，支持Markdown格式消息、@人员配置、失败重试机制
+**Leverage**: requests库；Python标准库json、time
+**Requirements**: PRD-2.3-企业微信推送
+**Prompt**: Role: 后端开发工程师 | Task: 开发企业微信推送模块，包括Webhook API调用、Markdown格式消息推送、@人员配置和失败重试机制，实现WechatNotifier类 | Restrictions: 必须支持企业微信Webhook API，Markdown格式正确，支持@人员列表 | Success: API调用成功，消息推送正常，@人员有效，重试机制工作
+
+## Features (WHAT)
+
+实现企业微信机器人推送功能，支持Markdown格式消息、@人员配置、失败重试机制。
+
+### Core Features
+- 企业微信Webhook API调用
+- Markdown格式消息推送
+- @人员列表配置处理
+- 推送失败重试机制
+- 推送结果统计和日志
+
+### User Value (WHY)
+及时将监控异常告警推送到企业微信群，帮助运维人员快速响应和解决问题。
+
+## User Workflow (HOW - User Perspective)
+
+1. 接收分析报告（MonitorReport对象）
+2. 格式化报告为Markdown消息
+3. 添加@人员列表
+4. 调用企业微信Webhook API
+5. 处理推送结果和失败重试
+
+## UI Elements Checklist
+
+无前端界面，纯后端推送模块。
+
+## Acceptance Criteria
+
+### Feature Acceptance
+- [ ] 成功调用企业微信Webhook API
+- [ ] Markdown格式消息渲染正确
+- [ ] @人员列表正确添加
+- [ ] 推送失败时自动重试（3次）
+- [ ] 支持富文本格式（代码块、表格等）
+
+### Interaction Acceptance
+- [ ] 推送速度快（<2秒）
+- [ ] 重试机制及时生效
+- [ ] 推送成功率>95%
+
+### Quality Acceptance
+- [ ] API调用错误处理完善
+- [ ] 网络异常降级处理
+- [ ] 消息长度限制检查
+- [ ] 推送日志记录详细
+
+## Technical Details
+
+### Implementation Plan
+
+**Phase 1: Webhook API调用**
+1. 使用requests库调用Webhook接口
+2. 处理HTTP请求和响应
+3. 解析响应状态和错误码
+4. 实现API调用封装
+
+**Phase 2: 消息格式化**
+1. 将MonitorReport转换为Markdown格式
+2. 添加标题、表格、代码块
+3. 处理长消息的分页
+4. 添加表情符号和格式化
+
+**Phase 3: @人员处理**
+1. 解析配置文件中的mentioned_list
+2. 构建mentioned_list和mentioned_mobile_list
+3. 支持@所有人和@指定人员
+4. 处理手机号和用户ID
+
+**Phase 4: 重试机制**
+1. 实现指数退避重试策略
+2. 区分可重试和不可重试错误
+3. 记录重试次数和结果
+4. 最终失败时降级处理
+
+### Frontend (if applicable)
+无前端组件。
+
+### Backend (if applicable)
+
+- **Module Structure**:
+  ```
+  src/notifier/
+  ├── __init__.py
+  ├── wechat_notifier.py       # 企业微信推送器
+  ├── message_formatter.py     # 消息格式化器
+  ├── webhook_client.py        # Webhook客户端
+  └── models/
+      └── wechat_message.py    # 微信消息模型
+  ```
+
+- **Core Classes**:
+  - WechatNotifier: 主推送器
+  - MessageFormatter: 消息格式化器
+  - WebhookClient: Webhook API客户端
+  - WechatMessage: 微信消息模型
+
+- **API Specifications**:
+  ```python
+  class WechatNotifier:
+      def __init__(self, config: dict):
+          """初始化企业微信推送器"""
+
+      async def send_report(self, report: MonitorReport) -> bool:
+          """发送监控报告"""
+
+      def format_message(self, report: MonitorReport) -> WechatMessage:
+          """格式化消息"""
+
+      async def send_message(self, message: WechatMessage) -> bool:
+          """发送消息"""
+
+      def is_retryable_error(self, error: Exception) -> bool:
+          """判断是否可重试错误"""
+  ```
+
+- **Data Model**:
+  ```python
+  @dataclass
+  WechatMessage:
+      msgtype: str = "markdown"
+      markdown: dict
+      mentioned_list: List[str] = field(default_factory=list)
+      mentioned_mobile_list: List[str] = field(default_factory=list)
+
+  @dataclass
+  class PushResult:
+      success: bool              # 推送是否成功
+      message_id: Optional[str]  # 消息ID
+      error_message: Optional[str] # 错误信息
+      retry_count: int          # 重试次数
+      timestamp: datetime       # 推送时间
+  ```
+
+- **Message Format**:
+  ```python
+  WECHAT_TEMPLATE = """
+  ## 🔔 接口监控告警
+
+  **监控时间**: {timestamp}
+  **总接口数**: {total_count}
+  **成功数**: {success_count}
+  **失败数**: {failure_count}
+  **成功率**: {success_rate}%
+
+  ## ⚠️ 异常详情
+
+  {error_details}
+
+  ## 📊 统计信息
+  {stats_details}
+
+  ---
+  *由接口监控系统自动发送*
+  """
+  ```
+
+- **Webhook API**:
+  ```python
+  WEBHOOK_ENDPOINT = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send"
+
+  def send_webhook_message(webhook_url: str, message: dict) -> dict:
+      """发送Webhook消息"""
+      response = requests.post(
+          webhook_url,
+          json=message,
+          headers={'Content-Type': 'application/json'},
+          timeout=10
+      )
+      return response.json()
+  ```
+
+- **Retry Strategy**:
+  ```python
+  class RetryConfig:
+      max_attempts = 3
+      backoff_strategy = [1, 2, 5]  # 指数退避（秒）
+      retryable_errors = [
+          'timeout',
+          'connection_error',
+          'http_500',
+          'http_502',
+          'http_503'
+      ]
+  ```
+
+### Common
+
+#### Performance Optimization
+- 异步发送减少等待时间
+- 批量发送多个通知
+- 消息压缩和分页
+
+#### Testing Strategy
+- 单元测试：消息格式化、API调用
+- 集成测试：推送流程、重试机制
+- 性能测试：推送速度、并发推送
+
+## Dependencies
+
+### Task Dependencies
+- 依赖任务002：配置管理模块
+- 依赖任务007：结果分析模块
+
+### External Dependencies
+- requests：HTTP请求库
+- aiohttp：可选，异步HTTP客户端
+
+## Effort Estimate
+
+- **Size**: M
+- **Hours**: 5-6 hours
+- **Risk**: Low
+
+### Size Reference
+M (1-2d): 中等复杂度，涉及API调用、消息格式化、重试机制等多个功能
+
+## Definition of Done
+
+### Code Complete
+- [ ] WechatNotifier类实现完成
+- [ ] MessageFormatter格式化器实现完成
+- [ ] WebhookClient客户端实现完成
+- [ ] 重试机制实现完成
+- [ ] @人员处理实现完成
+
+### Tests Pass
+- [ ] 单元测试覆盖率>80%
+- [ ] 集成测试通过（真实Webhook测试）
+- [ ] 重试机制测试通过
+- [ ] 消息格式化测试通过
+
+### Docs Updated
+- [ ] 企业微信推送模块API文档
+- [ ] Webhook配置说明
+
+### Deployment Verified
+- [ ] 本地测试环境验证完成
+- [ ] 推送成功率验证完成
+- [ ] 重试机制验证完成

@@ -1,0 +1,248 @@
+---
+name: 007-开发结果分析模块
+status: open
+created: 2026-01-26T08:16:58Z
+updated: 2026-01-26T08:16:58Z
+github: ""
+depends_on: ["006"]
+parallel: true
+deprecated: false
+---
+
+# 007 - 开发结果分析模块
+
+**File**: `src/analyzer/result_analyzer.py`
+**Purpose**: 实现监控结果分析功能，分类聚合异常结果，生成详细的Markdown格式监控报告
+**Leverage**: Python标准库datetime、statistics；requests库（可选）
+**Requirements**: PRD-2.3.2-推送内容需求
+**Prompt**: Role: 后端开发工程师 | Task: 开发结果分析模块，包括监控结果分类和聚合、异常状态识别和统计、详细版Markdown报告生成，实现ResultAnalyzer类 | Restrictions: 必须支持Markdown格式报告，包含请求和响应详情，统计信息准确 | Success: 结果分类正确，异常聚合完整，报告格式规范，统计信息准确
+
+## Features (WHAT)
+
+实现监控结果分析功能，分类聚合异常结果，生成详细的Markdown格式监控报告。
+
+### Core Features
+- 监控结果分类和聚合
+- 异常状态识别和统计
+- 详细版报告生成（Markdown格式）
+- 报告内容包含请求响应详情
+- 监控统计信息生成
+
+### User Value (WHY)
+将原始监控结果转化为可读的详细报告，便于快速定位问题、分析趋势和生成告警。
+
+## User Workflow (HOW - User Perspective)
+
+1. 接收监控执行结果列表
+2. 按状态分类（正常/异常）
+3. 聚合异常接口信息
+4. 生成详细版Markdown报告
+5. 输出报告供推送模块使用
+
+## UI Elements Checklist
+
+无前端界面，纯后端分析模块。
+
+## Acceptance Criteria
+
+### Feature Acceptance
+- [ ] 正确分类监控结果（正常/异常）
+- [ ] 准确聚合异常接口信息
+- [ ] 生成Markdown格式详细报告
+- [ ] 报告包含请求和响应详情（仅异常接口）
+- [ ] 提供统计信息和趋势分析
+
+### Interaction Acceptance
+- [ ] 分析速度快（1000个结果<5秒）
+- [ ] 报告生成及时（<3秒）
+- [ ] 支持实时分析（流式处理）
+
+### Quality Acceptance
+- [ ] 分析逻辑准确无误
+- [ ] 报告格式规范统一
+- [ ] 异常聚合无遗漏
+- [ ] 统计数据准确
+
+## Technical Details
+
+### Implementation Plan
+
+**Phase 1: 结果分类**
+1. 根据监控状态分类（SUCCESS/FAILED）
+2. 按异常类型分组（500/404/503/超时/网络错误）
+3. 按服务类型聚合（user/nurse/admin）
+4. 计算各类异常数量和占比
+
+**Phase 2: 异常聚合**
+1. 提取异常接口的详细信息
+2. 包含请求参数、响应内容、错误原因
+3. 按严重程度排序（500 > 503 > 404 > 超时 > 网络错误）
+4. 去重和合并相似异常
+
+**Phase 3: 报告生成**
+1. 生成Markdown格式报告
+2. 包含报告标题、时间戳
+3. 添加异常接口列表和详情
+4. 包含统计信息和图表
+
+**Phase 4: 统计信息**
+1. 计算总体成功率
+2. 统计各服务健康度
+3. 分析响应时间分布
+4. 生成趋势指标
+
+### Frontend (if applicable)
+无前端组件。
+
+### Backend (if applicable)
+
+- **Module Structure**:
+  ```
+  src/analyzer/
+  ├── __init__.py
+  ├── result_analyzer.py      # 结果分析器
+  ├── report_generator.py     # 报告生成器
+  ├── aggregators/
+  │   ├── __init__.py
+  │   ├── error_aggregator.py # 异常聚合器
+  │   └── stats_aggregator.py # 统计聚合器
+  └── models/
+      ├── report.py           # 报告模型
+      └── stats.py            # 统计模型
+  ```
+
+- **Core Classes**:
+  - ResultAnalyzer: 主结果分析器
+  - ReportGenerator: 报告生成器
+  - ErrorAggregator: 异常聚合器
+  - StatsAggregator: 统计聚合器
+  - MonitorReport: 报告数据模型
+
+- **API Specifications**:
+  ```python
+  class ResultAnalyzer:
+      def __init__(self, config: dict):
+          """初始化结果分析器"""
+
+      def analyze(self, results: List[MonitorResult]) -> MonitorReport:
+          """分析监控结果并生成报告"""
+
+      def categorize_results(self, results: List[MonitorResult]):
+          """分类监控结果"""
+
+      def aggregate_errors(self, failed_results: List[MonitorResult]):
+          """聚合异常结果"""
+
+      def generate_stats(self, results: List[MonitorResult]) -> Stats:
+          """生成统计信息"""
+  ```
+
+- **Data Model**:
+  ```python
+  @dataclass
+  class MonitorReport:
+      title: str                    # 报告标题
+      timestamp: datetime           # 报告时间
+      total_count: int             # 总接口数
+      success_count: int           # 成功数
+      failure_count: int           # 失败数
+      success_rate: float          # 成功率
+      errors: List[ErrorInfo]      # 异常列表
+      stats: Stats                 # 统计信息
+      content: str                 # Markdown报告内容
+
+  @dataclass
+  class ErrorInfo:
+      interface: Interface          # 接口信息
+      error_type: str             # 错误类型
+      error_message: str          # 错误信息
+      status_code: Optional[int]   # 状态码
+      request_data: dict           # 请求数据
+      response_data: dict          # 响应数据
+      count: int                  # 出现次数
+  ```
+
+- **Report Template**:
+  ```markdown
+  # 接口监控报告
+
+  **监控时间**: {timestamp}
+  **总接口数**: {total_count}
+  **成功数**: {success_count}
+  **失败数**: {failure_count}
+  **成功率**: {success_rate}%
+
+  ## 异常详情
+
+  ### 500状态码错误 ({count})
+  {error_details}
+
+  ### 404状态码错误 ({count})
+  {error_details}
+
+  ### 503状态码错误 ({count})
+  {error_details}
+
+  ### 超时错误 ({count})
+  {error_details}
+
+  ### 网络错误 ({count})
+  {error_details}
+
+  ## 统计信息
+  {stats_details}
+  ```
+
+### Common
+
+#### Performance Optimization
+- 使用生成器流式处理大量结果
+- 并行聚合不同维度的统计
+- 缓存常用统计结果
+
+#### Testing Strategy
+- 单元测试：结果分类、异常聚合
+- 集成测试：报告生成、统计计算
+- 性能测试：大量结果的分析性能
+
+## Dependencies
+
+### Task Dependencies
+- 依赖任务006：监控执行引擎
+
+### External Dependencies
+- Python标准库（datetime、statistics等）
+- markdown：Markdown文档生成（可选）
+
+## Effort Estimate
+
+- **Size**: M
+- **Hours**: 5-6 hours
+- **Risk**: Low
+
+### Size Reference
+M (1-2d): 中等复杂度，涉及数据分析、聚合、报告生成等多个功能
+
+## Definition of Done
+
+### Code Complete
+- [ ] ResultAnalyzer类实现完成
+- [ ] 报告生成器实现完成
+- [ ] 异常聚合器实现完成
+- [ ] 统计聚合器实现完成
+- [ ] Markdown模板实现完成
+
+### Tests Pass
+- [ ] 单元测试覆盖率>80%
+- [ ] 报告生成测试通过
+- [ ] 统计分析测试通过
+- [ ] 性能测试达标
+
+### Docs Updated
+- [ ] 结果分析模块API文档
+- [ ] 报告格式说明
+
+### Deployment Verified
+- [ ] 本地测试环境验证完成
+- [ ] 报告生成准确性验证完成
+- [ ] 统计分析准确性验证完成
