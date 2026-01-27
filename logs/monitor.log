@@ -113,3 +113,75 @@ ValueError: Test exception
 2026-01-27 17:14:56 - root - INFO - 文件日志处理器添加成功
 2026-01-27 17:14:56 - root - INFO - 文件日志处理器添加成功
 2026-01-27 17:14:56 - root - INFO - 文件日志处理器添加成功
+2026-01-27 18:26:22 - root - INFO - 文件日志处理器添加成功
+2026-01-27 18:26:22 - __main__ - INFO - 接口池监控测试开始
+2026-01-27 18:26:22 - config.config_manager - INFO - 开始加载配置文件: d:\Dev\interface_monitoring\config.yaml
+2026-01-27 18:26:22 - config.config_manager - INFO - 配置加载并验证成功
+2026-01-27 18:26:22 - config.config_manager - INFO - 配置热更新监控已启动: d:\Dev\interface_monitoring\config.yaml
+2026-01-27 18:26:22 - config.config_manager - INFO - 配置监控已停止
+2026-01-27 18:26:46 - root - INFO - 文件日志处理器添加成功
+2026-01-27 18:26:46 - __main__ - INFO - 接口池监控测试开始
+2026-01-27 18:26:46 - config.config_manager - INFO - 开始加载配置文件: d:\Dev\interface_monitoring\config.yaml
+2026-01-27 18:26:46 - config.config_manager - INFO - 配置加载并验证成功
+2026-01-27 18:26:46 - config.config_manager - INFO - 配置热更新监控已启动: d:\Dev\interface_monitoring\config.yaml
+2026-01-27 18:26:46 - config.config_manager - INFO - 配置监控已停止
+2026-01-27 18:26:46 - scanner.interface_scanner - INFO - 开始扫描目录: D:\Dev\interface_monitoring\Interface-pool
+2026-01-27 18:26:46 - scanner.interface_scanner - INFO - 找到 10 个接口文档文件
+2026-01-27 18:26:46 - scanner.interface_scanner - INFO - 扫描完成，共发现 10 个接口
+2026-01-27 18:26:46 - monitor.monitor_engine - INFO - 监控引擎初始化完成: 并发数=5, 超时时间=10s, 基础URL=None
+2026-01-27 18:26:46 - monitor.monitor_engine - INFO - 开始执行监控: 10个接口，5线程并发
+2026-01-27 18:26:46 - monitor.monitor_engine - INFO - 监控执行完成: 总数=10, 成功=2, 失败=8, 耗时=0.08s
+2026-01-27 18:26:46 - notifier.wechat_notifier - INFO - 企业微信推送器初始化完成: webhook=https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=651f2841-0a79-4a43-bc50-5761253d6b52, mentioned_list=2, mentioned_mobile_list=0
+2026-01-27 18:26:46 - notifier.wechat_notifier - INFO - 开始发送监控报告
+2026-01-27 18:26:46 - notifier.webhook_client - INFO - 发送企业微信消息 (尝试 1/3)
+2026-01-27 18:26:46 - notifier.webhook_client - INFO - 消息发送成功: N/A
+2026-01-27 18:26:46 - notifier.wechat_notifier - INFO - 监控报告发送成功: message_id=, retry_count=0
+2026-01-27 18:26:46 - notifier.wechat_notifier - INFO - 企业微信推送器已关闭
+2026-01-27 18:27:20 - root - INFO - 文件日志处理器添加成功
+2026-01-27 18:27:20 - __main__ - INFO - 企业微信推送测试开始
+2026-01-27 18:27:20 - config.config_manager - INFO - 开始加载配置文件: d:\Dev\interface_monitoring\config.yaml
+2026-01-27 18:27:20 - config.config_manager - INFO - 配置加载并验证成功
+2026-01-27 18:27:20 - config.config_manager - INFO - 配置热更新监控已启动: d:\Dev\interface_monitoring\config.yaml
+2026-01-27 18:27:20 - config.config_manager - INFO - 配置监控已停止
+2026-01-27 18:27:20 - notifier.wechat_notifier - INFO - 企业微信推送器初始化完成: webhook=https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=651f2841-0a79-4a43-bc50-5761253d6b52, mentioned_list=2, mentioned_mobile_list=0
+2026-01-27 18:27:20 - notifier.wechat_notifier - INFO - 开始发送自定义消息
+2026-01-27 18:27:20 - notifier.webhook_client - INFO - 发送企业微信消息 (尝试 1/3)
+2026-01-27 18:27:21 - notifier.webhook_client - INFO - 消息发送成功: N/A
+2026-01-27 18:27:21 - notifier.wechat_notifier - INFO - 自定义消息发送成功: message_id=, retry_count=0
+2026-01-27 18:27:21 - notifier.wechat_notifier - INFO - 企业微信推送器已关闭
+2026-01-27 18:38:54 - root - INFO - 文件日志处理器添加成功
+2026-01-27 18:38:54 - __main__ - INFO - 接口池监控测试开始
+2026-01-27 18:38:54 - config.config_manager - INFO - 开始加载配置文件: d:\Dev\interface_monitoring\config.yaml
+2026-01-27 18:38:54 - config.config_manager - INFO - 配置加载并验证成功
+2026-01-27 18:38:54 - config.config_manager - INFO - 配置热更新监控已启动: d:\Dev\interface_monitoring\config.yaml
+2026-01-27 18:38:54 - config.config_manager - INFO - 配置监控已停止
+2026-01-27 18:38:54 - scanner.interface_scanner - INFO - 开始扫描目录: D:\Dev\interface_monitoring\Interface-pool
+2026-01-27 18:38:54 - scanner.interface_scanner - INFO - 找到 10 个接口文档文件
+2026-01-27 18:38:54 - scanner.interface_scanner - INFO - 扫描完成，共发现 10 个接口
+2026-01-27 18:38:54 - monitor.monitor_engine - INFO - 监控引擎初始化完成: 并发数=5, 超时时间=10s, 基础URL=None
+2026-01-27 18:38:54 - monitor.monitor_engine - INFO - 开始执行监控: 10个接口，5线程并发
+2026-01-27 18:38:54 - monitor.monitor_engine - INFO - 监控执行完成: 总数=10, 成功=2, 失败=8, 耗时=0.08s
+2026-01-27 18:38:54 - notifier.wechat_notifier - INFO - 企业微信推送器初始化完成: webhook=https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=651f2841-0a79-4a43-bc50-5761253d6b52, mentioned_list=2, mentioned_mobile_list=0
+2026-01-27 18:38:54 - notifier.wechat_notifier - INFO - 开始发送监控报告
+2026-01-27 18:38:54 - notifier.webhook_client - INFO - 发送企业微信消息 (尝试 1/3)
+2026-01-27 18:38:54 - notifier.webhook_client - INFO - 消息发送成功: N/A
+2026-01-27 18:38:54 - notifier.wechat_notifier - INFO - 监控报告发送成功: message_id=, retry_count=0
+2026-01-27 18:38:54 - notifier.wechat_notifier - INFO - 企业微信推送器已关闭
+2026-01-27 18:41:21 - root - INFO - 文件日志处理器添加成功
+2026-01-27 18:41:21 - __main__ - INFO - 接口池监控测试开始
+2026-01-27 18:41:21 - config.config_manager - INFO - 开始加载配置文件: d:\Dev\interface_monitoring\config.yaml
+2026-01-27 18:41:21 - config.config_manager - INFO - 配置加载并验证成功
+2026-01-27 18:41:21 - config.config_manager - INFO - 配置热更新监控已启动: d:\Dev\interface_monitoring\config.yaml
+2026-01-27 18:41:21 - config.config_manager - INFO - 配置监控已停止
+2026-01-27 18:41:21 - scanner.interface_scanner - INFO - 开始扫描目录: D:\Dev\interface_monitoring\Interface-pool
+2026-01-27 18:41:21 - scanner.interface_scanner - INFO - 找到 10 个接口文档文件
+2026-01-27 18:41:21 - scanner.interface_scanner - INFO - 扫描完成，共发现 10 个接口
+2026-01-27 18:41:21 - monitor.monitor_engine - INFO - 监控引擎初始化完成: 并发数=5, 超时时间=10s, 基础URL=None
+2026-01-27 18:41:21 - monitor.monitor_engine - INFO - 开始执行监控: 10个接口，5线程并发
+2026-01-27 18:41:21 - monitor.monitor_engine - INFO - 监控执行完成: 总数=10, 成功=2, 失败=8, 耗时=0.08s
+2026-01-27 18:41:21 - notifier.wechat_notifier - INFO - 企业微信推送器初始化完成: webhook=https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=651f2841-0a79-4a43-bc50-5761253d6b52, mentioned_list=2, mentioned_mobile_list=0
+2026-01-27 18:41:21 - notifier.wechat_notifier - INFO - 开始发送监控报告
+2026-01-27 18:41:21 - notifier.webhook_client - INFO - 发送企业微信消息 (尝试 1/3)
+2026-01-27 18:41:21 - notifier.webhook_client - INFO - 消息发送成功: N/A
+2026-01-27 18:41:21 - notifier.wechat_notifier - INFO - 监控报告发送成功: message_id=, retry_count=0
+2026-01-27 18:41:21 - notifier.wechat_notifier - INFO - 企业微信推送器已关闭

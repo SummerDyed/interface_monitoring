@@ -6,13 +6,14 @@
 创建时间: 2026-01-27
 """
 
-from .wechat_notifier import WechatNotifier
+from .wechat_notifier import WechatNotifier, create_notifier_from_config
 from .message_formatter import MessageFormatter
 from .webhook_client import WebhookClient
 from .models.wechat_message import WechatMessage, PushResult
 
 __all__ = [
     'WechatNotifier',
+    'create_notifier_from_config',
     'MessageFormatter',
     'WebhookClient',
     'WechatMessage',

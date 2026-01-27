@@ -32,6 +32,10 @@ class MockError:
         self.interface_name = interface_name
         self.error_message = error_message
         self.status_code = status_code
+        self.interface_method = "GET"
+        self.interface_url = ""
+        self.request_data = {}
+        self.response_data = {}
 
 
 class TestMessageFormatter:
@@ -58,7 +62,8 @@ class TestMessageFormatter:
         assert message.msgtype == "markdown"
         assert "✅ 暂无异常" in message.markdown["content"]
         assert "100" in message.markdown["content"]
-        assert "95.00%" in message.markdown["content"]
+        # 新格式不再显示成功率
+        # assert "95.00%" in message.markdown["content"]
 
     def test_format_report_with_errors(self):
         """测试格式化有错误的报告"""
@@ -142,7 +147,7 @@ class TestMessageFormatter:
         """测试错误数量超过限制时的处理"""
         formatter = MessageFormatter()
         report = MockReport()
-        # 创建6个错误（超过默认显示的5个）
+        # 创建6个错误（超过默认显示的3个）
         report.errors = [
             MockError("HTTP_500", f"Interface{i}", f"Error{i}", 500)
             for i in range(6)
@@ -151,7 +156,7 @@ class TestMessageFormatter:
         result = formatter._format_error_details(report)
 
         # 应该显示省略提示
-        assert "... 还有 1 个类似错误" in result
+        assert "... 还有 3 个类似错误" in result
 
     def test_format_stats_no_stats(self):
         """测试格式化无统计信息"""
@@ -162,38 +167,29 @@ class TestMessageFormatter:
         result = formatter._format_stats(report)
 
         assert "平均响应时间" in result
-        assert "N/A" in result
+        # 新格式返回0.00ms而不是N/A
+        assert "0.00ms" in result
 
     def test_format_stats_with_service_health(self):
         """测试格式化服务健康度统计"""
         formatter = MessageFormatter()
         report = MockReport()
 
-        # 模拟stats对象
+        # 模拟stats对象，包含avg_response_time
         stats = Mock()
-        stats.service_health = {
-            "user": {"status": "HEALTHY", "success_rate": 99.0, "success_count": 100, "total_count": 101},
-            "order": {"status": "DEGRADED", "success_rate": 95.0, "success_count": 95, "total_count": 100}
-        }
-        stats.error_distribution = {"HTTP_500": 3, "HTTP_404": 2}
+        stats.avg_response_time = 25.5
         report.stats = stats
 
         result = formatter._format_stats(report)
 
-        assert "服务健康度" in result
-        assert "🟢" in result
-        assert "🟡" in result
-        assert "user" in result
-        assert "order" in result
-        assert "错误分布" in result
-        assert "HTTP_500" in result
-        assert "HTTP_404" in result
+        # 新格式只显示平均响应时间
+        assert "平均响应时间" in result
+        assert "25.50ms" in result
 
     def test_generate_simple_content(self):
         """测试生成简化内容"""
         formatter = MessageFormatter()
         timestamp = "2026-01-27 12:00:00"
-        success_rate = 95.0
         failure_count = 5
 
         report = MockReport()
@@ -203,12 +199,13 @@ class TestMessageFormatter:
         ]
 
         result = formatter._generate_simple_content(
-            timestamp, success_rate, failure_count, report
+            timestamp, failure_count, report
         )
 
         assert "🔔" in result
         assert "2026-01-27 12:00:00" in result
-        assert "95.00%" in result
+        # 新格式不再显示成功率
+        # assert "95.00%" in result
         assert "HTTP_500" in result
         assert "HTTP_404" in result
 

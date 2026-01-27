@@ -26,9 +26,7 @@ class MessageFormatter:
 
 **监控时间**: {timestamp}
 **总接口数**: {total_count}
-**成功数**: {success_count}
 **失败数**: {failure_count}
-**成功率**: {success_rate}%
 
 ## ⚠️ 异常详情
 
@@ -46,7 +44,6 @@ class MessageFormatter:
     SIMPLE_TEMPLATE = """## 🔔 接口监控告警
 
 **时间**: {timestamp}
-**成功率**: {success_rate}%
 **异常数**: {failure_count}
 
 {error_summary}
@@ -107,9 +104,7 @@ class MessageFormatter:
             # 提取报告信息
             timestamp = self._format_timestamp(report.timestamp if hasattr(report, 'timestamp') else datetime.now())
             total_count = report.total_count if hasattr(report, 'total_count') else 0
-            success_count = report.success_count if hasattr(report, 'success_count') else 0
             failure_count = report.failure_count if hasattr(report, 'failure_count') else 0
-            success_rate = getattr(report, 'success_rate', 0.0)
 
             # 生成错误详情
             error_details = self._format_error_details(report)
@@ -121,9 +116,7 @@ class MessageFormatter:
             content = self.WECHAT_TEMPLATE.format(
                 timestamp=timestamp,
                 total_count=total_count,
-                success_count=success_count,
                 failure_count=failure_count,
-                success_rate=f"{success_rate:.2f}",
                 error_details=error_details,
                 stats_details=stats_details
             )
@@ -134,7 +127,7 @@ class MessageFormatter:
                     f"消息长度 ({len(content)}) 超过限制 ({self.max_message_length})，使用简化版本"
                 )
                 content = self._generate_simple_content(
-                    timestamp, success_rate, failure_count, report
+                    timestamp, failure_count, report
                 )
 
             return content
@@ -186,34 +179,74 @@ class MessageFormatter:
             if not errors:
                 return "✅ 暂无异常"
 
-            # 按错误类型分组
-            error_groups = {}
+            # 按HTTP状态码分组
+            status_groups = {}
             for error in errors:
-                error_type = getattr(error, 'error_type', 'UNKNOWN')
-                if error_type not in error_groups:
-                    error_groups[error_type] = []
-                error_groups[error_type].append(error)
+                status_code = getattr(error, 'status_code', None)
+                if status_code:
+                    status_key = f"HTTP_{status_code}"
+                    if status_key not in status_groups:
+                        status_groups[status_key] = []
+                    status_groups[status_key].append(error)
 
             # 生成错误详情
             details = []
-            for error_type, error_list in error_groups.items():
+            for status_key in sorted(status_groups.keys()):
+                error_list = status_groups[status_key]
                 count = len(error_list)
-                details.append(f"### {error_type} ({count}个)")
+                status_code = status_key.replace('HTTP_', '')
+                details.append(f"### {status_key} ({count}个)")
 
-                # 只显示前5个错误详情，避免消息过长
-                for i, error in enumerate(error_list[:5]):
+                # 只显示前3个错误详情，避免消息过长
+                for error in error_list[:3]:
                     interface_name = getattr(error, 'interface_name', 'Unknown')
                     error_message = getattr(error, 'error_message', 'No message')
-                    status_code = getattr(error, 'status_code', 'N/A')
+                    method = getattr(error, 'interface_method', 'GET')
+                    url = getattr(error, 'interface_url', '')
+                    request_data = getattr(error, 'request_data', {})
+                    response_data = getattr(error, 'response_data', {})
 
-                    detail = f"- **{interface_name}**: {error_message} (HTTP {status_code})"
-                    details.append(detail)
+                    # 基本信息
+                    details.append(f"**{method} {interface_name}**")
+                    details.append(f"- URL: `{url}`")
+                    details.append(f"- 错误: {error_message}")
 
-                # 如果错误数量超过5个，显示省略提示
-                if count > 5:
-                    details.append(f"- ... 还有 {count - 5} 个类似错误")
+                    # 请求内容
+                    if request_data:
+                        details.append(f"- 请求内容:")
+                        details.append(f"  ```json")
+                        # 格式化请求数据
+                        import json
+                        try:
+                            if isinstance(request_data, dict):
+                                # 格式化JSON，保持缩进
+                                details.append(f"  {json.dumps(request_data, indent=2, ensure_ascii=False)}")
+                            else:
+                                details.append(f"  {str(request_data)}")
+                        except:
+                            details.append(f"  {str(request_data)}")
+                        details.append(f"  ```")
 
-                details.append("")  # 空行分隔
+                    # 响应内容
+                    if response_data:
+                        details.append(f"- 响应内容:")
+                        details.append(f"  ```json")
+                        # 格式化响应数据
+                        try:
+                            if isinstance(response_data, dict):
+                                details.append(f"  {json.dumps(response_data, indent=2, ensure_ascii=False)}")
+                            else:
+                                details.append(f"  {str(response_data)}")
+                        except:
+                            details.append(f"  {str(response_data)}")
+                        details.append(f"  ```")
+
+                    details.append("")
+
+                # 如果错误数量超过3个，显示省略提示
+                if count > 3:
+                    details.append(f"- ... 还有 {count - 3} 个类似错误")
+                    details.append("")
 
             return "\n".join(details).strip()
 
@@ -231,42 +264,31 @@ class MessageFormatter:
             str: 统计信息Markdown字符串
         """
         try:
-            # 尝试从报告获取统计信息
-            stats = getattr(report, 'stats', None)
+            # 获取平均响应时间
+            avg_response_time = 0.0
+            if hasattr(report, 'stats') and report.stats:
+                if hasattr(report.stats, 'avg_response_time'):
+                    avg_response_time = report.stats.avg_response_time
+                else:
+                    # 从原始响应时间计算
+                    response_times = []
+                    for result in getattr(report, 'results', []):
+                        if hasattr(result, 'response_time'):
+                            response_times.append(result.response_time)
+                    if response_times:
+                        avg_response_time = sum(response_times) / len(response_times)
+            else:
+                # 如果没有stats对象，从错误结果中计算平均响应时间
+                response_times = []
+                if hasattr(report, 'errors'):
+                    for error in report.errors:
+                        if hasattr(error, 'response_time') and error.response_time:
+                            response_times.append(error.response_time)
+                if response_times:
+                    avg_response_time = sum(response_times) / len(response_times)
 
-            if stats:
-                # 如果有stats对象，尝试提取信息
-                stats_lines = []
-
-                # 尝试获取服务健康度
-                if hasattr(stats, 'service_health') and stats.service_health:
-                    stats_lines.append("### 服务健康度")
-                    for service, health in stats.service_health.items():
-                        status_icon = "🟢" if health.get('status') == 'HEALTHY' else \
-                                     "🟡" if health.get('status') == 'DEGRADED' else "🔴"
-                        success_rate = health.get('success_rate', 0)
-                        stats_lines.append(
-                            f"- {status_icon} **{service}**: {success_rate:.2f}% "
-                            f"({health.get('success_count', 0)}/{health.get('total_count', 0)})"
-                        )
-
-                # 尝试获取错误分布
-                if hasattr(stats, 'error_distribution') and stats.error_distribution:
-                    if stats_lines:
-                        stats_lines.append("")
-                    stats_lines.append("### 错误分布")
-                    for error_type, count in stats.error_distribution.items():
-                        stats_lines.append(f"- {error_type}: {count}个")
-
-                if stats_lines:
-                    return "\n".join(stats_lines)
-
-            # 如果没有stats对象或stats为空，显示基本信息
-            return (
-                f"- **平均响应时间**: N/A\n"
-                f"- **P95响应时间**: N/A\n"
-                f"- **P99响应时间**: N/A"
-            )
+            # 返回平均响应时间
+            return f"- **平均响应时间**: {avg_response_time:.2f}ms"
 
         except Exception as e:
             logger.error(f"格式化统计信息失败: {str(e)}", exc_info=True)
@@ -275,7 +297,6 @@ class MessageFormatter:
     def _generate_simple_content(
         self,
         timestamp: str,
-        success_rate: float,
         failure_count: int,
         report: Any
     ) -> str:
@@ -283,7 +304,6 @@ class MessageFormatter:
 
         Args:
             timestamp: 时间戳
-            success_rate: 成功率
             failure_count: 失败数
             report: 报告对象
 
@@ -309,7 +329,6 @@ class MessageFormatter:
 
         return self.SIMPLE_TEMPLATE.format(
             timestamp=timestamp,
-            success_rate=f"{success_rate:.2f}",
             failure_count=failure_count,
             error_summary=error_summary
         )
