@@ -10,7 +10,7 @@ from collections import defaultdict
 import logging
 from typing import List, Dict, Any
 
-from src.monitor.result import MonitorResult, ErrorType
+from monitor.result import MonitorResult, ErrorType
 from ..models import ErrorInfo
 
 logger = logging.getLogger(__name__)

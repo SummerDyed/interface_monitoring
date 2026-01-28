@@ -1,0 +1,761 @@
+2026-01-27 19:18:34 - root - INFO - 文件日志处理器添加成功
+2026-01-27 19:18:34 - __main__ - INFO - ============================================================
+2026-01-27 19:18:34 - __main__ - INFO - 接口监控脚本启动
+2026-01-27 19:18:34 - __main__ - INFO - ============================================================
+2026-01-27 19:18:34 - config.config_manager - ERROR - 配置文件不存在: D:\Dev\interface_monitoring\src\config.yaml
+2026-01-27 19:18:34 - config.config_manager - ERROR - ('配置加载失败: %s', ConfigLoadError('配置文件不存在: %s', 'D:\\Dev\\interface_monitoring\\src\\config.yaml'))
+2026-01-27 19:18:34 - __main__ - ERROR - 配置文件加载失败: ('配置加载失败: %s', ConfigLoadError('配置文件不存在: %s', 'D:\\Dev\\interface_monitoring\\src\\config.yaml'))
+2026-01-27 19:18:34 - __main__ - ERROR - 程序启动失败: ('配置加载失败: %s', ConfigLoadError('配置文件不存在: %s', 'D:\\Dev\\interface_monitoring\\src\\config.yaml'))
+2026-01-27 19:18:34 - __main__ - ERROR - Traceback (most recent call last):
+  File "D:\Dev\interface_monitoring\src\config\config_manager.py", line 97, in load_config
+    raise ConfigLoadError("配置文件不存在: %s", self.config_path)
+config.exceptions.ConfigLoadError: ('配置文件不存在: %s', 'D:\\Dev\\interface_monitoring\\src\\config.yaml')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Dev\interface_monitoring\src\main.py", line 284, in main
+    config = load_config()
+             ^^^^^^^^^^^^^
+  File "D:\Dev\interface_monitoring\src\main.py", line 255, in load_config
+    _config_manager = ConfigManager(config_path)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\interface_monitoring\src\config\config_manager.py", line 67, in __init__
+    self.load_config()
+  File "D:\Dev\interface_monitoring\src\config\config_manager.py", line 128, in load_config
+    raise ConfigLoadError(error_msg) from e
+config.exceptions.ConfigLoadError: ('配置加载失败: %s', ConfigLoadError('配置文件不存在: %s', 'D:\\Dev\\interface_monitoring\\src\\config.yaml'))
+
+2026-01-27 19:18:34 - __main__ - INFO - 开始清理资源...
+2026-01-27 19:18:34 - __main__ - INFO - 资源清理完成
+2026-01-27 19:18:50 - root - INFO - 文件日志处理器添加成功
+2026-01-27 19:18:50 - __main__ - INFO - ============================================================
+2026-01-27 19:18:50 - __main__ - INFO - 接口监控脚本启动
+2026-01-27 19:18:50 - __main__ - INFO - ============================================================
+2026-01-27 19:18:50 - config.config_manager - INFO - 开始加载配置文件: D:\Dev\interface_monitoring\config.yaml
+2026-01-27 19:18:50 - config.config_manager - INFO - 配置加载并验证成功
+2026-01-27 19:18:50 - config.config_manager - INFO - 配置热更新监控已启动: D:\Dev\interface_monitoring\config.yaml
+2026-01-27 19:18:50 - __main__ - INFO - 配置加载完成
+2026-01-27 19:18:50 - __main__ - INFO - 开始初始化核心模块...
+2026-01-27 19:18:50 - __main__ - INFO - 接口扫描器初始化完成
+2026-01-27 19:18:50 - auth.token_manager - INFO - TokenManager已初始化: auto_refresh=True, services=['user', 'nurse', 'admin']
+2026-01-27 19:18:50 - __main__ - INFO - Token管理器初始化完成
+2026-01-27 19:18:50 - monitor.monitor_engine - INFO - 监控引擎初始化完成: 并发数=5, 超时时间=10s, 基础URL=None
+2026-01-27 19:18:50 - __main__ - INFO - 监控引擎初始化完成
+2026-01-27 19:18:50 - analyzer.result_analyzer - INFO - 结果分析器初始化完成: 批处理大小=1000, 流式处理=禁用
+2026-01-27 19:18:50 - __main__ - INFO - 结果分析器初始化完成
+2026-01-27 19:18:50 - notifier.wechat_notifier - INFO - 企业微信推送器初始化完成: webhook=https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=651f2841-0a79-4a43-bc50-5761253d6b52, mentioned_list=2, mentioned_mobile_list=0
+2026-01-27 19:18:50 - __main__ - INFO - 企业微信推送器初始化完成
+2026-01-27 19:18:50 - __main__ - INFO - 所有核心模块初始化完成
+2026-01-27 19:18:50 - __main__ - INFO - 配置定时任务：每 15 分钟执行一次监控
+2026-01-27 19:18:50 - __main__ - INFO - 立即执行一次监控周期...
+2026-01-27 19:18:50 - __main__ - INFO - ============================================================
+2026-01-27 19:18:50 - __main__ - INFO - 开始监控周期: 2026-01-27 19:18:50
+2026-01-27 19:18:50 - __main__ - INFO - ============================================================
+2026-01-27 19:18:50 - __main__ - INFO - Step 1: 扫描接口文档...
+2026-01-27 19:18:50 - scanner.interface_scanner - INFO - 开始扫描目录: D:\Dev\interface_monitoring\src\Interface-pool
+2026-01-27 19:18:50 - __main__ - ERROR - 监控周期执行失败: 扫描目录不存在: D:\Dev\interface_monitoring\src\Interface-pool
+2026-01-27 19:18:50 - __main__ - ERROR - Traceback (most recent call last):
+  File "D:\Dev\interface_monitoring\src\main.py", line 133, in run_monitoring_cycle
+    interfaces = _scanner.scan()
+                 ^^^^^^^^^^^^^^^
+  File "D:\Dev\interface_monitoring\src\scanner\interface_scanner.py", line 62, in scan
+    raise FileNotFoundError(f"扫描目录不存在: {self.root_path}")
+FileNotFoundError: 扫描目录不存在: D:\Dev\interface_monitoring\src\Interface-pool
+
+2026-01-27 19:18:50 - __main__ - INFO - ============================================================
+2026-01-27 19:18:50 - __main__ - INFO - 监控调度器启动成功，开始等待...
+2026-01-27 19:18:50 - __main__ - INFO - 按 Ctrl+C 可优雅关闭程序
+2026-01-27 19:18:50 - __main__ - INFO - ============================================================
+2026-01-27 19:20:03 - root - INFO - 文件日志处理器添加成功
+2026-01-27 19:20:03 - __main__ - INFO - ============================================================
+2026-01-27 19:20:03 - __main__ - INFO - 接口监控脚本启动
+2026-01-27 19:20:03 - __main__ - INFO - ============================================================
+2026-01-27 19:20:03 - config.config_manager - INFO - 开始加载配置文件: D:\Dev\interface_monitoring\config.yaml
+2026-01-27 19:20:03 - config.config_manager - INFO - 配置加载并验证成功
+2026-01-27 19:20:03 - config.config_manager - INFO - 配置热更新监控已启动: D:\Dev\interface_monitoring\config.yaml
+2026-01-27 19:20:03 - __main__ - INFO - 配置加载完成
+2026-01-27 19:20:03 - __main__ - INFO - 开始初始化核心模块...
+2026-01-27 19:20:03 - __main__ - INFO - 接口扫描器初始化完成
+2026-01-27 19:20:03 - auth.token_manager - INFO - TokenManager已初始化: auto_refresh=True, services=['user', 'nurse', 'admin']
+2026-01-27 19:20:03 - __main__ - INFO - Token管理器初始化完成
+2026-01-27 19:20:03 - monitor.monitor_engine - INFO - 监控引擎初始化完成: 并发数=5, 超时时间=10s, 基础URL=None
+2026-01-27 19:20:03 - __main__ - INFO - 监控引擎初始化完成
+2026-01-27 19:20:03 - analyzer.result_analyzer - INFO - 结果分析器初始化完成: 批处理大小=1000, 流式处理=禁用
+2026-01-27 19:20:03 - __main__ - INFO - 结果分析器初始化完成
+2026-01-27 19:20:03 - notifier.wechat_notifier - INFO - 企业微信推送器初始化完成: webhook=https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=651f2841-0a79-4a43-bc50-5761253d6b52, mentioned_list=2, mentioned_mobile_list=0
+2026-01-27 19:20:03 - __main__ - INFO - 企业微信推送器初始化完成
+2026-01-27 19:20:03 - __main__ - INFO - 所有核心模块初始化完成
+2026-01-27 19:20:03 - __main__ - INFO - 配置定时任务：每 15 分钟执行一次监控
+2026-01-27 19:20:03 - __main__ - INFO - 立即执行一次监控周期...
+2026-01-27 19:20:03 - __main__ - INFO - ============================================================
+2026-01-27 19:20:03 - __main__ - INFO - 开始监控周期: 2026-01-27 19:20:03
+2026-01-27 19:20:03 - __main__ - INFO - ============================================================
+2026-01-27 19:20:03 - __main__ - INFO - Step 1: 扫描接口文档...
+2026-01-27 19:20:03 - scanner.interface_scanner - INFO - 开始扫描目录: D:\Dev\interface_monitoring\Interface-pool
+2026-01-27 19:20:03 - scanner.interface_scanner - INFO - 找到 10 个接口文档文件
+2026-01-27 19:20:03 - scanner.interface_scanner - INFO - 扫描完成，共发现 10 个接口
+2026-01-27 19:20:03 - __main__ - INFO - 发现 10 个接口
+2026-01-27 19:20:03 - __main__ - INFO - Step 2: 获取认证Token...
+2026-01-27 19:20:03 - auth.token_manager - ERROR - 获取Token失败: service=user, error=未找到服务提供商: service=user
+2026-01-27 19:20:03 - __main__ - ERROR - 获取 user 服务Token异常: 未找到服务提供商: service=user
+2026-01-27 19:20:03 - auth.token_manager - ERROR - 获取Token失败: service=nurse, error=未找到服务提供商: service=nurse
+2026-01-27 19:20:03 - __main__ - ERROR - 获取 nurse 服务Token异常: 未找到服务提供商: service=nurse
+2026-01-27 19:20:03 - auth.token_manager - ERROR - 获取Token失败: service=admin, error=未找到服务提供商: service=admin
+2026-01-27 19:20:03 - __main__ - ERROR - 获取 admin 服务Token异常: 未找到服务提供商: service=admin
+2026-01-27 19:20:03 - __main__ - INFO - Step 3: 执行接口监控...
+2026-01-27 19:20:03 - monitor.monitor_engine - INFO - 开始执行监控: 10个接口，5线程并发
+2026-01-27 19:20:03 - monitor.monitor_engine - INFO - 监控执行完成: 总数=10, 成功=2, 失败=8, 耗时=0.07s
+2026-01-27 19:20:03 - __main__ - INFO - Step 4: 分析监控结果...
+2026-01-27 19:20:03 - analyzer.result_analyzer - INFO - 开始分析 10 个监控结果
+2026-01-27 19:20:03 - analyzer.aggregators.error_aggregator - INFO - 开始聚合 8 个异常结果
+2026-01-27 19:20:03 - analyzer.aggregators.error_aggregator - INFO - 聚合完成，共 8 种异常类型
+2026-01-27 19:20:03 - analyzer.aggregators.stats_aggregator - INFO - 开始统计 10 个监控结果
+2026-01-27 19:20:03 - analyzer.aggregators.stats_aggregator - INFO - 统计完成: 总数=10, 成功率=20.00%
+2026-01-27 19:20:03 - analyzer.alert_logic - INFO - 无需发送告警
+2026-01-27 19:20:03 - analyzer.result_analyzer - INFO - 分析完成: 总数=10, 成功=2, 失败=8, 异常类型=8, 需要告警=False, 告警摘要=无
+2026-01-27 19:20:03 - __main__ - INFO - 无需发送告警
+2026-01-27 19:20:03 - __main__ - INFO - ============================================================
+2026-01-27 19:20:03 - __main__ - INFO - 监控周期完成: 2026-01-27 19:20:03
+2026-01-27 19:20:03 - __main__ - INFO - 总耗时: 0.08秒
+2026-01-27 19:20:03 - __main__ - INFO - 接口总数: 10
+2026-01-27 19:20:03 - __main__ - INFO - 成功: 2
+2026-01-27 19:20:03 - __main__ - INFO - 失败: 8
+2026-01-27 19:20:03 - __main__ - INFO - 成功率: 20.00%
+2026-01-27 19:20:03 - __main__ - INFO - 平均响应时间: 26.39秒
+2026-01-27 19:20:03 - __main__ - INFO - ============================================================
+2026-01-27 19:20:03 - __main__ - INFO - ============================================================
+2026-01-27 19:20:03 - __main__ - INFO - 监控调度器启动成功，开始等待...
+2026-01-27 19:20:03 - __main__ - INFO - 按 Ctrl+C 可优雅关闭程序
+2026-01-27 19:20:03 - __main__ - INFO - ============================================================
+2026-01-27 19:29:13 - root - INFO - 文件日志处理器添加成功
+2026-01-27 19:29:13 - __main__ - INFO - ============================================================
+2026-01-27 19:29:13 - __main__ - INFO - 接口监控脚本启动
+2026-01-27 19:29:13 - __main__ - INFO - ============================================================
+2026-01-27 19:29:13 - config.config_manager - INFO - 开始加载配置文件: D:\Dev\interface_monitoring\config.yaml
+2026-01-27 19:29:13 - config.config_manager - INFO - 配置加载并验证成功
+2026-01-27 19:29:13 - config.config_manager - INFO - 配置热更新监控已启动: D:\Dev\interface_monitoring\config.yaml
+2026-01-27 19:29:13 - __main__ - INFO - 配置加载完成
+2026-01-27 19:29:13 - __main__ - INFO - 开始初始化核心模块...
+2026-01-27 19:29:13 - __main__ - INFO - 接口扫描器初始化完成
+2026-01-27 19:29:13 - auth.token_manager - INFO - TokenManager已初始化: auto_refresh=True, services=['user', 'nurse', 'admin']
+2026-01-27 19:29:13 - __main__ - INFO - Token管理器初始化完成
+2026-01-27 19:29:13 - monitor.monitor_engine - INFO - 监控引擎初始化完成: 并发数=5, 超时时间=10s, 基础URL=None
+2026-01-27 19:29:13 - __main__ - INFO - 监控引擎初始化完成
+2026-01-27 19:29:13 - analyzer.result_analyzer - INFO - 结果分析器初始化完成: 批处理大小=1000, 流式处理=禁用
+2026-01-27 19:29:13 - __main__ - INFO - 结果分析器初始化完成
+2026-01-27 19:29:13 - notifier.wechat_notifier - INFO - 企业微信推送器初始化完成: webhook=https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=651f2841-0a79-4a43-bc50-5761253d6b52, mentioned_list=2, mentioned_mobile_list=0
+2026-01-27 19:29:13 - __main__ - INFO - 企业微信推送器初始化完成
+2026-01-27 19:29:13 - __main__ - INFO - 所有核心模块初始化完成
+2026-01-27 19:29:13 - __main__ - INFO - 配置定时任务：每 15 分钟执行一次监控
+2026-01-27 19:29:13 - __main__ - INFO - 立即执行一次监控周期...
+2026-01-27 19:29:13 - __main__ - INFO - ============================================================
+2026-01-27 19:29:13 - __main__ - INFO - 开始监控周期: 2026-01-27 19:29:13
+2026-01-27 19:29:13 - __main__ - INFO - ============================================================
+2026-01-27 19:29:13 - __main__ - INFO - Step 1: 扫描接口文档...
+2026-01-27 19:29:13 - scanner.interface_scanner - INFO - 开始扫描目录: D:\Dev\interface_monitoring\Interface-pool
+2026-01-27 19:29:13 - scanner.interface_scanner - INFO - 找到 10 个接口文档文件
+2026-01-27 19:29:13 - scanner.interface_scanner - INFO - 扫描完成，共发现 10 个接口
+2026-01-27 19:29:13 - __main__ - INFO - 发现 10 个接口
+2026-01-27 19:29:13 - __main__ - INFO - Step 2: 获取认证Token...
+2026-01-27 19:29:13 - auth.token_manager - ERROR - 获取Token失败: service=user, error=未找到服务提供商: service=user
+2026-01-27 19:29:13 - __main__ - ERROR - 获取 user 服务Token异常: 未找到服务提供商: service=user
+2026-01-27 19:29:13 - auth.token_manager - ERROR - 获取Token失败: service=nurse, error=未找到服务提供商: service=nurse
+2026-01-27 19:29:13 - __main__ - ERROR - 获取 nurse 服务Token异常: 未找到服务提供商: service=nurse
+2026-01-27 19:29:13 - auth.token_manager - ERROR - 获取Token失败: service=admin, error=未找到服务提供商: service=admin
+2026-01-27 19:29:13 - __main__ - ERROR - 获取 admin 服务Token异常: 未找到服务提供商: service=admin
+2026-01-27 19:29:13 - __main__ - INFO - Step 3: 执行接口监控...
+2026-01-27 19:29:13 - monitor.monitor_engine - INFO - 开始执行监控: 10个接口，5线程并发
+2026-01-27 19:29:13 - monitor.monitor_engine - INFO - 监控执行完成: 总数=10, 成功=2, 失败=8, 耗时=0.06s
+2026-01-27 19:29:13 - __main__ - INFO - Step 4: 分析监控结果...
+2026-01-27 19:29:13 - analyzer.result_analyzer - INFO - 开始分析 10 个监控结果
+2026-01-27 19:29:13 - analyzer.aggregators.error_aggregator - INFO - 开始聚合 8 个异常结果
+2026-01-27 19:29:13 - analyzer.aggregators.error_aggregator - INFO - 聚合完成，共 8 种异常类型
+2026-01-27 19:29:13 - analyzer.aggregators.stats_aggregator - INFO - 开始统计 10 个监控结果
+2026-01-27 19:29:13 - analyzer.aggregators.stats_aggregator - INFO - 统计完成: 总数=10, 成功率=20.00%
+2026-01-27 19:29:13 - analyzer.alert_logic - INFO - 无需发送告警
+2026-01-27 19:29:13 - analyzer.result_analyzer - INFO - 分析完成: 总数=10, 成功=2, 失败=8, 异常类型=8, 需要告警=False, 告警摘要=无
+2026-01-27 19:29:13 - __main__ - INFO - 无需发送告警
+2026-01-27 19:29:13 - __main__ - INFO - ============================================================
+2026-01-27 19:29:13 - __main__ - INFO - 监控周期完成: 2026-01-27 19:29:13
+2026-01-27 19:29:13 - __main__ - INFO - 总耗时: 0.06秒
+2026-01-27 19:29:13 - __main__ - INFO - 接口总数: 10
+2026-01-27 19:29:13 - __main__ - INFO - 成功: 2
+2026-01-27 19:29:13 - __main__ - INFO - 失败: 8
+2026-01-27 19:29:13 - __main__ - INFO - 成功率: 20.00%
+2026-01-27 19:29:13 - __main__ - INFO - 平均响应时间: 24.07秒
+2026-01-27 19:29:13 - __main__ - INFO - ============================================================
+2026-01-27 19:29:13 - __main__ - INFO - ============================================================
+2026-01-27 19:29:13 - __main__ - INFO - 监控调度器启动成功，开始等待...
+2026-01-27 19:29:13 - __main__ - INFO - 按 Ctrl+C 可优雅关闭程序
+2026-01-27 19:29:13 - __main__ - INFO - ============================================================
+2026-01-27 19:29:38 - root - INFO - 文件日志处理器添加成功
+2026-01-27 19:29:38 - __main__ - INFO - ============================================================
+2026-01-27 19:29:38 - __main__ - INFO - 接口监控脚本启动
+2026-01-27 19:29:38 - __main__ - INFO - ============================================================
+2026-01-27 19:29:38 - config.config_manager - INFO - 开始加载配置文件: D:\Dev\interface_monitoring\config.yaml
+2026-01-27 19:29:38 - config.config_manager - INFO - 配置加载并验证成功
+2026-01-27 19:29:38 - config.config_manager - INFO - 配置热更新监控已启动: D:\Dev\interface_monitoring\config.yaml
+2026-01-27 19:29:38 - __main__ - INFO - 配置加载完成
+2026-01-27 19:29:38 - __main__ - INFO - 开始初始化核心模块...
+2026-01-27 19:29:38 - __main__ - INFO - 接口扫描器初始化完成
+2026-01-27 19:29:38 - auth.token_manager - INFO - TokenManager已初始化: auto_refresh=True, services=['user', 'nurse', 'admin']
+2026-01-27 19:29:38 - __main__ - INFO - Token管理器初始化完成
+2026-01-27 19:29:38 - monitor.monitor_engine - INFO - 监控引擎初始化完成: 并发数=5, 超时时间=10s, 基础URL=None
+2026-01-27 19:29:38 - __main__ - INFO - 监控引擎初始化完成
+2026-01-27 19:29:38 - analyzer.result_analyzer - INFO - 结果分析器初始化完成: 批处理大小=1000, 流式处理=禁用
+2026-01-27 19:29:38 - __main__ - INFO - 结果分析器初始化完成
+2026-01-27 19:29:38 - notifier.wechat_notifier - INFO - 企业微信推送器初始化完成: webhook=https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=651f2841-0a79-4a43-bc50-5761253d6b52, mentioned_list=2, mentioned_mobile_list=0
+2026-01-27 19:29:38 - __main__ - INFO - 企业微信推送器初始化完成
+2026-01-27 19:29:38 - __main__ - INFO - 所有核心模块初始化完成
+2026-01-27 19:29:38 - __main__ - INFO - 配置定时任务：每 15 分钟执行一次监控
+2026-01-27 19:29:38 - __main__ - INFO - 立即执行一次监控周期...
+2026-01-27 19:29:38 - __main__ - INFO - ============================================================
+2026-01-27 19:29:38 - __main__ - INFO - 开始监控周期: 2026-01-27 19:29:38
+2026-01-27 19:29:38 - __main__ - INFO - ============================================================
+2026-01-27 19:29:38 - __main__ - INFO - Step 1: 扫描接口文档...
+2026-01-27 19:29:38 - scanner.interface_scanner - INFO - 开始扫描目录: D:\Dev\interface_monitoring\Interface-pool
+2026-01-27 19:29:38 - scanner.interface_scanner - INFO - 找到 10 个接口文档文件
+2026-01-27 19:29:38 - scanner.interface_scanner - INFO - 扫描完成，共发现 10 个接口
+2026-01-27 19:29:38 - __main__ - INFO - 发现 10 个接口
+2026-01-27 19:29:38 - __main__ - INFO - Step 2: 获取认证Token...
+2026-01-27 19:29:38 - auth.token_manager - ERROR - 获取Token失败: service=user, error=未找到服务提供商: service=user
+2026-01-27 19:29:38 - __main__ - ERROR - 获取 user 服务Token异常: 未找到服务提供商: service=user
+2026-01-27 19:29:38 - auth.token_manager - ERROR - 获取Token失败: service=nurse, error=未找到服务提供商: service=nurse
+2026-01-27 19:29:38 - __main__ - ERROR - 获取 nurse 服务Token异常: 未找到服务提供商: service=nurse
+2026-01-27 19:29:38 - auth.token_manager - ERROR - 获取Token失败: service=admin, error=未找到服务提供商: service=admin
+2026-01-27 19:29:38 - __main__ - ERROR - 获取 admin 服务Token异常: 未找到服务提供商: service=admin
+2026-01-27 19:29:38 - __main__ - INFO - Step 3: 执行接口监控...
+2026-01-27 19:29:38 - monitor.monitor_engine - INFO - 开始执行监控: 10个接口，5线程并发
+2026-01-27 19:29:38 - monitor.monitor_engine - INFO - 监控执行完成: 总数=10, 成功=2, 失败=8, 耗时=0.09s
+2026-01-27 19:29:38 - __main__ - INFO - Step 4: 分析监控结果...
+2026-01-27 19:29:38 - analyzer.result_analyzer - INFO - 开始分析 10 个监控结果
+2026-01-27 19:29:38 - analyzer.aggregators.error_aggregator - INFO - 开始聚合 8 个异常结果
+2026-01-27 19:29:38 - analyzer.aggregators.error_aggregator - INFO - 聚合完成，共 8 种异常类型
+2026-01-27 19:29:38 - analyzer.aggregators.stats_aggregator - INFO - 开始统计 10 个监控结果
+2026-01-27 19:29:38 - analyzer.aggregators.stats_aggregator - INFO - 统计完成: 总数=10, 成功率=20.00%
+2026-01-27 19:29:38 - analyzer.alert_logic - INFO - 无需发送告警
+2026-01-27 19:29:38 - analyzer.result_analyzer - INFO - 分析完成: 总数=10, 成功=2, 失败=8, 异常类型=8, 需要告警=False, 告警摘要=无
+2026-01-27 19:29:38 - __main__ - INFO - 无需发送告警
+2026-01-27 19:29:38 - __main__ - INFO - ============================================================
+2026-01-27 19:29:38 - __main__ - INFO - 监控周期完成: 2026-01-27 19:29:38
+2026-01-27 19:29:38 - __main__ - INFO - 总耗时: 0.10秒
+2026-01-27 19:29:38 - __main__ - INFO - 接口总数: 10
+2026-01-27 19:29:38 - __main__ - INFO - 成功: 2
+2026-01-27 19:29:38 - __main__ - INFO - 失败: 8
+2026-01-27 19:29:38 - __main__ - INFO - 成功率: 20.00%
+2026-01-27 19:29:38 - __main__ - INFO - 平均响应时间: 34.75秒
+2026-01-27 19:29:38 - __main__ - INFO - ============================================================
+2026-01-27 19:29:38 - __main__ - INFO - ============================================================
+2026-01-27 19:29:38 - __main__ - INFO - 监控调度器启动成功，开始等待...
+2026-01-27 19:29:38 - __main__ - INFO - 按 Ctrl+C 可优雅关闭程序
+2026-01-27 19:29:38 - __main__ - INFO - ============================================================
+2026-01-27 19:36:00 - root - INFO - 文件日志处理器添加成功
+2026-01-27 19:36:00 - __main__ - INFO - ============================================================
+2026-01-27 19:36:00 - __main__ - INFO - 接口监控脚本启动
+2026-01-27 19:36:00 - __main__ - INFO - ============================================================
+2026-01-27 19:36:00 - config.config_manager - INFO - 开始加载配置文件: D:\Dev\interface_monitoring\config.yaml
+2026-01-27 19:36:00 - config.config_manager - INFO - 配置加载并验证成功
+2026-01-27 19:36:00 - config.config_manager - INFO - 配置热更新监控已启动: D:\Dev\interface_monitoring\config.yaml
+2026-01-27 19:36:00 - __main__ - INFO - 配置加载完成
+2026-01-27 19:36:00 - __main__ - INFO - 开始初始化核心模块...
+2026-01-27 19:36:00 - __main__ - INFO - 接口扫描器初始化完成
+2026-01-27 19:36:00 - auth.token_manager - INFO - TokenManager已初始化: auto_refresh=True, services=['user', 'nurse', 'admin']
+2026-01-27 19:36:00 - auth.providers.base_provider - INFO - 认证提供商已初始化: service=user, token_url=http://120.79.173.8:8201/maiban-user/api/v1/user/auth/dev-login/1, refresh_url=http://120.79.173.8:8201/maiban-user/api/v1/user/auth/refresh, method=GET
+2026-01-27 19:36:00 - auth.token_manager - INFO - 已注册认证提供商: service=user, provider=HTTPAuthProvider(service=user, token_url=http://120.79.173.8:8201/maiban-user/api/v1/user/auth/dev-login/1, method=GET, response_field=data)
+2026-01-27 19:36:00 - __main__ - INFO - 已注册 user 服务认证提供商
+2026-01-27 19:36:00 - auth.providers.base_provider - INFO - 认证提供商已初始化: service=nurse, token_url=http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/auth/dev-login/1, refresh_url=http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/auth/refresh, method=GET
+2026-01-27 19:36:00 - auth.token_manager - INFO - 已注册认证提供商: service=nurse, provider=HTTPAuthProvider(service=nurse, token_url=http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/auth/dev-login/1, method=GET, response_field=data)
+2026-01-27 19:36:00 - __main__ - INFO - 已注册 nurse 服务认证提供商
+2026-01-27 19:36:00 - auth.providers.base_provider - INFO - 认证提供商已初始化: service=admin, token_url=https://maibanjk.com/maiban-admin/admin/api/v1/auth/login, refresh_url=https://maibanjk.com/maiban-admin/admin/api/v1/auth/refresh, method=POST
+2026-01-27 19:36:00 - auth.providers.http_auth_provider - WARNING - POST方法未配置认证数据: service=admin
+2026-01-27 19:36:00 - auth.token_manager - INFO - 已注册认证提供商: service=admin, provider=HTTPAuthProvider(service=admin, token_url=https://maibanjk.com/maiban-admin/admin/api/v1/auth/login, method=POST, response_field=data)
+2026-01-27 19:36:00 - __main__ - INFO - 已注册 admin 服务认证提供商
+2026-01-27 19:36:00 - __main__ - INFO - Token管理器初始化完成
+2026-01-27 19:36:00 - monitor.monitor_engine - INFO - 监控引擎初始化完成: 并发数=5, 超时时间=10s, 基础URL=None
+2026-01-27 19:36:00 - __main__ - INFO - 监控引擎初始化完成
+2026-01-27 19:36:00 - analyzer.result_analyzer - INFO - 结果分析器初始化完成: 批处理大小=1000, 流式处理=禁用
+2026-01-27 19:36:00 - __main__ - INFO - 结果分析器初始化完成
+2026-01-27 19:36:00 - notifier.wechat_notifier - INFO - 企业微信推送器初始化完成: webhook=https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=651f2841-0a79-4a43-bc50-5761253d6b52, mentioned_list=2, mentioned_mobile_list=0
+2026-01-27 19:36:00 - __main__ - INFO - 企业微信推送器初始化完成
+2026-01-27 19:36:00 - __main__ - INFO - 所有核心模块初始化完成
+2026-01-27 19:36:00 - __main__ - INFO - 配置定时任务：每 15 分钟执行一次监控
+2026-01-27 19:36:00 - __main__ - INFO - 立即执行一次监控周期...
+2026-01-27 19:36:00 - __main__ - INFO - ============================================================
+2026-01-27 19:36:00 - __main__ - INFO - 开始监控周期: 2026-01-27 19:36:00
+2026-01-27 19:36:00 - __main__ - INFO - ============================================================
+2026-01-27 19:36:00 - __main__ - INFO - Step 1: 扫描接口文档...
+2026-01-27 19:36:00 - scanner.interface_scanner - INFO - 开始扫描目录: D:\Dev\interface_monitoring\Interface-pool
+2026-01-27 19:36:00 - scanner.interface_scanner - INFO - 找到 10 个接口文档文件
+2026-01-27 19:36:00 - scanner.interface_scanner - INFO - 扫描完成，共发现 10 个接口
+2026-01-27 19:36:00 - __main__ - INFO - 发现 10 个接口
+2026-01-27 19:36:00 - __main__ - INFO - Step 2: 获取认证Token...
+2026-01-27 19:36:00 - auth.providers.http_auth_provider - INFO - 开始获取Token: service=user, method=GET
+2026-01-27 19:36:00 - auth.providers.http_auth_provider - INFO - Token获取成功: service=user, expires_at=2026-01-27T20:36:00.665802
+2026-01-27 19:36:00 - auth.token_manager - INFO - 首次获取Token成功: service=user
+2026-01-27 19:36:00 - auth.cache - INFO - Token已缓存: service=user, expires_at=2026-01-27 20:36:00.665802, remaining=3600s
+2026-01-27 19:36:00 - auth.providers.http_auth_provider - INFO - 开始获取Token: service=nurse, method=GET
+2026-01-27 19:36:00 - auth.providers.http_auth_provider - INFO - Token获取成功: service=nurse, expires_at=2026-01-27T20:36:00.726189
+2026-01-27 19:36:00 - auth.token_manager - INFO - 首次获取Token成功: service=nurse
+2026-01-27 19:36:00 - auth.cache - INFO - Token已缓存: service=nurse, expires_at=2026-01-27 20:36:00.726189, remaining=3599s
+2026-01-27 19:36:00 - auth.providers.http_auth_provider - WARNING - POST方法未配置认证数据: service=admin
+2026-01-27 19:36:00 - auth.providers.http_auth_provider - INFO - 开始获取Token: service=admin, method=POST
+2026-01-27 19:36:00 - auth.providers.http_auth_provider - INFO - Token获取成功: service=admin, expires_at=2026-01-27T20:36:00.787064
+2026-01-27 19:36:00 - auth.token_manager - INFO - 首次获取Token成功: service=admin
+2026-01-27 19:36:00 - auth.cache - INFO - Token已缓存: service=admin, expires_at=2026-01-27 20:36:00.787064, remaining=3599s
+2026-01-27 19:36:00 - __main__ - INFO - Step 3: 执行接口监控...
+2026-01-27 19:36:00 - monitor.monitor_engine - INFO - 开始执行监控: 10个接口，5线程并发
+2026-01-27 19:36:01 - monitor.monitor_engine - INFO - 监控执行完成: 总数=10, 成功=4, 失败=6, 耗时=0.22s
+2026-01-27 19:36:01 - __main__ - INFO - Step 4: 分析监控结果...
+2026-01-27 19:36:01 - analyzer.result_analyzer - INFO - 开始分析 10 个监控结果
+2026-01-27 19:36:01 - analyzer.aggregators.error_aggregator - INFO - 开始聚合 6 个异常结果
+2026-01-27 19:36:01 - analyzer.aggregators.error_aggregator - INFO - 聚合完成，共 6 种异常类型
+2026-01-27 19:36:01 - analyzer.aggregators.stats_aggregator - INFO - 开始统计 10 个监控结果
+2026-01-27 19:36:01 - analyzer.aggregators.stats_aggregator - INFO - 统计完成: 总数=10, 成功率=40.00%
+2026-01-27 19:36:01 - analyzer.alert_logic - INFO - 无需发送告警
+2026-01-27 19:36:01 - analyzer.result_analyzer - INFO - 分析完成: 总数=10, 成功=4, 失败=6, 异常类型=6, 需要告警=False, 告警摘要=无
+2026-01-27 19:36:01 - __main__ - INFO - Step 5: 发送监控报告...
+2026-01-27 19:36:01 - __main__ - INFO - 无严重错误，发送正常监控报告
+2026-01-27 19:36:01 - __main__ - ERROR - 发送监控报告异常: name 'wechat_config' is not defined
+2026-01-27 19:36:01 - __main__ - ERROR - Traceback (most recent call last):
+  File "D:\Dev\interface_monitoring\src\main.py", line 230, in run_monitoring_cycle
+    mentioned_list=wechat_config.get('at_users', []),
+                   ^^^^^^^^^^^^^
+NameError: name 'wechat_config' is not defined
+
+2026-01-27 19:36:01 - __main__ - INFO - ============================================================
+2026-01-27 19:36:01 - __main__ - INFO - 监控周期完成: 2026-01-27 19:36:01
+2026-01-27 19:36:01 - __main__ - INFO - 总耗时: 0.42秒
+2026-01-27 19:36:01 - __main__ - INFO - 接口总数: 10
+2026-01-27 19:36:01 - __main__ - INFO - 成功: 4
+2026-01-27 19:36:01 - __main__ - INFO - 失败: 6
+2026-01-27 19:36:01 - __main__ - INFO - 成功率: 40.00%
+2026-01-27 19:36:01 - __main__ - INFO - 平均响应时间: 67.01秒
+2026-01-27 19:36:01 - __main__ - INFO - ============================================================
+2026-01-27 19:36:01 - __main__ - INFO - ============================================================
+2026-01-27 19:36:01 - __main__ - INFO - 监控调度器启动成功，开始等待...
+2026-01-27 19:36:01 - __main__ - INFO - 按 Ctrl+C 可优雅关闭程序
+2026-01-27 19:36:01 - __main__ - INFO - ============================================================
+2026-01-27 19:36:54 - root - INFO - 文件日志处理器添加成功
+2026-01-27 19:36:54 - __main__ - INFO - ============================================================
+2026-01-27 19:36:54 - __main__ - INFO - 接口监控脚本启动
+2026-01-27 19:36:54 - __main__ - INFO - ============================================================
+2026-01-27 19:36:54 - config.config_manager - INFO - 开始加载配置文件: D:\Dev\interface_monitoring\config.yaml
+2026-01-27 19:36:54 - config.config_manager - INFO - 配置加载并验证成功
+2026-01-27 19:36:54 - config.config_manager - INFO - 配置热更新监控已启动: D:\Dev\interface_monitoring\config.yaml
+2026-01-27 19:36:54 - __main__ - INFO - 配置加载完成
+2026-01-27 19:36:54 - __main__ - INFO - 开始初始化核心模块...
+2026-01-27 19:36:54 - __main__ - INFO - 接口扫描器初始化完成
+2026-01-27 19:36:54 - auth.token_manager - INFO - TokenManager已初始化: auto_refresh=True, services=['user', 'nurse', 'admin']
+2026-01-27 19:36:54 - auth.providers.base_provider - INFO - 认证提供商已初始化: service=user, token_url=http://120.79.173.8:8201/maiban-user/api/v1/user/auth/dev-login/1, refresh_url=http://120.79.173.8:8201/maiban-user/api/v1/user/auth/refresh, method=GET
+2026-01-27 19:36:54 - auth.token_manager - INFO - 已注册认证提供商: service=user, provider=HTTPAuthProvider(service=user, token_url=http://120.79.173.8:8201/maiban-user/api/v1/user/auth/dev-login/1, method=GET, response_field=data)
+2026-01-27 19:36:54 - __main__ - INFO - 已注册 user 服务认证提供商
+2026-01-27 19:36:54 - auth.providers.base_provider - INFO - 认证提供商已初始化: service=nurse, token_url=http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/auth/dev-login/1, refresh_url=http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/auth/refresh, method=GET
+2026-01-27 19:36:54 - auth.token_manager - INFO - 已注册认证提供商: service=nurse, provider=HTTPAuthProvider(service=nurse, token_url=http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/auth/dev-login/1, method=GET, response_field=data)
+2026-01-27 19:36:54 - __main__ - INFO - 已注册 nurse 服务认证提供商
+2026-01-27 19:36:54 - auth.providers.base_provider - INFO - 认证提供商已初始化: service=admin, token_url=https://maibanjk.com/maiban-admin/admin/api/v1/auth/login, refresh_url=https://maibanjk.com/maiban-admin/admin/api/v1/auth/refresh, method=POST
+2026-01-27 19:36:54 - auth.providers.http_auth_provider - WARNING - POST方法未配置认证数据: service=admin
+2026-01-27 19:36:54 - auth.token_manager - INFO - 已注册认证提供商: service=admin, provider=HTTPAuthProvider(service=admin, token_url=https://maibanjk.com/maiban-admin/admin/api/v1/auth/login, method=POST, response_field=data)
+2026-01-27 19:36:54 - __main__ - INFO - 已注册 admin 服务认证提供商
+2026-01-27 19:36:54 - __main__ - INFO - Token管理器初始化完成
+2026-01-27 19:36:54 - monitor.monitor_engine - INFO - 监控引擎初始化完成: 并发数=5, 超时时间=10s, 基础URL=None
+2026-01-27 19:36:54 - __main__ - INFO - 监控引擎初始化完成
+2026-01-27 19:36:54 - analyzer.result_analyzer - INFO - 结果分析器初始化完成: 批处理大小=1000, 流式处理=禁用
+2026-01-27 19:36:54 - __main__ - INFO - 结果分析器初始化完成
+2026-01-27 19:36:54 - notifier.wechat_notifier - INFO - 企业微信推送器初始化完成: webhook=https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=651f2841-0a79-4a43-bc50-5761253d6b52, mentioned_list=2, mentioned_mobile_list=0
+2026-01-27 19:36:54 - __main__ - INFO - 企业微信推送器初始化完成
+2026-01-27 19:36:54 - __main__ - INFO - 所有核心模块初始化完成
+2026-01-27 19:36:54 - __main__ - INFO - 配置定时任务：每 15 分钟执行一次监控
+2026-01-27 19:36:54 - __main__ - INFO - 立即执行一次监控周期...
+2026-01-27 19:36:54 - __main__ - INFO - ============================================================
+2026-01-27 19:36:54 - __main__ - INFO - 开始监控周期: 2026-01-27 19:36:54
+2026-01-27 19:36:54 - __main__ - INFO - ============================================================
+2026-01-27 19:36:54 - __main__ - INFO - Step 1: 扫描接口文档...
+2026-01-27 19:36:54 - scanner.interface_scanner - INFO - 开始扫描目录: D:\Dev\interface_monitoring\Interface-pool
+2026-01-27 19:36:54 - scanner.interface_scanner - INFO - 找到 10 个接口文档文件
+2026-01-27 19:36:54 - scanner.interface_scanner - INFO - 扫描完成，共发现 10 个接口
+2026-01-27 19:36:54 - __main__ - INFO - 发现 10 个接口
+2026-01-27 19:36:54 - __main__ - INFO - Step 2: 获取认证Token...
+2026-01-27 19:36:54 - auth.providers.http_auth_provider - INFO - 开始获取Token: service=user, method=GET
+2026-01-27 19:36:54 - auth.providers.http_auth_provider - INFO - Token获取成功: service=user, expires_at=2026-01-27T20:36:54.249119
+2026-01-27 19:36:54 - auth.token_manager - INFO - 首次获取Token成功: service=user
+2026-01-27 19:36:54 - auth.cache - INFO - Token已缓存: service=user, expires_at=2026-01-27 20:36:54.249119, remaining=3600s
+2026-01-27 19:36:54 - auth.providers.http_auth_provider - INFO - 开始获取Token: service=nurse, method=GET
+2026-01-27 19:36:54 - auth.providers.http_auth_provider - INFO - Token获取成功: service=nurse, expires_at=2026-01-27T20:36:54.304969
+2026-01-27 19:36:54 - auth.token_manager - INFO - 首次获取Token成功: service=nurse
+2026-01-27 19:36:54 - auth.cache - INFO - Token已缓存: service=nurse, expires_at=2026-01-27 20:36:54.304969, remaining=3600s
+2026-01-27 19:36:54 - auth.providers.http_auth_provider - WARNING - POST方法未配置认证数据: service=admin
+2026-01-27 19:36:54 - auth.providers.http_auth_provider - INFO - 开始获取Token: service=admin, method=POST
+2026-01-27 19:36:54 - auth.providers.http_auth_provider - INFO - Token获取成功: service=admin, expires_at=2026-01-27T20:36:54.363524
+2026-01-27 19:36:54 - auth.token_manager - INFO - 首次获取Token成功: service=admin
+2026-01-27 19:36:54 - auth.cache - INFO - Token已缓存: service=admin, expires_at=2026-01-27 20:36:54.363524, remaining=3599s
+2026-01-27 19:36:54 - __main__ - INFO - Step 3: 执行接口监控...
+2026-01-27 19:36:54 - monitor.monitor_engine - INFO - 开始执行监控: 10个接口，5线程并发
+2026-01-27 19:36:54 - monitor.monitor_engine - INFO - 监控执行完成: 总数=10, 成功=4, 失败=6, 耗时=0.09s
+2026-01-27 19:36:54 - __main__ - INFO - Step 4: 分析监控结果...
+2026-01-27 19:36:54 - analyzer.result_analyzer - INFO - 开始分析 10 个监控结果
+2026-01-27 19:36:54 - analyzer.aggregators.error_aggregator - INFO - 开始聚合 6 个异常结果
+2026-01-27 19:36:54 - analyzer.aggregators.error_aggregator - INFO - 聚合完成，共 6 种异常类型
+2026-01-27 19:36:54 - analyzer.aggregators.stats_aggregator - INFO - 开始统计 10 个监控结果
+2026-01-27 19:36:54 - analyzer.aggregators.stats_aggregator - INFO - 统计完成: 总数=10, 成功率=40.00%
+2026-01-27 19:36:54 - analyzer.alert_logic - INFO - 无需发送告警
+2026-01-27 19:36:54 - analyzer.result_analyzer - INFO - 分析完成: 总数=10, 成功=4, 失败=6, 异常类型=6, 需要告警=False, 告警摘要=无
+2026-01-27 19:36:54 - __main__ - INFO - Step 5: 发送监控报告...
+2026-01-27 19:36:54 - __main__ - INFO - 无严重错误，发送正常监控报告
+2026-01-27 19:36:54 - __main__ - ERROR - 发送监控报告异常: name 'config' is not defined
+2026-01-27 19:36:54 - __main__ - ERROR - Traceback (most recent call last):
+  File "D:\Dev\interface_monitoring\src\main.py", line 228, in run_monitoring_cycle
+    wechat_config = config.get('wechat', {})
+                    ^^^^^^
+NameError: name 'config' is not defined
+
+2026-01-27 19:36:54 - __main__ - INFO - ============================================================
+2026-01-27 19:36:54 - __main__ - INFO - 监控周期完成: 2026-01-27 19:36:54
+2026-01-27 19:36:54 - __main__ - INFO - 总耗时: 0.26秒
+2026-01-27 19:36:54 - __main__ - INFO - 接口总数: 10
+2026-01-27 19:36:54 - __main__ - INFO - 成功: 4
+2026-01-27 19:36:54 - __main__ - INFO - 失败: 6
+2026-01-27 19:36:54 - __main__ - INFO - 成功率: 40.00%
+2026-01-27 19:36:54 - __main__ - INFO - 平均响应时间: 37.02秒
+2026-01-27 19:36:54 - __main__ - INFO - ============================================================
+2026-01-27 19:36:54 - __main__ - INFO - ============================================================
+2026-01-27 19:36:54 - __main__ - INFO - 监控调度器启动成功，开始等待...
+2026-01-27 19:36:54 - __main__ - INFO - 按 Ctrl+C 可优雅关闭程序
+2026-01-27 19:36:54 - __main__ - INFO - ============================================================
+2026-01-27 19:38:00 - root - INFO - 文件日志处理器添加成功
+2026-01-27 19:38:00 - __main__ - INFO - ============================================================
+2026-01-27 19:38:00 - __main__ - INFO - 接口监控脚本启动
+2026-01-27 19:38:00 - __main__ - INFO - ============================================================
+2026-01-27 19:38:00 - config.config_manager - INFO - 开始加载配置文件: D:\Dev\interface_monitoring\config.yaml
+2026-01-27 19:38:01 - config.config_manager - INFO - 配置加载并验证成功
+2026-01-27 19:38:01 - config.config_manager - INFO - 配置热更新监控已启动: D:\Dev\interface_monitoring\config.yaml
+2026-01-27 19:38:01 - __main__ - INFO - 配置加载完成
+2026-01-27 19:38:01 - __main__ - INFO - 开始初始化核心模块...
+2026-01-27 19:38:01 - __main__ - INFO - 接口扫描器初始化完成
+2026-01-27 19:38:01 - auth.token_manager - INFO - TokenManager已初始化: auto_refresh=True, services=['user', 'nurse', 'admin']
+2026-01-27 19:38:01 - auth.providers.base_provider - INFO - 认证提供商已初始化: service=user, token_url=http://120.79.173.8:8201/maiban-user/api/v1/user/auth/dev-login/1, refresh_url=http://120.79.173.8:8201/maiban-user/api/v1/user/auth/refresh, method=GET
+2026-01-27 19:38:01 - auth.token_manager - INFO - 已注册认证提供商: service=user, provider=HTTPAuthProvider(service=user, token_url=http://120.79.173.8:8201/maiban-user/api/v1/user/auth/dev-login/1, method=GET, response_field=data)
+2026-01-27 19:38:01 - __main__ - INFO - 已注册 user 服务认证提供商
+2026-01-27 19:38:01 - auth.providers.base_provider - INFO - 认证提供商已初始化: service=nurse, token_url=http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/auth/dev-login/1, refresh_url=http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/auth/refresh, method=GET
+2026-01-27 19:38:01 - auth.token_manager - INFO - 已注册认证提供商: service=nurse, provider=HTTPAuthProvider(service=nurse, token_url=http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/auth/dev-login/1, method=GET, response_field=data)
+2026-01-27 19:38:01 - __main__ - INFO - 已注册 nurse 服务认证提供商
+2026-01-27 19:38:01 - auth.providers.base_provider - INFO - 认证提供商已初始化: service=admin, token_url=https://maibanjk.com/maiban-admin/admin/api/v1/auth/login, refresh_url=https://maibanjk.com/maiban-admin/admin/api/v1/auth/refresh, method=POST
+2026-01-27 19:38:01 - auth.providers.http_auth_provider - WARNING - POST方法未配置认证数据: service=admin
+2026-01-27 19:38:01 - auth.token_manager - INFO - 已注册认证提供商: service=admin, provider=HTTPAuthProvider(service=admin, token_url=https://maibanjk.com/maiban-admin/admin/api/v1/auth/login, method=POST, response_field=data)
+2026-01-27 19:38:01 - __main__ - INFO - 已注册 admin 服务认证提供商
+2026-01-27 19:38:01 - __main__ - INFO - Token管理器初始化完成
+2026-01-27 19:38:01 - monitor.monitor_engine - INFO - 监控引擎初始化完成: 并发数=5, 超时时间=10s, 基础URL=None
+2026-01-27 19:38:01 - __main__ - INFO - 监控引擎初始化完成
+2026-01-27 19:38:01 - analyzer.result_analyzer - INFO - 结果分析器初始化完成: 批处理大小=1000, 流式处理=禁用
+2026-01-27 19:38:01 - __main__ - INFO - 结果分析器初始化完成
+2026-01-27 19:38:01 - notifier.wechat_notifier - INFO - 企业微信推送器初始化完成: webhook=https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=651f2841-0a79-4a43-bc50-5761253d6b52, mentioned_list=2, mentioned_mobile_list=0
+2026-01-27 19:38:01 - __main__ - INFO - 企业微信推送器初始化完成
+2026-01-27 19:38:01 - __main__ - INFO - 所有核心模块初始化完成
+2026-01-27 19:38:01 - __main__ - INFO - 配置定时任务：每 15 分钟执行一次监控
+2026-01-27 19:38:01 - __main__ - INFO - 立即执行一次监控周期...
+2026-01-27 19:38:01 - __main__ - INFO - ============================================================
+2026-01-27 19:38:01 - __main__ - INFO - 开始监控周期: 2026-01-27 19:38:01
+2026-01-27 19:38:01 - __main__ - INFO - ============================================================
+2026-01-27 19:38:01 - __main__ - INFO - Step 1: 扫描接口文档...
+2026-01-27 19:38:01 - scanner.interface_scanner - INFO - 开始扫描目录: D:\Dev\interface_monitoring\Interface-pool
+2026-01-27 19:38:01 - scanner.interface_scanner - INFO - 找到 10 个接口文档文件
+2026-01-27 19:38:01 - scanner.interface_scanner - INFO - 扫描完成，共发现 10 个接口
+2026-01-27 19:38:01 - __main__ - INFO - 发现 10 个接口
+2026-01-27 19:38:01 - __main__ - INFO - Step 2: 获取认证Token...
+2026-01-27 19:38:01 - auth.providers.http_auth_provider - INFO - 开始获取Token: service=user, method=GET
+2026-01-27 19:38:01 - auth.providers.http_auth_provider - INFO - Token获取成功: service=user, expires_at=2026-01-27T20:38:01.061713
+2026-01-27 19:38:01 - auth.token_manager - INFO - 首次获取Token成功: service=user
+2026-01-27 19:38:01 - auth.cache - INFO - Token已缓存: service=user, expires_at=2026-01-27 20:38:01.061713, remaining=3600s
+2026-01-27 19:38:01 - auth.providers.http_auth_provider - INFO - 开始获取Token: service=nurse, method=GET
+2026-01-27 19:38:01 - auth.providers.http_auth_provider - INFO - Token获取成功: service=nurse, expires_at=2026-01-27T20:38:01.123860
+2026-01-27 19:38:01 - auth.token_manager - INFO - 首次获取Token成功: service=nurse
+2026-01-27 19:38:01 - auth.cache - INFO - Token已缓存: service=nurse, expires_at=2026-01-27 20:38:01.123860, remaining=3599s
+2026-01-27 19:38:01 - auth.providers.http_auth_provider - WARNING - POST方法未配置认证数据: service=admin
+2026-01-27 19:38:01 - auth.providers.http_auth_provider - INFO - 开始获取Token: service=admin, method=POST
+2026-01-27 19:38:01 - auth.providers.http_auth_provider - INFO - Token获取成功: service=admin, expires_at=2026-01-27T20:38:01.159861
+2026-01-27 19:38:01 - auth.token_manager - INFO - 首次获取Token成功: service=admin
+2026-01-27 19:38:01 - auth.cache - INFO - Token已缓存: service=admin, expires_at=2026-01-27 20:38:01.159861, remaining=3599s
+2026-01-27 19:38:01 - __main__ - INFO - Step 3: 执行接口监控...
+2026-01-27 19:38:01 - monitor.monitor_engine - INFO - 开始执行监控: 10个接口，5线程并发
+2026-01-27 19:38:01 - monitor.monitor_engine - INFO - 监控执行完成: 总数=10, 成功=4, 失败=6, 耗时=0.07s
+2026-01-27 19:38:01 - __main__ - INFO - Step 4: 分析监控结果...
+2026-01-27 19:38:01 - analyzer.result_analyzer - INFO - 开始分析 10 个监控结果
+2026-01-27 19:38:01 - analyzer.aggregators.error_aggregator - INFO - 开始聚合 6 个异常结果
+2026-01-27 19:38:01 - analyzer.aggregators.error_aggregator - INFO - 聚合完成，共 6 种异常类型
+2026-01-27 19:38:01 - analyzer.aggregators.stats_aggregator - INFO - 开始统计 10 个监控结果
+2026-01-27 19:38:01 - analyzer.aggregators.stats_aggregator - INFO - 统计完成: 总数=10, 成功率=40.00%
+2026-01-27 19:38:01 - analyzer.alert_logic - INFO - 无需发送告警
+2026-01-27 19:38:01 - analyzer.result_analyzer - INFO - 分析完成: 总数=10, 成功=4, 失败=6, 异常类型=6, 需要告警=False, 告警摘要=无
+2026-01-27 19:38:01 - __main__ - INFO - Step 5: 发送监控报告...
+2026-01-27 19:38:01 - __main__ - INFO - 无严重错误，发送正常监控报告
+2026-01-27 19:38:01 - notifier.wechat_notifier - INFO - 开始发送监控报告
+2026-01-27 19:38:01 - notifier.message_formatter - WARNING - 消息长度 (4961) 超过限制 (4000)，使用简化版本
+2026-01-27 19:38:01 - notifier.webhook_client - INFO - 发送企业微信消息 (尝试 1/3)
+2026-01-27 19:38:01 - notifier.webhook_client - INFO - 消息发送成功: N/A
+2026-01-27 19:38:01 - notifier.wechat_notifier - INFO - 监控报告发送成功: message_id=, retry_count=0
+2026-01-27 19:38:01 - __main__ - INFO - 监控报告发送成功
+2026-01-27 19:38:01 - __main__ - INFO - ============================================================
+2026-01-27 19:38:01 - __main__ - INFO - 监控周期完成: 2026-01-27 19:38:01
+2026-01-27 19:38:01 - __main__ - INFO - 总耗时: 0.60秒
+2026-01-27 19:38:01 - __main__ - INFO - 接口总数: 10
+2026-01-27 19:38:01 - __main__ - INFO - 成功: 4
+2026-01-27 19:38:01 - __main__ - INFO - 失败: 6
+2026-01-27 19:38:01 - __main__ - INFO - 成功率: 40.00%
+2026-01-27 19:38:01 - __main__ - INFO - 平均响应时间: 30.93秒
+2026-01-27 19:38:01 - __main__ - INFO - ============================================================
+2026-01-27 19:38:01 - __main__ - INFO - ============================================================
+2026-01-27 19:38:01 - __main__ - INFO - 监控调度器启动成功，开始等待...
+2026-01-27 19:38:01 - __main__ - INFO - 按 Ctrl+C 可优雅关闭程序
+2026-01-27 19:38:01 - __main__ - INFO - ============================================================
+2026-01-28 09:21:52 - root - INFO - 文件日志处理器添加成功
+2026-01-28 09:21:52 - __main__ - INFO - ============================================================
+2026-01-28 09:21:52 - __main__ - INFO - 接口监控脚本启动
+2026-01-28 09:21:52 - __main__ - INFO - ============================================================
+2026-01-28 09:21:52 - config.config_manager - INFO - 开始加载配置文件: D:\Dev\interface_monitoring\config.yaml
+2026-01-28 09:21:52 - config.config_manager - INFO - 配置加载并验证成功
+2026-01-28 09:21:52 - config.config_manager - INFO - 配置热更新监控已启动: D:\Dev\interface_monitoring\config.yaml
+2026-01-28 09:21:52 - __main__ - INFO - 配置加载完成
+2026-01-28 09:21:52 - __main__ - INFO - 开始初始化核心模块...
+2026-01-28 09:21:52 - __main__ - INFO - 接口扫描器初始化完成
+2026-01-28 09:21:52 - auth.token_manager - INFO - TokenManager已初始化: auto_refresh=True, services=['user', 'nurse', 'admin']
+2026-01-28 09:21:52 - auth.providers.base_provider - INFO - 认证提供商已初始化: service=user, token_url=http://120.79.173.8:8201/maiban-user/api/v1/user/auth/dev-login/1, refresh_url=http://120.79.173.8:8201/maiban-user/api/v1/user/auth/refresh, method=GET
+2026-01-28 09:21:52 - auth.token_manager - INFO - 已注册认证提供商: service=user, provider=HTTPAuthProvider(service=user, token_url=http://120.79.173.8:8201/maiban-user/api/v1/user/auth/dev-login/1, method=GET, response_field=data)
+2026-01-28 09:21:52 - __main__ - INFO - 已注册 user 服务认证提供商
+2026-01-28 09:21:52 - auth.providers.base_provider - INFO - 认证提供商已初始化: service=nurse, token_url=http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/auth/dev-login/1, refresh_url=http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/auth/refresh, method=GET
+2026-01-28 09:21:52 - auth.token_manager - INFO - 已注册认证提供商: service=nurse, provider=HTTPAuthProvider(service=nurse, token_url=http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/auth/dev-login/1, method=GET, response_field=data)
+2026-01-28 09:21:52 - __main__ - INFO - 已注册 nurse 服务认证提供商
+2026-01-28 09:21:52 - auth.providers.base_provider - INFO - 认证提供商已初始化: service=admin, token_url=https://maibanjk.com/maiban-admin/admin/api/v1/auth/login, refresh_url=https://maibanjk.com/maiban-admin/admin/api/v1/auth/refresh, method=POST
+2026-01-28 09:21:52 - auth.providers.http_auth_provider - WARNING - POST方法未配置认证数据: service=admin
+2026-01-28 09:21:52 - auth.token_manager - INFO - 已注册认证提供商: service=admin, provider=HTTPAuthProvider(service=admin, token_url=https://maibanjk.com/maiban-admin/admin/api/v1/auth/login, method=POST, response_field=data)
+2026-01-28 09:21:52 - __main__ - INFO - 已注册 admin 服务认证提供商
+2026-01-28 09:21:52 - __main__ - INFO - Token管理器初始化完成
+2026-01-28 09:21:52 - monitor.monitor_engine - INFO - 监控引擎初始化完成: 并发数=5, 超时时间=10s, 基础URL=None
+2026-01-28 09:21:52 - __main__ - INFO - 监控引擎初始化完成
+2026-01-28 09:21:52 - analyzer.result_analyzer - INFO - 结果分析器初始化完成: 批处理大小=1000, 流式处理=禁用
+2026-01-28 09:21:52 - __main__ - INFO - 结果分析器初始化完成
+2026-01-28 09:21:52 - notifier.wechat_notifier - INFO - 企业微信推送器初始化完成: webhook=https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=651f2841-0a79-4a43-bc50-5761253d6b52, mentioned_list=2, mentioned_mobile_list=0
+2026-01-28 09:21:52 - __main__ - INFO - 企业微信推送器初始化完成
+2026-01-28 09:21:52 - __main__ - INFO - 所有核心模块初始化完成
+2026-01-28 09:21:52 - __main__ - INFO - 配置定时任务：每 15 分钟执行一次监控
+2026-01-28 09:21:52 - __main__ - INFO - 立即执行一次监控周期...
+2026-01-28 09:21:52 - __main__ - INFO - ============================================================
+2026-01-28 09:21:52 - __main__ - INFO - 开始监控周期: 2026-01-28 09:21:52
+2026-01-28 09:21:52 - __main__ - INFO - ============================================================
+2026-01-28 09:21:52 - __main__ - INFO - Step 1: 扫描接口文档...
+2026-01-28 09:21:52 - scanner.interface_scanner - INFO - 开始扫描目录: D:\Dev\interface_monitoring\Interface-pool
+2026-01-28 09:21:52 - scanner.interface_scanner - INFO - 找到 10 个接口文档文件
+2026-01-28 09:21:52 - scanner.interface_scanner - INFO - 扫描完成，共发现 10 个接口
+2026-01-28 09:21:52 - __main__ - INFO - 发现 10 个接口
+2026-01-28 09:21:52 - __main__ - INFO - Step 2: 获取认证Token...
+2026-01-28 09:21:52 - auth.providers.http_auth_provider - INFO - 开始获取Token: service=user, method=GET
+2026-01-28 09:21:52 - auth.providers.http_auth_provider - INFO - Token获取成功: service=user, expires_at=2026-01-28T10:21:52.845649
+2026-01-28 09:21:52 - auth.token_manager - INFO - 首次获取Token成功: service=user
+2026-01-28 09:21:52 - auth.cache - INFO - Token已缓存: service=user, expires_at=2026-01-28 10:21:52.845649, remaining=3600s
+2026-01-28 09:21:52 - auth.providers.http_auth_provider - INFO - 开始获取Token: service=nurse, method=GET
+2026-01-28 09:21:52 - auth.providers.http_auth_provider - INFO - Token获取成功: service=nurse, expires_at=2026-01-28T10:21:52.918199
+2026-01-28 09:21:52 - auth.token_manager - INFO - 首次获取Token成功: service=nurse
+2026-01-28 09:21:52 - auth.cache - INFO - Token已缓存: service=nurse, expires_at=2026-01-28 10:21:52.918199, remaining=3599s
+2026-01-28 09:21:52 - auth.providers.http_auth_provider - WARNING - POST方法未配置认证数据: service=admin
+2026-01-28 09:21:52 - auth.providers.http_auth_provider - INFO - 开始获取Token: service=admin, method=POST
+2026-01-28 09:21:52 - auth.providers.http_auth_provider - INFO - Token获取成功: service=admin, expires_at=2026-01-28T10:21:52.947232
+2026-01-28 09:21:52 - auth.token_manager - INFO - 首次获取Token成功: service=admin
+2026-01-28 09:21:52 - auth.cache - INFO - Token已缓存: service=admin, expires_at=2026-01-28 10:21:52.947232, remaining=3599s
+2026-01-28 09:21:52 - __main__ - INFO - Step 3: 执行接口监控...
+2026-01-28 09:21:52 - monitor.monitor_engine - INFO - 开始执行监控: 10个接口，5线程并发
+2026-01-28 09:21:53 - monitor.monitor_engine - INFO - 监控执行完成: 总数=10, 成功=4, 失败=6, 耗时=0.10s
+2026-01-28 09:21:53 - __main__ - INFO - Step 4: 分析监控结果...
+2026-01-28 09:21:53 - analyzer.result_analyzer - INFO - 开始分析 10 个监控结果
+2026-01-28 09:21:53 - analyzer.aggregators.error_aggregator - INFO - 开始聚合 6 个异常结果
+2026-01-28 09:21:53 - analyzer.aggregators.error_aggregator - INFO - 聚合完成，共 6 种异常类型
+2026-01-28 09:21:53 - analyzer.aggregators.stats_aggregator - INFO - 开始统计 10 个监控结果
+2026-01-28 09:21:53 - analyzer.aggregators.stats_aggregator - INFO - 统计完成: 总数=10, 成功率=40.00%
+2026-01-28 09:21:53 - analyzer.alert_logic - INFO - 无需发送告警
+2026-01-28 09:21:53 - analyzer.result_analyzer - INFO - 分析完成: 总数=10, 成功=4, 失败=6, 异常类型=6, 需要告警=False, 告警摘要=无
+2026-01-28 09:21:53 - __main__ - INFO - Step 5: 发送监控报告...
+2026-01-28 09:21:53 - __main__ - INFO - 无严重错误，发送正常监控报告
+2026-01-28 09:21:53 - notifier.wechat_notifier - INFO - 开始发送监控报告
+2026-01-28 09:21:53 - notifier.webhook_client - INFO - 发送企业微信消息 (尝试 1/3)
+2026-01-28 09:21:53 - notifier.webhook_client - INFO - 消息发送成功: N/A
+2026-01-28 09:21:53 - notifier.wechat_notifier - INFO - 监控报告发送成功: message_id=, retry_count=0
+2026-01-28 09:21:53 - __main__ - INFO - 监控报告发送成功
+2026-01-28 09:21:53 - __main__ - INFO - ============================================================
+2026-01-28 09:21:53 - __main__ - INFO - 监控周期完成: 2026-01-28 09:21:53
+2026-01-28 09:21:53 - __main__ - INFO - 总耗时: 0.49秒
+2026-01-28 09:21:53 - __main__ - INFO - 接口总数: 10
+2026-01-28 09:21:53 - __main__ - INFO - 成功: 4
+2026-01-28 09:21:53 - __main__ - INFO - 失败: 6
+2026-01-28 09:21:53 - __main__ - INFO - 成功率: 40.00%
+2026-01-28 09:21:53 - __main__ - INFO - 平均响应时间: 36.85秒
+2026-01-28 09:21:53 - __main__ - INFO - ============================================================
+2026-01-28 09:21:53 - __main__ - INFO - ============================================================
+2026-01-28 09:21:53 - __main__ - INFO - 监控调度器启动成功，开始等待...
+2026-01-28 09:21:53 - __main__ - INFO - 按 Ctrl+C 可优雅关闭程序
+2026-01-28 09:21:53 - __main__ - INFO - ============================================================
+2026-01-28 09:36:46 - root - INFO - 文件日志处理器添加成功
+2026-01-28 09:36:46 - __main__ - INFO - ============================================================
+2026-01-28 09:36:46 - __main__ - INFO - 接口监控脚本启动
+2026-01-28 09:36:46 - __main__ - INFO - ============================================================
+2026-01-28 09:36:46 - config.config_manager - INFO - 开始加载配置文件: D:\Dev\interface_monitoring\config.yaml
+2026-01-28 09:36:46 - config.config_manager - INFO - 配置加载并验证成功
+2026-01-28 09:36:46 - config.config_manager - INFO - 配置热更新监控已启动: D:\Dev\interface_monitoring\config.yaml
+2026-01-28 09:36:46 - __main__ - INFO - 配置加载完成
+2026-01-28 09:36:46 - __main__ - INFO - 开始初始化核心模块...
+2026-01-28 09:36:46 - __main__ - INFO - 接口扫描器初始化完成
+2026-01-28 09:36:46 - auth.token_manager - INFO - TokenManager已初始化: auto_refresh=True, services=['user', 'nurse', 'admin']
+2026-01-28 09:36:46 - auth.providers.base_provider - INFO - 认证提供商已初始化: service=user, token_url=http://120.79.173.8:8201/maiban-user/api/v1/user/auth/dev-login/1, refresh_url=http://120.79.173.8:8201/maiban-user/api/v1/user/auth/refresh, method=GET
+2026-01-28 09:36:46 - auth.token_manager - INFO - 已注册认证提供商: service=user, provider=HTTPAuthProvider(service=user, token_url=http://120.79.173.8:8201/maiban-user/api/v1/user/auth/dev-login/1, method=GET, response_field=data)
+2026-01-28 09:36:46 - __main__ - INFO - 已注册 user 服务认证提供商
+2026-01-28 09:36:46 - auth.providers.base_provider - INFO - 认证提供商已初始化: service=nurse, token_url=http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/auth/dev-login/1, refresh_url=http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/auth/refresh, method=GET
+2026-01-28 09:36:46 - auth.token_manager - INFO - 已注册认证提供商: service=nurse, provider=HTTPAuthProvider(service=nurse, token_url=http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/auth/dev-login/1, method=GET, response_field=data)
+2026-01-28 09:36:46 - __main__ - INFO - 已注册 nurse 服务认证提供商
+2026-01-28 09:36:46 - auth.providers.base_provider - INFO - 认证提供商已初始化: service=admin, token_url=https://maibanjk.com/maiban-admin/admin/api/v1/auth/login, refresh_url=https://maibanjk.com/maiban-admin/admin/api/v1/auth/refresh, method=POST
+2026-01-28 09:36:46 - auth.providers.http_auth_provider - WARNING - POST方法未配置认证数据: service=admin
+2026-01-28 09:36:46 - auth.token_manager - INFO - 已注册认证提供商: service=admin, provider=HTTPAuthProvider(service=admin, token_url=https://maibanjk.com/maiban-admin/admin/api/v1/auth/login, method=POST, response_field=data)
+2026-01-28 09:36:46 - __main__ - INFO - 已注册 admin 服务认证提供商
+2026-01-28 09:36:46 - __main__ - INFO - Token管理器初始化完成
+2026-01-28 09:36:46 - monitor.monitor_engine - INFO - 监控引擎初始化完成: 并发数=5, 超时时间=10s, 基础URL=None
+2026-01-28 09:36:46 - __main__ - INFO - 监控引擎初始化完成
+2026-01-28 09:36:46 - analyzer.result_analyzer - INFO - 结果分析器初始化完成: 批处理大小=1000, 流式处理=禁用
+2026-01-28 09:36:46 - __main__ - INFO - 结果分析器初始化完成
+2026-01-28 09:36:46 - notifier.wechat_notifier - INFO - 企业微信推送器初始化完成: webhook=https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=651f2841-0a79-4a43-bc50-5761253d6b52, mentioned_list=2, mentioned_mobile_list=0
+2026-01-28 09:36:46 - __main__ - INFO - 企业微信推送器初始化完成
+2026-01-28 09:36:46 - __main__ - INFO - 所有核心模块初始化完成
+2026-01-28 09:36:46 - __main__ - INFO - 配置定时任务：每 15 分钟执行一次监控
+2026-01-28 09:36:46 - __main__ - INFO - 立即执行一次监控周期...
+2026-01-28 09:36:46 - __main__ - INFO - ============================================================
+2026-01-28 09:36:46 - __main__ - INFO - 开始监控周期: 2026-01-28 09:36:46
+2026-01-28 09:36:46 - __main__ - INFO - ============================================================
+2026-01-28 09:36:46 - __main__ - INFO - Step 1: 扫描接口文档...
+2026-01-28 09:36:46 - scanner.interface_scanner - INFO - 开始扫描目录: D:\Dev\interface_monitoring\Interface-pool
+2026-01-28 09:36:46 - scanner.interface_scanner - INFO - 找到 10 个接口文档文件
+2026-01-28 09:36:46 - scanner.interface_scanner - INFO - 扫描完成，共发现 10 个接口
+2026-01-28 09:36:46 - __main__ - INFO - 发现 10 个接口
+2026-01-28 09:36:46 - __main__ - INFO - Step 2: 获取认证Token...
+2026-01-28 09:36:46 - auth.providers.http_auth_provider - INFO - 开始获取Token: service=user, method=GET
+2026-01-28 09:36:46 - auth.providers.http_auth_provider - INFO - Token获取成功: service=user, expires_at=2026-01-28T10:36:46.900182
+2026-01-28 09:36:46 - auth.token_manager - INFO - 首次获取Token成功: service=user
+2026-01-28 09:36:46 - auth.cache - INFO - Token已缓存: service=user, expires_at=2026-01-28 10:36:46.900182, remaining=3600s
+2026-01-28 09:36:46 - auth.providers.http_auth_provider - INFO - 开始获取Token: service=nurse, method=GET
+2026-01-28 09:36:46 - auth.providers.http_auth_provider - INFO - Token获取成功: service=nurse, expires_at=2026-01-28T10:36:46.958667
+2026-01-28 09:36:46 - auth.token_manager - INFO - 首次获取Token成功: service=nurse
+2026-01-28 09:36:46 - auth.cache - INFO - Token已缓存: service=nurse, expires_at=2026-01-28 10:36:46.958667, remaining=3599s
+2026-01-28 09:36:46 - auth.providers.http_auth_provider - WARNING - POST方法未配置认证数据: service=admin
+2026-01-28 09:36:46 - auth.providers.http_auth_provider - INFO - 开始获取Token: service=admin, method=POST
+2026-01-28 09:36:47 - auth.providers.http_auth_provider - INFO - Token获取成功: service=admin, expires_at=2026-01-28T10:36:47.022808
+2026-01-28 09:36:47 - auth.token_manager - INFO - 首次获取Token成功: service=admin
+2026-01-28 09:36:47 - auth.cache - INFO - Token已缓存: service=admin, expires_at=2026-01-28 10:36:47.022808, remaining=3599s
+2026-01-28 09:36:47 - __main__ - INFO - Step 3: 执行接口监控...
+2026-01-28 09:36:47 - monitor.monitor_engine - INFO - 开始执行监控: 10个接口，5线程并发
+2026-01-28 09:36:47 - monitor.monitor_engine - INFO - 监控执行完成: 总数=10, 成功=4, 失败=6, 耗时=0.10s
+2026-01-28 09:36:47 - __main__ - INFO - Step 4: 分析监控结果...
+2026-01-28 09:36:47 - analyzer.result_analyzer - INFO - 开始分析 10 个监控结果
+2026-01-28 09:36:47 - analyzer.aggregators.error_aggregator - INFO - 开始聚合 6 个异常结果
+2026-01-28 09:36:47 - analyzer.aggregators.error_aggregator - INFO - 聚合完成，共 6 种异常类型
+2026-01-28 09:36:47 - analyzer.aggregators.stats_aggregator - INFO - 开始统计 10 个监控结果
+2026-01-28 09:36:47 - analyzer.aggregators.stats_aggregator - INFO - 统计完成: 总数=10, 成功率=40.00%
+2026-01-28 09:36:47 - analyzer.alert_logic - INFO - 无需发送告警
+2026-01-28 09:36:47 - analyzer.result_analyzer - INFO - 分析完成: 总数=10, 成功=4, 失败=6, 异常类型=6, 需要告警=False, 告警摘要=无
+2026-01-28 09:36:47 - __main__ - INFO - Step 5: 发送监控报告...
+2026-01-28 09:36:47 - __main__ - INFO - 无严重错误，发送正常监控报告
+2026-01-28 09:36:47 - notifier.wechat_notifier - INFO - 开始发送监控报告
+2026-01-28 09:36:47 - notifier.webhook_client - INFO - 发送企业微信消息 (尝试 1/3)
+2026-01-28 09:36:47 - notifier.webhook_client - INFO - 消息发送成功: N/A
+2026-01-28 09:36:47 - notifier.wechat_notifier - INFO - 监控报告发送成功: message_id=, retry_count=0
+2026-01-28 09:36:47 - __main__ - INFO - 监控报告发送成功
+2026-01-28 09:36:47 - __main__ - INFO - ============================================================
+2026-01-28 09:36:47 - __main__ - INFO - 监控周期完成: 2026-01-28 09:36:47
+2026-01-28 09:36:47 - __main__ - INFO - 总耗时: 0.63秒
+2026-01-28 09:36:47 - __main__ - INFO - 接口总数: 10
+2026-01-28 09:36:47 - __main__ - INFO - 成功: 4
+2026-01-28 09:36:47 - __main__ - INFO - 失败: 6
+2026-01-28 09:36:47 - __main__ - INFO - 成功率: 40.00%
+2026-01-28 09:36:47 - __main__ - INFO - 平均响应时间: 36.98秒
+2026-01-28 09:36:47 - __main__ - INFO - ============================================================
+2026-01-28 09:36:47 - __main__ - INFO - ============================================================
+2026-01-28 09:36:47 - __main__ - INFO - 监控调度器启动成功，开始等待...
+2026-01-28 09:36:47 - __main__ - INFO - 按 Ctrl+C 可优雅关闭程序
+2026-01-28 09:36:47 - __main__ - INFO - ============================================================
+2026-01-28 09:42:28 - root - INFO - 文件日志处理器添加成功
+2026-01-28 09:42:28 - __main__ - INFO - ============================================================
+2026-01-28 09:42:28 - __main__ - INFO - 接口监控脚本启动
+2026-01-28 09:42:28 - __main__ - INFO - ============================================================
+2026-01-28 09:42:28 - config.config_manager - INFO - 开始加载配置文件: D:\Dev\interface_monitoring\config.yaml
+2026-01-28 09:42:28 - config.config_manager - INFO - 配置加载并验证成功
+2026-01-28 09:42:28 - config.config_manager - INFO - 配置热更新监控已启动: D:\Dev\interface_monitoring\config.yaml
+2026-01-28 09:42:28 - __main__ - INFO - 配置加载完成
+2026-01-28 09:42:28 - __main__ - INFO - 开始初始化核心模块...
+2026-01-28 09:42:28 - __main__ - INFO - 接口扫描器初始化完成
+2026-01-28 09:42:28 - auth.token_manager - INFO - TokenManager已初始化: auto_refresh=True, services=['user', 'nurse', 'admin']
+2026-01-28 09:42:28 - auth.providers.base_provider - INFO - 认证提供商已初始化: service=user, token_url=http://120.79.173.8:8201/maiban-user/api/v1/user/auth/dev-login/1, refresh_url=http://120.79.173.8:8201/maiban-user/api/v1/user/auth/refresh, method=GET
+2026-01-28 09:42:28 - auth.token_manager - INFO - 已注册认证提供商: service=user, provider=HTTPAuthProvider(service=user, token_url=http://120.79.173.8:8201/maiban-user/api/v1/user/auth/dev-login/1, method=GET, response_field=data)
+2026-01-28 09:42:28 - __main__ - INFO - 已注册 user 服务认证提供商
+2026-01-28 09:42:28 - auth.providers.base_provider - INFO - 认证提供商已初始化: service=nurse, token_url=http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/auth/dev-login/1, refresh_url=http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/auth/refresh, method=GET
+2026-01-28 09:42:28 - auth.token_manager - INFO - 已注册认证提供商: service=nurse, provider=HTTPAuthProvider(service=nurse, token_url=http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/auth/dev-login/1, method=GET, response_field=data)
+2026-01-28 09:42:28 - __main__ - INFO - 已注册 nurse 服务认证提供商
+2026-01-28 09:42:28 - auth.providers.base_provider - INFO - 认证提供商已初始化: service=admin, token_url=https://maibanjk.com/maiban-admin/admin/api/v1/auth/login, refresh_url=https://maibanjk.com/maiban-admin/admin/api/v1/auth/refresh, method=POST
+2026-01-28 09:42:28 - auth.providers.http_auth_provider - WARNING - POST方法未配置认证数据: service=admin
+2026-01-28 09:42:28 - auth.token_manager - INFO - 已注册认证提供商: service=admin, provider=HTTPAuthProvider(service=admin, token_url=https://maibanjk.com/maiban-admin/admin/api/v1/auth/login, method=POST, response_field=data)
+2026-01-28 09:42:28 - __main__ - INFO - 已注册 admin 服务认证提供商
+2026-01-28 09:42:28 - __main__ - INFO - Token管理器初始化完成
+2026-01-28 09:42:28 - monitor.monitor_engine - INFO - 监控引擎初始化完成: 并发数=5, 超时时间=10s, 基础URL=None
+2026-01-28 09:42:28 - __main__ - INFO - 监控引擎初始化完成
+2026-01-28 09:42:28 - analyzer.result_analyzer - INFO - 结果分析器初始化完成: 批处理大小=1000, 流式处理=禁用
+2026-01-28 09:42:28 - __main__ - INFO - 结果分析器初始化完成
+2026-01-28 09:42:28 - notifier.wechat_notifier - INFO - 企业微信推送器初始化完成: webhook=https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=651f2841-0a79-4a43-bc50-5761253d6b52, mentioned_list=2, mentioned_mobile_list=0
+2026-01-28 09:42:28 - __main__ - INFO - 企业微信推送器初始化完成
+2026-01-28 09:42:28 - __main__ - INFO - 所有核心模块初始化完成
+2026-01-28 09:42:28 - __main__ - INFO - 配置定时任务：每 15 分钟执行一次监控
+2026-01-28 09:42:28 - __main__ - INFO - 立即执行一次监控周期...
+2026-01-28 09:42:28 - __main__ - INFO - ============================================================
+2026-01-28 09:42:28 - __main__ - INFO - 开始监控周期: 2026-01-28 09:42:28
+2026-01-28 09:42:28 - __main__ - INFO - ============================================================
+2026-01-28 09:42:28 - __main__ - INFO - Step 1: 扫描接口文档...
+2026-01-28 09:42:28 - scanner.interface_scanner - INFO - 开始扫描目录: D:\Dev\interface_monitoring\Interface-pool
+2026-01-28 09:42:28 - scanner.interface_scanner - INFO - 找到 10 个接口文档文件
+2026-01-28 09:42:28 - scanner.interface_scanner - INFO - 扫描完成，共发现 10 个接口
+2026-01-28 09:42:28 - __main__ - INFO - 发现 10 个接口
+2026-01-28 09:42:28 - __main__ - INFO - Step 2: 获取认证Token...
+2026-01-28 09:42:28 - auth.providers.http_auth_provider - INFO - 开始获取Token: service=user, method=GET
+2026-01-28 09:42:28 - auth.providers.http_auth_provider - INFO - Token获取成功: service=user, expires_at=2026-01-28T10:42:28.349074
+2026-01-28 09:42:28 - auth.token_manager - INFO - 首次获取Token成功: service=user
+2026-01-28 09:42:28 - auth.cache - INFO - Token已缓存: service=user, expires_at=2026-01-28 10:42:28.349074, remaining=3599s
+2026-01-28 09:42:28 - auth.providers.http_auth_provider - INFO - 开始获取Token: service=nurse, method=GET
+2026-01-28 09:42:28 - auth.providers.http_auth_provider - INFO - Token获取成功: service=nurse, expires_at=2026-01-28T10:42:28.411353
+2026-01-28 09:42:28 - auth.token_manager - INFO - 首次获取Token成功: service=nurse
+2026-01-28 09:42:28 - auth.cache - INFO - Token已缓存: service=nurse, expires_at=2026-01-28 10:42:28.411353, remaining=3599s
+2026-01-28 09:42:28 - auth.providers.http_auth_provider - WARNING - POST方法未配置认证数据: service=admin
+2026-01-28 09:42:28 - auth.providers.http_auth_provider - INFO - 开始获取Token: service=admin, method=POST
+2026-01-28 09:42:28 - auth.providers.http_auth_provider - INFO - Token获取成功: service=admin, expires_at=2026-01-28T10:42:28.462392
+2026-01-28 09:42:28 - auth.token_manager - INFO - 首次获取Token成功: service=admin
+2026-01-28 09:42:28 - auth.cache - INFO - Token已缓存: service=admin, expires_at=2026-01-28 10:42:28.462392, remaining=3599s
+2026-01-28 09:42:28 - __main__ - INFO - Step 3: 执行接口监控...
+2026-01-28 09:42:28 - monitor.monitor_engine - INFO - 开始执行监控: 10个接口，5线程并发
+2026-01-28 09:42:28 - monitor.monitor_engine - INFO - 监控执行完成: 总数=10, 成功=4, 失败=6, 耗时=0.08s
+2026-01-28 09:42:28 - __main__ - INFO - Step 4: 分析监控结果...
+2026-01-28 09:42:28 - analyzer.result_analyzer - INFO - 开始分析 10 个监控结果
+2026-01-28 09:42:28 - analyzer.aggregators.error_aggregator - INFO - 开始聚合 6 个异常结果
+2026-01-28 09:42:28 - analyzer.aggregators.error_aggregator - INFO - 聚合完成，共 6 种异常类型
+2026-01-28 09:42:28 - analyzer.aggregators.stats_aggregator - INFO - 开始统计 10 个监控结果
+2026-01-28 09:42:28 - analyzer.aggregators.stats_aggregator - INFO - 统计完成: 总数=10, 成功率=40.00%
+2026-01-28 09:42:28 - analyzer.alert_logic - INFO - 无需发送告警
+2026-01-28 09:42:28 - analyzer.result_analyzer - INFO - 分析完成: 总数=10, 成功=4, 失败=6, 异常类型=6, 需要告警=False, 告警摘要=无
+2026-01-28 09:42:28 - __main__ - INFO - Step 5: 发送监控报告...
+2026-01-28 09:42:28 - __main__ - INFO - 无严重错误，发送正常监控报告
+2026-01-28 09:42:28 - notifier.wechat_notifier - INFO - 开始发送监控报告
+2026-01-28 09:42:28 - notifier.webhook_client - INFO - 发送企业微信消息 (尝试 1/3)
+2026-01-28 09:42:28 - notifier.webhook_client - INFO - 消息发送成功: N/A
+2026-01-28 09:42:28 - notifier.wechat_notifier - INFO - 监控报告发送成功: message_id=, retry_count=0
+2026-01-28 09:42:28 - __main__ - INFO - 监控报告发送成功
+2026-01-28 09:42:28 - __main__ - INFO - ============================================================
+2026-01-28 09:42:28 - __main__ - INFO - 监控周期完成: 2026-01-28 09:42:28
+2026-01-28 09:42:28 - __main__ - INFO - 总耗时: 0.57秒
+2026-01-28 09:42:28 - __main__ - INFO - 接口总数: 10
+2026-01-28 09:42:28 - __main__ - INFO - 成功: 4
+2026-01-28 09:42:28 - __main__ - INFO - 失败: 6
+2026-01-28 09:42:28 - __main__ - INFO - 成功率: 40.00%
+2026-01-28 09:42:28 - __main__ - INFO - 平均响应时间: 35.08秒
+2026-01-28 09:42:28 - __main__ - INFO - ============================================================
+2026-01-28 09:42:28 - __main__ - INFO - ============================================================
+2026-01-28 09:42:28 - __main__ - INFO - 监控调度器启动成功，开始等待...
+2026-01-28 09:42:28 - __main__ - INFO - 按 Ctrl+C 可优雅关闭程序
+2026-01-28 09:42:28 - __main__ - INFO - ============================================================

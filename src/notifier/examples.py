@@ -7,8 +7,8 @@
 创建时间: 2026-01-27
 """
 
-from src.notifier import WechatNotifier, create_notifier_from_config
-from src.analyzer import MonitorReport
+from .notifier import WechatNotifier, create_notifier_from_config
+from .analyzer import MonitorReport
 from datetime import datetime
 
 
@@ -72,8 +72,8 @@ def example_with_monitor_report():
 
     # 2. 假设我们有一个监控报告
     # 这里使用模拟数据，实际使用时应该从监控模块获取
-    from src.analyzer.models.report import MonitorReport
-    from src.analyzer.models.stats import Stats
+    from analyzer.models.report import MonitorReport
+    from analyzer.models.stats import Stats
 
     # 创建监控报告
     report = MonitorReport(
@@ -88,7 +88,7 @@ def example_with_monitor_report():
     )
 
     # 3. 添加错误信息（模拟）
-    from src.analyzer.models.report import ErrorInfo
+    from analyzer.models.report import ErrorInfo
 
     error = ErrorInfo(
         interface_name="getUserProfile",
@@ -291,7 +291,7 @@ def example_advanced_usage():
 
     # 3. 使用WebhookClient直接发送（绕过格式化器）
     print("3. 直接使用WebhookClient")
-    from src.notifier.models.wechat_message import WechatMessage
+    from notifier.models.wechat_message import WechatMessage
 
     custom_message = WechatMessage(
         markdown={"content": "自定义格式的消息"},

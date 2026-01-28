@@ -10,7 +10,7 @@ import logging
 from datetime import datetime
 from typing import List, Dict, Any, Optional, Tuple
 
-from src.monitor.result import MonitorResult
+from monitor.result import MonitorResult
 from .aggregators import ErrorAggregator, StatsAggregator
 from .models import MonitorReport, Stats, ErrorInfo
 from .alert_logic import (

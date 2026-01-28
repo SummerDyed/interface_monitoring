@@ -6,8 +6,8 @@
 创建时间: 2026-01-27
 """
 
-from src.analyzer import ResultAnalyzer, ReportGenerator, process_alert
-from src.monitor.result import MonitorResult, ErrorType
+from . import ResultAnalyzer, ReportGenerator, process_alert
+from monitor.result import MonitorResult, ErrorType
 
 
 def example_usage():

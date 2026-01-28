@@ -6,8 +6,8 @@
 创建时间: 2026-01-27
 """
 
-from src.analyzer import ResultAnalyzer, process_alert, ReportGenerator
-from src.monitor.monitor_engine import MonitorEngine
+from . import ResultAnalyzer, process_alert, ReportGenerator
+from monitor.monitor_engine import MonitorEngine
 
 
 def example_with_real_monitor():
@@ -54,7 +54,7 @@ def example_with_real_monitor():
     print("步骤2: 分析监控结果...")
 
     # 为了演示，我们直接创建模拟结果
-    from src.monitor.result import MonitorResult, ErrorType
+    from monitor.result import MonitorResult, ErrorType
     from datetime import datetime
 
     class MockInterface:
@@ -220,7 +220,7 @@ def example_business_code_with_details():
     print("=" * 80)
     print()
 
-    from src.monitor.result import MonitorResult
+    from monitor.result import MonitorResult
     from datetime import datetime
 
     class MockInterface:

@@ -26,15 +26,12 @@ class MessageFormatter:
 
 **监控时间**: {timestamp}
 **总接口数**: {total_count}
-**失败数**: {failure_count}
+**运行时间**: {duration}
+**最慢接口**: {slowest_interface}
 
 ## ⚠️ 异常详情
 
 {error_details}
-
-## 📊 统计信息
-
-{stats_details}
 
 ---
 *由接口监控系统自动发送*
@@ -49,6 +46,19 @@ class MessageFormatter:
 {error_summary}
 """
 
+    # 正常情况模板（无错误时使用）
+    NORMAL_TEMPLATE = """## ✅ 接口监控正常
+
+**监控时间**: {timestamp}
+**接口总数**: {total_count}
+**运行时间**: {duration}
+**最慢接口**:
+{slowest_interface}
+
+---
+*由接口监控系统自动发送*
+"""
+
     def __init__(self, max_message_length: int = 4000):
         """初始化消息格式化器
 
@@ -61,7 +71,8 @@ class MessageFormatter:
         self,
         report: Any,
         mentioned_list: Optional[List[str]] = None,
-        mentioned_mobile_list: Optional[List[str]] = None
+        mentioned_mobile_list: Optional[List[str]] = None,
+        alert_info: Optional[Dict[str, Any]] = None
     ) -> WechatMessage:
         """格式化监控报告为微信消息
 
@@ -69,12 +80,13 @@ class MessageFormatter:
             report: 监控报告对象
             mentioned_list: @人员列表（用户ID）
             mentioned_mobile_list: @人员列表（手机号）
+            alert_info: 告警信息（包含告警类型等）
 
         Returns:
             WechatMessage: 微信消息对象
         """
         # 生成Markdown内容
-        markdown_content = self._generate_markdown_content(report)
+        markdown_content = self._generate_markdown_content(report, alert_info)
 
         # 创建消息对象
         message = WechatMessage(
@@ -91,34 +103,54 @@ class MessageFormatter:
 
         return message
 
-    def _generate_markdown_content(self, report: Any) -> str:
+    def _generate_markdown_content(self, report: Any, alert_info: Optional[Dict[str, Any]] = None) -> str:
         """生成Markdown内容
 
         Args:
             report: 监控报告对象
+            alert_info: 告警信息
 
         Returns:
             str: Markdown格式的字符串
         """
         try:
+            # 如果有alert_info且类型为normal，使用正常模板
+            if alert_info and alert_info.get('alert_type') == 'normal':
+                return self._generate_normal_content(report, alert_info)
+
+            # 否则使用默认模板
             # 提取报告信息
             timestamp = self._format_timestamp(report.timestamp if hasattr(report, 'timestamp') else datetime.now())
             total_count = report.total_count if hasattr(report, 'total_count') else 0
             failure_count = report.failure_count if hasattr(report, 'failure_count') else 0
 
+            # 如果有alert_info且包含statistics，优先使用其中的数据
+            if alert_info and 'statistics' in alert_info:
+                statistics = alert_info['statistics']
+                duration = statistics.get('duration', '未知')
+                slowest_interface = statistics.get('slowest_interface', '无')
+                slowest_url = statistics.get('slowest_url', '')
+
+                # 构建最慢接口信息
+                if slowest_interface != '无' and slowest_url:
+                    slowest_info = f"{slowest_interface} ({slowest_url})"
+                else:
+                    slowest_info = slowest_interface
+            else:
+                # 否则计算运行时间和最慢接口
+                duration, slowest_interface = self._calculate_duration_and_slowest(report)
+                slowest_info = slowest_interface
+
             # 生成错误详情
             error_details = self._format_error_details(report)
-
-            # 生成统计信息
-            stats_details = self._format_stats(report)
 
             # 填充模板
             content = self.WECHAT_TEMPLATE.format(
                 timestamp=timestamp,
                 total_count=total_count,
-                failure_count=failure_count,
-                error_details=error_details,
-                stats_details=stats_details
+                duration=duration,
+                slowest_interface=slowest_info,
+                error_details=error_details
             )
 
             # 检查消息长度，如果超过限制则使用简化版本
@@ -350,3 +382,92 @@ class MessageFormatter:
 
 请检查监控报告数据格式是否正确。
 """
+
+    def _generate_normal_content(self, report: Any, alert_info: Dict[str, Any]) -> str:
+        """生成正常情况内容（无错误时）
+
+        Args:
+            report: 监控报告对象
+            alert_info: 告警信息
+
+        Returns:
+            str: 正常情况Markdown内容
+        """
+        try:
+            # 获取当前时间戳
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+            # 从 alert_info 中提取数据
+            statistics = alert_info.get('statistics', {})
+            total_count = statistics.get('total', 0)
+            duration = statistics.get('duration', '0秒')
+            slowest_interface = statistics.get('slowest_interface', '无')
+            slowest_url = statistics.get('slowest_url', '')
+            slowest_time = statistics.get('slowest_time', '无')
+
+            # 构建最慢接口信息（包含URL）
+            if slowest_interface != '无' and slowest_url:
+                slowest_info = f"{slowest_interface}\n  URL: {slowest_url} ({slowest_time})"
+            else:
+                slowest_info = f"{slowest_interface} ({slowest_time})"
+
+            # 填充正常模板
+            content = self.NORMAL_TEMPLATE.format(
+                timestamp=timestamp,
+                total_count=total_count,
+                duration=duration,
+                slowest_interface=slowest_info
+            )
+
+            return content
+
+        except Exception as e:
+            logger.error(f"生成正常内容失败: {str(e)}", exc_info=True)
+            # 返回简单的错误消息
+            return self._generate_error_message(str(e))
+
+    def _calculate_duration_and_slowest(self, report: Any) -> tuple:
+        """计算运行时间和最慢接口
+
+        Args:
+            report: 监控报告对象
+
+        Returns:
+            tuple: (运行时间字符串, 最慢接口信息字符串)
+        """
+        try:
+            # 获取所有结果
+            results = getattr(report, 'results', [])
+
+            # 计算运行时间（简化处理，默认为空或从报告时间推断）
+            duration = "未知"
+
+            # 查找最慢的接口
+            max_response_time = 0
+            slowest_interface_info = "无"
+
+            for result in results:
+                if hasattr(result, 'response_time') and result.response_time > max_response_time:
+                    max_response_time = result.response_time
+
+                    # 获取接口信息
+                    interface_name = getattr(result, 'interface_name', '未知接口')
+                    interface_method = getattr(result, 'interface_method', 'GET')
+                    interface_url = getattr(result, 'interface_url', '')
+
+                    # 处理错误信息中的 "[Request interrupted by user]"
+                    error_message = getattr(result, 'error_message', '')
+                    if '[Request interrupted by user]' in error_message:
+                        error_message = error_message.replace('[Request interrupted by user]', '').strip()
+
+                    # 构建最慢接口信息
+                    if interface_url:
+                        slowest_interface_info = f"{interface_name} ({interface_method} {interface_url}) - {max_response_time:.2f}秒"
+                    else:
+                        slowest_interface_info = f"{interface_name} - {max_response_time:.2f}秒"
+
+            return duration, slowest_interface_info
+
+        except Exception as e:
+            logger.error(f"计算运行时间和最慢接口失败: {str(e)}", exc_info=True)
+            return "未知", "无"

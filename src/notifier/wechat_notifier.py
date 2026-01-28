@@ -93,7 +93,8 @@ class WechatNotifier:
             message = self.message_formatter.format_report(
                 report=report,
                 mentioned_list=final_mentioned_list,
-                mentioned_mobile_list=final_mentioned_mobile_list
+                mentioned_mobile_list=final_mentioned_mobile_list,
+                alert_info=alert_info
             )
 
             # 发送消息

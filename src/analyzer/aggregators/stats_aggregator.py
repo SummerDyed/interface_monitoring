@@ -12,7 +12,7 @@ from datetime import datetime
 import logging
 
 from ..models import Stats, ServiceHealth
-from src.monitor.result import MonitorResult
+from monitor.result import MonitorResult
 
 logger = logging.getLogger(__name__)
 
