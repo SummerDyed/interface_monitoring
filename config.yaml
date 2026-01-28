@@ -1,0 +1,105 @@
+# 接口监控脚本配置文件
+# 详细说明各配置项用途和默认值
+
+# 监控配置
+monitor:
+  # 监控间隔时间（分钟）
+  interval: 15
+  # 请求超时时间（秒）
+  timeout: 3
+  # 并发线程数
+  concurrent_threads: 5
+  # 重试次数
+  retry_times: 0
+  # 指数退避策略（秒）
+  retry_backoff: [1, 2, 4]
+  # 接口文档目录路径
+  interface_pool_path: "./Interface-pool"
+
+# 企业微信通知配置
+wechat:
+  # Webhook地址（必填）
+  webhook_url: "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=651f2841-0a79-4a43-bc50-5761253d6b52"
+  # 是否启用通知
+  enabled: true
+  # @人员列表（企业微信ID，多个用逗号分隔）
+  at_users: ["user1", "user2"]
+  # 通知内容格式：simple（简洁版）/ detail（详细版）
+  message_format: "simple"
+
+# 日志配置
+logging:
+  # 日志级别：DEBUG/INFO/WARNING/ERROR
+  level: "INFO"
+  # 日志格式
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  # 日志文件路径
+  log_file: "./logs/monitor.log"
+  # 错误日志文件路径
+  error_log_file: "./logs/error.log"
+  # 日志轮转配置
+  rotation:
+    # 单个日志文件最大大小（MB）
+    max_size: 10
+    # 保留的日志文件数量
+    backup_count: 5
+
+# 服务认证配置
+services:
+  # 用户服务认证
+  user:
+    # Token获取接口URL
+    token_url: "http://120.79.173.8:8201/maiban-user/api/v1/user/auth/dev-login/1"
+    # Token刷新接口URL
+    refresh_url: "http://120.79.173.8:8201/maiban-user/api/v1/user/auth/refresh"
+    # 请求方法：GET
+    method: "GET"
+    # 请求头配置
+    headers:
+      Accept: "*/*"
+      Accept-Language: "zh-CN,zh;q=0.9,en;q=0.8"
+      User-Agent: "InterfaceMonitor/1.0"
+    # Token缓存时间（秒）
+    cache_duration: 3600
+    # 接口文档路径
+    interface_path: "./Interface-pool/user"
+  
+  # 护士服务认证
+  nurse:
+    # Token获取接口URL
+    token_url: "http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/auth/dev-login/1"
+    # Token刷新接口URL
+    refresh_url: "http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/auth/refresh"
+    # 请求方法：GET
+    method: "GET"
+    # 请求头配置
+    headers:
+      Accept: "*/*"
+      Accept-Language: "zh-CN,zh;q=0.9,en;q=0.8"
+      User-Agent: "InterfaceMonitor/1.0"
+    # Token缓存时间（秒）
+    cache_duration: 3600
+    # 接口文档路径
+    interface_path: "./Interface-pool/nurse"
+  
+  # 管理员服务认证
+  admin:
+    # Token获取接口URL
+    # 测试结果: 状态码200，返回accessToken和refreshToken
+    token_url: "https://maibanjk.com/maiban-admin/admin/api/v1/auth/login"
+    # Token刷新接口URL
+    refresh_url: "https://maibanjk.com/maiban-admin/admin/api/v1/auth/refresh"
+    # 请求方法：POST
+    method: "POST"
+    # 请求头配置
+    headers:
+      Accept: "application/json, text/plain, */*"
+      Content-Type: "application/json"
+      User-Agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+    # 认证数据
+    username: "admin005"
+    password: "Admin@123"
+    # Token缓存时间（秒）
+    cache_duration: 3600
+    # 接口文档路径
+    interface_path: "./Interface-pool/admin"

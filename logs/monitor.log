@@ -1,0 +1,187 @@
+2026-01-27 17:14:55 - root - INFO - 日志轮转完成
+2026-01-27 17:14:55 - root - INFO - 文件日志处理器添加成功
+2026-01-27 17:14:55 - root - INFO - 文件日志处理器添加成功
+2026-01-27 17:14:55 - root - INFO - 文件日志处理器添加成功
+2026-01-27 17:14:55 - exception_test - ERROR - Caught an exception
+Traceback (most recent call last):
+  File "d:\Dev\interface_monitoring\tests\utils\test_logger.py", line 750, in test_exception_in_log_message
+    raise ValueError("Test exception")
+ValueError: Test exception
+2026-01-27 17:14:56 - root - INFO - 文件日志处理器添加成功
+2026-01-27 17:14:56 - none_test - INFO - None
+2026-01-27 17:14:56 - root - INFO - 文件日志处理器添加成功
+2026-01-27 17:14:56 - perf_test_0 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_1 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_2 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_3 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_4 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_5 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_6 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_7 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_8 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_9 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_10 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_11 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_12 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_13 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_14 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_15 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_16 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_17 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_18 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_19 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_20 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_21 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_22 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_23 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_24 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_25 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_26 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_27 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_28 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_29 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_30 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_31 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_32 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_33 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_34 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_35 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_36 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_37 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_38 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_39 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_40 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_41 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_42 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_43 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_44 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_45 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_46 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_47 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_48 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_49 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_50 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_51 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_52 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_53 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_54 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_55 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_56 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_57 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_58 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_59 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_60 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_61 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_62 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_63 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_64 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_65 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_66 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_67 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_68 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_69 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_70 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_71 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_72 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_73 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_74 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_75 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_76 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_77 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_78 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_79 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_80 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_81 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_82 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_83 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_84 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_85 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_86 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_87 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_88 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_89 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_90 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_91 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_92 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_93 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_94 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_95 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_96 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_97 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_98 - INFO - Performance test
+2026-01-27 17:14:56 - perf_test_99 - INFO - Performance test
+2026-01-27 17:14:56 - root - INFO - 文件日志处理器添加成功
+2026-01-27 17:14:56 - root - INFO - 文件日志处理器添加成功
+2026-01-27 17:14:56 - root - INFO - 文件日志处理器添加成功
+2026-01-27 18:26:22 - root - INFO - 文件日志处理器添加成功
+2026-01-27 18:26:22 - __main__ - INFO - 接口池监控测试开始
+2026-01-27 18:26:22 - config.config_manager - INFO - 开始加载配置文件: d:\Dev\interface_monitoring\config.yaml
+2026-01-27 18:26:22 - config.config_manager - INFO - 配置加载并验证成功
+2026-01-27 18:26:22 - config.config_manager - INFO - 配置热更新监控已启动: d:\Dev\interface_monitoring\config.yaml
+2026-01-27 18:26:22 - config.config_manager - INFO - 配置监控已停止
+2026-01-27 18:26:46 - root - INFO - 文件日志处理器添加成功
+2026-01-27 18:26:46 - __main__ - INFO - 接口池监控测试开始
+2026-01-27 18:26:46 - config.config_manager - INFO - 开始加载配置文件: d:\Dev\interface_monitoring\config.yaml
+2026-01-27 18:26:46 - config.config_manager - INFO - 配置加载并验证成功
+2026-01-27 18:26:46 - config.config_manager - INFO - 配置热更新监控已启动: d:\Dev\interface_monitoring\config.yaml
+2026-01-27 18:26:46 - config.config_manager - INFO - 配置监控已停止
+2026-01-27 18:26:46 - scanner.interface_scanner - INFO - 开始扫描目录: D:\Dev\interface_monitoring\Interface-pool
+2026-01-27 18:26:46 - scanner.interface_scanner - INFO - 找到 10 个接口文档文件
+2026-01-27 18:26:46 - scanner.interface_scanner - INFO - 扫描完成，共发现 10 个接口
+2026-01-27 18:26:46 - monitor.monitor_engine - INFO - 监控引擎初始化完成: 并发数=5, 超时时间=10s, 基础URL=None
+2026-01-27 18:26:46 - monitor.monitor_engine - INFO - 开始执行监控: 10个接口，5线程并发
+2026-01-27 18:26:46 - monitor.monitor_engine - INFO - 监控执行完成: 总数=10, 成功=2, 失败=8, 耗时=0.08s
+2026-01-27 18:26:46 - notifier.wechat_notifier - INFO - 企业微信推送器初始化完成: webhook=https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=651f2841-0a79-4a43-bc50-5761253d6b52, mentioned_list=2, mentioned_mobile_list=0
+2026-01-27 18:26:46 - notifier.wechat_notifier - INFO - 开始发送监控报告
+2026-01-27 18:26:46 - notifier.webhook_client - INFO - 发送企业微信消息 (尝试 1/3)
+2026-01-27 18:26:46 - notifier.webhook_client - INFO - 消息发送成功: N/A
+2026-01-27 18:26:46 - notifier.wechat_notifier - INFO - 监控报告发送成功: message_id=, retry_count=0
+2026-01-27 18:26:46 - notifier.wechat_notifier - INFO - 企业微信推送器已关闭
+2026-01-27 18:27:20 - root - INFO - 文件日志处理器添加成功
+2026-01-27 18:27:20 - __main__ - INFO - 企业微信推送测试开始
+2026-01-27 18:27:20 - config.config_manager - INFO - 开始加载配置文件: d:\Dev\interface_monitoring\config.yaml
+2026-01-27 18:27:20 - config.config_manager - INFO - 配置加载并验证成功
+2026-01-27 18:27:20 - config.config_manager - INFO - 配置热更新监控已启动: d:\Dev\interface_monitoring\config.yaml
+2026-01-27 18:27:20 - config.config_manager - INFO - 配置监控已停止
+2026-01-27 18:27:20 - notifier.wechat_notifier - INFO - 企业微信推送器初始化完成: webhook=https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=651f2841-0a79-4a43-bc50-5761253d6b52, mentioned_list=2, mentioned_mobile_list=0
+2026-01-27 18:27:20 - notifier.wechat_notifier - INFO - 开始发送自定义消息
+2026-01-27 18:27:20 - notifier.webhook_client - INFO - 发送企业微信消息 (尝试 1/3)
+2026-01-27 18:27:21 - notifier.webhook_client - INFO - 消息发送成功: N/A
+2026-01-27 18:27:21 - notifier.wechat_notifier - INFO - 自定义消息发送成功: message_id=, retry_count=0
+2026-01-27 18:27:21 - notifier.wechat_notifier - INFO - 企业微信推送器已关闭
+2026-01-27 18:38:54 - root - INFO - 文件日志处理器添加成功
+2026-01-27 18:38:54 - __main__ - INFO - 接口池监控测试开始
+2026-01-27 18:38:54 - config.config_manager - INFO - 开始加载配置文件: d:\Dev\interface_monitoring\config.yaml
+2026-01-27 18:38:54 - config.config_manager - INFO - 配置加载并验证成功
+2026-01-27 18:38:54 - config.config_manager - INFO - 配置热更新监控已启动: d:\Dev\interface_monitoring\config.yaml
+2026-01-27 18:38:54 - config.config_manager - INFO - 配置监控已停止
+2026-01-27 18:38:54 - scanner.interface_scanner - INFO - 开始扫描目录: D:\Dev\interface_monitoring\Interface-pool
+2026-01-27 18:38:54 - scanner.interface_scanner - INFO - 找到 10 个接口文档文件
+2026-01-27 18:38:54 - scanner.interface_scanner - INFO - 扫描完成，共发现 10 个接口
+2026-01-27 18:38:54 - monitor.monitor_engine - INFO - 监控引擎初始化完成: 并发数=5, 超时时间=10s, 基础URL=None
+2026-01-27 18:38:54 - monitor.monitor_engine - INFO - 开始执行监控: 10个接口，5线程并发
+2026-01-27 18:38:54 - monitor.monitor_engine - INFO - 监控执行完成: 总数=10, 成功=2, 失败=8, 耗时=0.08s
+2026-01-27 18:38:54 - notifier.wechat_notifier - INFO - 企业微信推送器初始化完成: webhook=https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=651f2841-0a79-4a43-bc50-5761253d6b52, mentioned_list=2, mentioned_mobile_list=0
+2026-01-27 18:38:54 - notifier.wechat_notifier - INFO - 开始发送监控报告
+2026-01-27 18:38:54 - notifier.webhook_client - INFO - 发送企业微信消息 (尝试 1/3)
+2026-01-27 18:38:54 - notifier.webhook_client - INFO - 消息发送成功: N/A
+2026-01-27 18:38:54 - notifier.wechat_notifier - INFO - 监控报告发送成功: message_id=, retry_count=0
+2026-01-27 18:38:54 - notifier.wechat_notifier - INFO - 企业微信推送器已关闭
+2026-01-27 18:41:21 - root - INFO - 文件日志处理器添加成功
+2026-01-27 18:41:21 - __main__ - INFO - 接口池监控测试开始
+2026-01-27 18:41:21 - config.config_manager - INFO - 开始加载配置文件: d:\Dev\interface_monitoring\config.yaml
+2026-01-27 18:41:21 - config.config_manager - INFO - 配置加载并验证成功
+2026-01-27 18:41:21 - config.config_manager - INFO - 配置热更新监控已启动: d:\Dev\interface_monitoring\config.yaml
+2026-01-27 18:41:21 - config.config_manager - INFO - 配置监控已停止
+2026-01-27 18:41:21 - scanner.interface_scanner - INFO - 开始扫描目录: D:\Dev\interface_monitoring\Interface-pool
+2026-01-27 18:41:21 - scanner.interface_scanner - INFO - 找到 10 个接口文档文件
+2026-01-27 18:41:21 - scanner.interface_scanner - INFO - 扫描完成，共发现 10 个接口
+2026-01-27 18:41:21 - monitor.monitor_engine - INFO - 监控引擎初始化完成: 并发数=5, 超时时间=10s, 基础URL=None
+2026-01-27 18:41:21 - monitor.monitor_engine - INFO - 开始执行监控: 10个接口，5线程并发
+2026-01-27 18:41:21 - monitor.monitor_engine - INFO - 监控执行完成: 总数=10, 成功=2, 失败=8, 耗时=0.08s
+2026-01-27 18:41:21 - notifier.wechat_notifier - INFO - 企业微信推送器初始化完成: webhook=https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=651f2841-0a79-4a43-bc50-5761253d6b52, mentioned_list=2, mentioned_mobile_list=0
+2026-01-27 18:41:21 - notifier.wechat_notifier - INFO - 开始发送监控报告
+2026-01-27 18:41:21 - notifier.webhook_client - INFO - 发送企业微信消息 (尝试 1/3)
+2026-01-27 18:41:21 - notifier.webhook_client - INFO - 消息发送成功: N/A
+2026-01-27 18:41:21 - notifier.wechat_notifier - INFO - 监控报告发送成功: message_id=, retry_count=0
+2026-01-27 18:41:21 - notifier.wechat_notifier - INFO - 企业微信推送器已关闭
