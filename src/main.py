@@ -376,7 +376,7 @@ def main():
 
     try:
         # 加载配置
-        config = load_config()
+        config = load_config("config.yaml")
         _logger.info("配置加载完成")
 
         # 验证配置

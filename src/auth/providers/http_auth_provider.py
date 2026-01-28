@@ -42,8 +42,18 @@ class HTTPAuthProvider(BaseAuthProvider):
         """
         super().__init__(config)
 
-        # 扩展配置
+        # 扩展配置 - 支持多种认证字段格式
         self.auth_data = config.get('auth_data', {})
+        # 如果没有auth_data，尝试从username/password或credentials构建
+        if not self.auth_data:
+            if 'username' in config and 'password' in config:
+                self.auth_data = {
+                    'username': config['username'],
+                    'password': config['password']
+                }
+            elif 'credentials' in config:
+                self.auth_data = config['credentials']
+
         self.response_field = config.get('response_field', 'data')
         self.token_field = config.get('token_field', 'accessToken')
 
@@ -266,7 +276,7 @@ class HTTPAuthProvider(BaseAuthProvider):
                             f"response={response_data}"
                         )
 
-            if not token:
+            if not token or token == "None":
                 raise TokenObtainError(
                     f"Token值为空: service={self.service_name}"
                 )

@@ -8,11 +8,13 @@
 
 import logging
 import time
+import threading
 from typing import List, Any, Optional, Dict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from .executor import HTTPExecutor
 from .retry import RetryConfig
 from .result import MonitorResult, ErrorType
+from utils.performance_monitor import get_global_monitor
 
 logger = logging.getLogger(__name__)
 
@@ -27,6 +29,7 @@ class MonitorEngine:
         self,
         config: Optional[Dict] = None,
         retry_config: Optional[RetryConfig] = None,
+        enable_monitoring: bool = True,
     ):
         """初始化监控引擎
 
@@ -36,9 +39,11 @@ class MonitorEngine:
                 - timeout: 请求超时时间（默认10秒）
                 - base_url: 基础URL
             retry_config: 重试配置
+            enable_monitoring: 是否启用性能监控
         """
         self.config = config or {}
         self.retry_config = retry_config or RetryConfig()
+        self.enable_monitoring = enable_monitoring
 
         # 从配置中读取参数
         self.concurrency = self.config.get('concurrency', 5)
@@ -57,6 +62,12 @@ class MonitorEngine:
             },
             retry_config=self.retry_config,
         )
+
+        # 性能监控
+        self.monitor = get_global_monitor() if self.enable_monitoring else None
+
+        # 统计锁
+        self._stats_lock = threading.Lock()
 
         logger.info(
             f"监控引擎初始化完成: 并发数={self.concurrency}, "
@@ -83,9 +94,16 @@ class MonitorEngine:
 
         logger.info(f"开始执行监控: {len(interfaces)}个接口，{self.concurrency}线程并发")
 
+        # 记录性能指标
+        if self.monitor:
+            self.monitor.record_concurrent_requests(self.concurrency)
+
         start_time = time.time()
         results = []
         futures = []
+        response_times = []
+        success_count = 0
+        failed_count = 0
 
         # 使用ThreadPoolExecutor进行并发执行
         with ThreadPoolExecutor(max_workers=self.concurrency) as executor:
@@ -106,9 +124,28 @@ class MonitorEngine:
                 try:
                     result = future.result()
                     results.append(result)
+
+                    # 收集响应时间
+                    if result.response_time > 0:
+                        response_times.append(result.response_time)
+
+                    # 统计成功/失败
+                    if result.is_success():
+                        success_count += 1
+                    else:
+                        failed_count += 1
+
                     logger.debug(f"接口监控完成: {interface.name} - {result.status}")
+
+                    # 记录性能指标
+                    if self.monitor:
+                        self.monitor.record_response_time(result.response_time, interface.name)
+                        self.monitor.record_success_rate(success_count, success_count + failed_count)
+
                 except Exception as e:
                     logger.error(f"接口监控异常: {interface.name} - {e}")
+                    failed_count += 1
+
                     # 创建错误结果
                     error_result = MonitorResult(
                         interface=interface,
@@ -124,12 +161,30 @@ class MonitorEngine:
 
         # 统计信息
         elapsed_time = time.time() - start_time
-        success_count = sum(1 for r in results if r.is_success())
-        failed_count = len(results) - success_count
+        total_count = len(results)
+
+        # 计算P95响应时间
+        if response_times:
+            response_times.sort()
+            p95_index = int(len(response_times) * 0.95)
+            p95_response_time = response_times[p95_index] if p95_index < len(response_times) else response_times[-1]
+        else:
+            p95_response_time = 0.0
+
+        # 记录最终性能指标
+        if self.monitor:
+            self.monitor.record_metric('total_requests', total_count)
+            self.monitor.record_metric('success_count', success_count)
+            self.monitor.record_metric('failed_count', failed_count)
+            self.monitor.record_metric('execution_time', elapsed_time)
+            if p95_response_time > 0:
+                self.monitor.record_metric('response_time_p95', p95_response_time)
 
         logger.info(
-            f"监控执行完成: 总数={len(results)}, "
+            f"监控执行完成: 总数={total_count}, "
             f"成功={success_count}, 失败={failed_count}, "
+            f"成功率={(success_count/total_count*100) if total_count > 0 else 0:.1f}%, "
+            f"P95响应时间={p95_response_time:.2f}s, "
             f"耗时={elapsed_time:.2f}s"
         )
 
@@ -192,6 +247,30 @@ class MonitorEngine:
 
         self.concurrency = count
         logger.info(f"并发数已更新: {count}")
+
+    def optimize_for_load(self, expected_interfaces: int) -> int:
+        """根据负载优化并发数
+
+        Args:
+            expected_interfaces: 预期接口数
+
+        Returns:
+            优化后的并发数
+        """
+        import os
+        cpu_count = os.cpu_count() or 4
+
+        # 计算最优并发数
+        # 公式: min(接口数/10, CPU核心数*2, 最大50)
+        optimal = min(
+            max(expected_interfaces // 10, 1),  # 至少1个线程
+            cpu_count * 2,  # CPU核心数*2
+            50,  # 最大50个线程
+        )
+
+        self.set_concurrency(optimal)
+        logger.info(f"根据负载优化并发数: 接口数={expected_interfaces}, 优化后并发数={optimal}")
+        return optimal
 
     def set_timeout(self, seconds: int):
         """设置超时时间

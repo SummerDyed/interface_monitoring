@@ -6,15 +6,15 @@ monitor:
   # 监控间隔时间（分钟）
   interval: 15
   # 请求超时时间（秒）
-  timeout: 10
+  timeout: 3
   # 并发线程数
   concurrent_threads: 5
   # 重试次数
-  retry_times: 3
+  retry_times: 0
   # 指数退避策略（秒）
   retry_backoff: [1, 2, 4]
   # 接口文档目录路径
-  interface_pool_path: "../Interface-pool"
+  interface_pool_path: "./Interface-pool"
 
 # 企业微信通知配置
 wechat:

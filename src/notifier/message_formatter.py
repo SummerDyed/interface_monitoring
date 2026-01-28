@@ -37,15 +37,6 @@ class MessageFormatter:
 *由接口监控系统自动发送*
 """
 
-    # 简化的Markdown模板（用于消息较短时）
-    SIMPLE_TEMPLATE = """## 🔔 接口监控告警
-
-**时间**: {timestamp}
-**异常数**: {failure_count}
-
-{error_summary}
-"""
-
     # 正常情况模板（无错误时使用）
     NORMAL_TEMPLATE = """## ✅ 接口监控正常
 
@@ -153,14 +144,12 @@ class MessageFormatter:
                 error_details=error_details
             )
 
-            # 检查消息长度，如果超过限制则使用简化版本
+            # 检查消息长度，如果超过限制则截断
             if len(content) > self.max_message_length:
                 logger.warning(
-                    f"消息长度 ({len(content)}) 超过限制 ({self.max_message_length})，使用简化版本"
+                    f"消息长度 ({len(content)}) 超过限制 ({self.max_message_length})，将截断内容"
                 )
-                content = self._generate_simple_content(
-                    timestamp, failure_count, report
-                )
+                content = content[:self.max_message_length - 50] + "\n\n...内容已截断"
 
             return content
 
@@ -326,45 +315,6 @@ class MessageFormatter:
             logger.error(f"格式化统计信息失败: {str(e)}", exc_info=True)
             return f"❌ 统计信息格式化失败: {str(e)}"
 
-    def _generate_simple_content(
-        self,
-        timestamp: str,
-        failure_count: int,
-        report: Any
-    ) -> str:
-        """生成简化版内容
-
-        Args:
-            timestamp: 时间戳
-            failure_count: 失败数
-            report: 报告对象
-
-        Returns:
-            str: 简化版Markdown内容
-        """
-        # 获取主要错误类型
-        error_summary = "✅ 暂无异常"
-        if failure_count > 0 and hasattr(report, 'errors') and report.errors:
-            error_types = {}
-            for error in report.errors:
-                error_type = getattr(error, 'error_type', 'UNKNOWN')
-                error_types[error_type] = error_types.get(error_type, 0) + 1
-
-            summary_parts = []
-            for error_type, count in error_types.items():
-                summary_parts.append(f"{error_type}: {count}个")
-
-            if summary_parts:
-                error_summary = "\n".join([f"- {part}" for part in summary_parts[:3]])
-                if len(error_types) > 3:
-                    error_summary += f"\n- ... 还有 {len(error_types) - 3} 种错误类型"
-
-        return self.SIMPLE_TEMPLATE.format(
-            timestamp=timestamp,
-            failure_count=failure_count,
-            error_summary=error_summary
-        )
-
     def _generate_error_message(self, error_msg: str) -> str:
         """生成错误消息
 
@@ -442,13 +392,15 @@ class MessageFormatter:
             # 计算运行时间（简化处理，默认为空或从报告时间推断）
             duration = "未知"
 
-            # 查找最慢的接口
+            # 查找最慢的接口（只统计成功的接口）
             max_response_time = 0
             slowest_interface_info = "无"
 
             for result in results:
-                if hasattr(result, 'response_time') and result.response_time > max_response_time:
-                    max_response_time = result.response_time
+                # 只统计成功的接口
+                if hasattr(result, 'is_success') and result.is_success():
+                    if hasattr(result, 'response_time') and result.response_time > max_response_time:
+                        max_response_time = result.response_time
 
                     # 获取接口信息
                     interface_name = getattr(result, 'interface_name', '未知接口')

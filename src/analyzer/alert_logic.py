@@ -31,45 +31,41 @@ class AlertRule:
 def should_send_alert(report: MonitorReport) -> bool:
     """判断是否需要发送告警
 
-    只推送404和500错误作为告警
+    只对404和500错误发送异常告警
+    其他情况发送正常报告
 
     Args:
         report: 监控报告
 
     Returns:
-        bool: 是否需要发送告警
+        bool: 是否需要发送告警（总是返回True，除非报告为空）
     """
 
-    # 检查是否有404或500错误
+    if not report.errors:
+        # 无错误，仍然发送正常报告
+        logger.info("无错误，发送正常监控报告")
+        return True
+
+    # 检查是否有404或500错误（触发异常告警）
     for error in report.errors:
-        # 检查HTTP错误类型
-        if error.error_type in AlertRule.CRITICAL_ERROR_TYPES:
-            logger.info(
-                f"发现{error.error_type}错误，触发告警: {error.interface_name}"
-            )
+        if error.error_type == 'HTTP_500':
+            logger.info(f"发现500错误，触发异常告警: {error.interface_name}")
+            return True
+        if error.error_type == 'HTTP_404':
+            logger.info(f"发现404错误，触发异常告警: {error.interface_name}")
             return True
 
         # 检查HTTP状态码
-        if error.status_code == AlertRule.HTTP_404_CODE:
-            logger.info(
-                f"发现404状态码，触发告警: {error.interface_name}"
-            )
+        if error.status_code == 500:
+            logger.info(f"发现500状态码，触发异常告警: {error.interface_name}")
+            return True
+        if error.status_code == 404:
+            logger.info(f"发现404状态码，触发异常告警: {error.interface_name}")
             return True
 
-        if error.status_code == AlertRule.HTTP_500_CODE:
-            logger.info(
-                f"发现500状态码，触发告警: {error.interface_name}"
-            )
-            return True
-
-        # 检查业务码（从响应数据中提取）
-        if _check_business_error_code(error):
-            logger.info(
-                f"发现业务错误码404/500，触发告警: {error.interface_name}"
-            )
-            return True
-
-    return False
+    # 无404/500错误，发送正常报告（包含401、400等业务错误信息）
+    logger.info("无404/500错误，发送正常监控报告")
+    return True
 
 
 def _check_business_error_code(error: ErrorInfo) -> bool:
@@ -133,6 +129,7 @@ def get_alert_priority(report: MonitorReport) -> str:
     if has_404:
         return 'HIGH'  # 404错误，高优先级
 
+    # 401/400等业务错误，优先级为LOW
     return 'LOW'
 
 
@@ -395,8 +392,8 @@ def filter_alert_errors(report: MonitorReport) -> List[ErrorInfo]:
     alert_errors = []
 
     for error in report.errors:
-        # 检查HTTP错误类型
-        if error.error_type in AlertRule.CRITICAL_ERROR_TYPES:
+        # 检查HTTP错误类型（只关注404、500）
+        if error.error_type in ['HTTP_404', 'HTTP_500']:
             alert_errors.append(error)
             continue
 
@@ -405,7 +402,7 @@ def filter_alert_errors(report: MonitorReport) -> List[ErrorInfo]:
             alert_errors.append(error)
             continue
 
-        # 检查业务码
+        # 检查业务码（只关注404、500）
         if _check_business_error_code(error):
             alert_errors.append(error)
             continue
@@ -423,40 +420,48 @@ def process_alert(report: MonitorReport) -> Dict[str, Any]:
     Returns:
         Dict[str, Any]: 告警信息
     """
-    # 判断是否需要告警
-    if not should_send_alert(report):
-        logger.info("无需发送告警")
-        return {
-            'should_alert': False,
-            'reason': '无404/500错误'
-        }
+    # 总是发送通知（除非报告为空）
+    should_alert = should_send_alert(report)
 
     # 获取告警信息
     priority = get_alert_priority(report)
     recipients = get_alert_recipients(report)
-    summary = get_alert_summary(report)
+
+    # 过滤出需要告警的错误（404/500/401）
     alert_errors = filter_alert_errors(report)
+
+    # 构建摘要 - 只有两个场景
+    if alert_errors:
+        # 有404/500错误 → 异常告警
+        summary = get_alert_summary(report)
+        alert_type = 'error'
+    else:
+        # 无404/500错误 → 正常报告（即使有400/401也不显示）
+        summary = f"✅ 监控正常 - 共监控{report.stats.total_count}个接口"
+        alert_type = 'normal'
 
     # 获取详细告警内容
     detailed_content = get_detailed_alert_content(alert_errors)
-    simple_content = get_alert_content(alert_errors)
+    simple_content = get_alert_content(alert_errors) if alert_errors else "所有接口监控正常"
 
     # 构建告警信息
     alert_info = {
-        'should_alert': True,
+        'should_alert': should_alert,
+        'alert_type': alert_type,
         'priority': priority,
         'recipients': recipients,
         'summary': summary,
         'error_count': len(alert_errors),
         'total_errors': len(report.errors),
-        'alert_errors': alert_errors,  # 仅包含404/500错误
+        'alert_errors': alert_errors,  # 仅包含404/500/401错误
         'detailed_content': detailed_content,  # 详细告警内容
         'content': simple_content,  # 简化告警内容
         'report': report,
     }
 
     logger.info(
-        f"准备发送告警: 优先级={priority}, "
+        f"准备发送{'告警' if alert_type == 'error' else '报告'}: "
+        f"类型={alert_type}, 优先级={priority}, "
         f"接收人={len(recipients)}个, "
         f"告警错误={len(alert_errors)}个"
     )

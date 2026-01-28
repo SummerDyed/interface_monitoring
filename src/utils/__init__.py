@@ -20,6 +20,14 @@ from .logger import (
 
 from .log_config import LogConfig, parse_size, format_size
 from .formatters import LogFormatter, JSONFormatter
+from .performance_optimizer import PerformanceOptimizer, OptimizationConfig, PerformanceMetrics
+from .performance_monitor import (
+    PerformanceMonitor,
+    MetricPoint,
+    PerformanceAlert,
+    get_global_monitor,
+    set_global_monitor,
+)
 
 __all__ = [
     'LoggerManager',
@@ -36,5 +44,13 @@ __all__ = [
     'parse_size',
     'format_size',
     'LogFormatter',
-    'JSONFormatter'
+    'JSONFormatter',
+    'PerformanceOptimizer',
+    'OptimizationConfig',
+    'PerformanceMetrics',
+    'PerformanceMonitor',
+    'MetricPoint',
+    'PerformanceAlert',
+    'get_global_monitor',
+    'set_global_monitor',
 ]
