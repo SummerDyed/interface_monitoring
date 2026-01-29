@@ -27,7 +27,7 @@ class MessageFormatter:
 **监控时间**: {timestamp}
 **总接口数**: {total_count}
 **运行时间**: {duration}
-**最慢接口**: {slowest_interface}
+**超时接口**: {timeout_interfaces}
 
 ## ⚠️ 异常详情
 
@@ -43,8 +43,7 @@ class MessageFormatter:
 **监控时间**: {timestamp}
 **接口总数**: {total_count}
 **运行时间**: {duration}
-**最慢接口**:
-{slowest_interface}
+**超时接口**: {timeout_interfaces}
 
 ---
 *由接口监控系统自动发送*
@@ -119,18 +118,17 @@ class MessageFormatter:
             if alert_info and 'statistics' in alert_info:
                 statistics = alert_info['statistics']
                 duration = statistics.get('duration', '未知')
-                slowest_interface = statistics.get('slowest_interface', '无')
-                slowest_url = statistics.get('slowest_url', '')
-
-                # 构建最慢接口信息
-                if slowest_interface != '无' and slowest_url:
-                    slowest_info = f"{slowest_interface} ({slowest_url})"
-                else:
-                    slowest_info = slowest_interface
+                timeout_interfaces = alert_info.get('timeout_interfaces', [])
             else:
-                # 否则计算运行时间和最慢接口
-                duration, slowest_interface = self._calculate_duration_and_slowest(report)
-                slowest_info = slowest_interface
+                # 否则计算运行时间和超时接口
+                duration = '未知'
+                timeout_interfaces = getattr(report, 'timeout_interfaces', [])
+
+            # 构建超时接口信息
+            if timeout_interfaces:
+                timeout_info = "\n".join([f"- {url}" for url in timeout_interfaces])
+            else:
+                timeout_info = "无"
 
             # 生成错误详情
             error_details = self._format_error_details(report)
@@ -140,7 +138,7 @@ class MessageFormatter:
                 timestamp=timestamp,
                 total_count=total_count,
                 duration=duration,
-                slowest_interface=slowest_info,
+                timeout_interfaces=timeout_info,
                 error_details=error_details
             )
 
@@ -311,22 +309,20 @@ class MessageFormatter:
             statistics = alert_info.get('statistics', {})
             total_count = statistics.get('total', 0)
             duration = statistics.get('duration', '0秒')
-            slowest_interface = statistics.get('slowest_interface', '无')
-            slowest_url = statistics.get('slowest_url', '')
-            slowest_time = statistics.get('slowest_time', '无')
+            timeout_interfaces = alert_info.get('timeout_interfaces', [])
 
-            # 构建最慢接口信息（包含URL）
-            if slowest_interface != '无' and slowest_url:
-                slowest_info = f"{slowest_interface}\n  URL: {slowest_url} ({slowest_time})"
+            # 构建超时接口信息
+            if timeout_interfaces:
+                timeout_info = "\n".join([f"- {url}" for url in timeout_interfaces])
             else:
-                slowest_info = f"{slowest_interface} ({slowest_time})"
+                timeout_info = "无"
 
             # 填充正常模板
             content = self.NORMAL_TEMPLATE.format(
                 timestamp=timestamp,
                 total_count=total_count,
                 duration=duration,
-                slowest_interface=slowest_info
+                timeout_interfaces=timeout_info
             )
 
             return content

@@ -120,6 +120,9 @@ class MonitorReport:
     stats: Optional['Stats'] = None
     """统计信息"""
 
+    timeout_interfaces: List[str] = field(default_factory=list)
+    """超时接口列表（响应时间超过3秒）"""
+
     content: str = ""
     """Markdown格式的报告内容"""
 
@@ -141,6 +144,7 @@ class MonitorReport:
             'success_rate': self.success_rate,
             'errors': [error.to_dict() for error in self.errors],
             'stats': self.stats.to_dict() if self.stats else None,
+            'timeout_interfaces': self.timeout_interfaces,
             'content': self.content,
             'alert_info': self.alert_info,
         }

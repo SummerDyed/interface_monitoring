@@ -76,14 +76,24 @@ class ResultAnalyzer:
         # 分类结果
         success_results, failed_results = self.categorize_results(results)
 
-        # 聚合异常
+        # 检查响应时间超过3秒的接口（仅用于收集超时列表）
+        timeout_interfaces = []
+        for result in results:
+            if result.response_time > 3.0:
+                timeout_url = result.interface.url if result.interface else ""
+                timeout_interfaces.append(timeout_url)
+
+        if timeout_interfaces:
+            logger.info(f"发现 {len(timeout_interfaces)} 个响应时间超过3秒的接口")
+
+        # 聚合异常（保持原有逻辑，不修改错误类型）
         errors = self.aggregate_errors(failed_results)
 
         # 生成统计
         stats = self.generate_stats(results)
 
         # 构建报告
-        report = self._build_report(results, errors, stats, title)
+        report = self._build_report(results, errors, stats, title, timeout_interfaces)
 
         # 判断是否需要告警（仅404和500错误）
         alert_info = process_alert(report)
@@ -181,6 +191,7 @@ class ResultAnalyzer:
         errors: List[ErrorInfo],
         stats: Stats,
         title: Optional[str],
+        timeout_interfaces: Optional[List[str]] = None,
     ) -> MonitorReport:
         """构建监控报告
 
@@ -210,6 +221,9 @@ class ResultAnalyzer:
             errors=errors,
             stats=stats,
         )
+
+        # 添加超时接口信息
+        report.timeout_interfaces = timeout_interfaces or []
 
         return report
 

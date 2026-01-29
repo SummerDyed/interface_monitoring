@@ -219,6 +219,8 @@ def run_monitoring_cycle(config: Dict[str, Any]) -> bool:
     global _scanner, _token_manager, _monitor_engine, _analyzer, _notifier, _logger
 
     cycle_start = datetime.now()
+    monitor_duration = 0.0  # 初始化监控执行时间
+    analyze_duration = 0.0  # 初始化分析耗时
     _logger.info(f"=" * 60)
     _logger.info(f"开始监控周期: {cycle_start.strftime('%Y-%m-%d %H:%M:%S')}")
     _logger.info(f"=" * 60)
@@ -252,7 +254,11 @@ def run_monitoring_cycle(config: Dict[str, Any]) -> bool:
 
         # Step 3: 执行监控
         _logger.info("Step 3: 执行接口监控...")
+        monitor_start = datetime.now()
         results = _monitor_engine.execute(interfaces, token_map)
+        monitor_end = datetime.now()
+        monitor_duration = (monitor_end - monitor_start).total_seconds()
+        _logger.info(f"接口监控执行时间: {monitor_duration:.2f}秒 ({len(interfaces)}个接口)")
 
         if not results:
             _logger.warning("监控结果为空")
@@ -260,7 +266,11 @@ def run_monitoring_cycle(config: Dict[str, Any]) -> bool:
 
         # Step 4: 分析结果
         _logger.info("Step 4: 分析监控结果...")
+        analyze_start = datetime.now()
         report = _analyzer.analyze(results, title=f"监控报告 - {cycle_start.strftime('%Y-%m-%d %H:%M:%S')}")
+        analyze_end = datetime.now()
+        analyze_duration = (analyze_end - analyze_start).total_seconds()
+        _logger.info(f"分析耗时: {analyze_duration:.2f}秒")
 
         # Step 5: 推送监控报告（总是发送）
         _logger.info("Step 5: 发送监控报告...")
@@ -279,73 +289,39 @@ def run_monitoring_cycle(config: Dict[str, Any]) -> bool:
 
                 if has_critical_errors:
                     _logger.info("发现严重错误，发送告警通知")
-                    # 计算运行时间
-                    cycle_end = datetime.now()
-                    duration = (cycle_end - cycle_start).total_seconds()
-
-                    # 获取响应时间最慢的接口
-                    slowest_interface = None
-                    slowest_url = None
-                    max_response_time = 0
-                    for result in results:
-                        if result.response_time > max_response_time:
-                            max_response_time = result.response_time
-                            slowest_interface = result.interface.name if result.interface else "未知接口"
-                            slowest_url = result.interface.url if result.interface else ""
-
                     # 有严重错误，使用告警信息
                     if report.alert_info:
                         alert_info = report.alert_info.copy()
                         alert_info['is_alert'] = True
                         alert_info['alert_type'] = 'error'
                         alert_info['summary'] = f"🚨 接口监控告警 - 发现{len([e for e in results if hasattr(e, 'error_type') and (e.error_type in {'HTTP_404', 'HTTP_500'} or e.status_code in [404, 500])])}个严重错误"
+                        alert_info['timeout_interfaces'] = report.timeout_interfaces
                         alert_info['statistics'] = {
                             'total': stats['total'],
-                            'duration': f"{duration:.2f}秒",
-                            'slowest_interface': slowest_interface if slowest_interface else "无",
-                            'slowest_url': slowest_url if slowest_url else "",
-                            'slowest_time': f"{max_response_time:.2f}秒" if max_response_time > 0 else "无"
+                            'duration': f"{monitor_duration:.2f}秒"
                         }
                     else:
                         alert_info = {
                             'is_alert': True,
                             'alert_type': 'error',
                             'summary': f"🚨 接口监控告警 - 发现严重错误",
+                            'timeout_interfaces': report.timeout_interfaces,
                             'statistics': {
                                 'total': stats['total'],
-                                'duration': f"{duration:.2f}秒",
-                                'slowest_interface': slowest_interface if slowest_interface else "无",
-                                'slowest_url': slowest_url if slowest_url else "",
-                                'slowest_time': f"{max_response_time:.2f}秒" if max_response_time > 0 else "无"
+                                'duration': f"{monitor_duration:.2f}秒"
                             }
                         }
                 else:
                     _logger.info("无严重错误，发送正常监控报告")
                     # 无严重错误，发送简化正常报告
-                    # 计算运行时间
-                    cycle_end = datetime.now()
-                    duration = (cycle_end - cycle_start).total_seconds()
-
-                    # 获取响应时间最慢的接口
-                    slowest_interface = None
-                    slowest_url = None
-                    max_response_time = 0
-                    for result in results:
-                        if result.response_time > max_response_time:
-                            max_response_time = result.response_time
-                            slowest_interface = result.interface.name if result.interface else "未知接口"
-                            slowest_url = result.interface.url if result.interface else ""
-
                     alert_info = {
                         'is_alert': False,
                         'alert_type': 'normal',
                         'summary': f"✅ 接口监控正常 - 共监控{stats['total']}个接口",
+                        'timeout_interfaces': report.timeout_interfaces,
                         'statistics': {
                             'total': stats['total'],
-                            'duration': f"{duration:.2f}秒",
-                            'slowest_interface': slowest_interface if slowest_interface else "无",
-                            'slowest_url': slowest_url if slowest_url else "",
-                            'slowest_time': f"{max_response_time:.2f}秒" if max_response_time > 0 else "无"
+                            'duration': f"{monitor_duration:.2f}秒"
                         }
                     }
 
@@ -378,7 +354,7 @@ def run_monitoring_cycle(config: Dict[str, Any]) -> bool:
 
         _logger.info(f"=" * 60)
         _logger.info(f"监控周期完成: {cycle_end.strftime('%Y-%m-%d %H:%M:%S')}")
-        _logger.info(f"总耗时: {duration:.2f}秒")
+        _logger.info(f"总耗时: {duration:.2f}秒 (监控执行: {monitor_duration:.2f}秒, 分析: {analyze_duration:.2f}秒)")
         _logger.info(f"接口总数: {stats['total']}")
         _logger.info(f"成功: {stats['success']}")
         _logger.info(f"失败: {stats['failed']}")

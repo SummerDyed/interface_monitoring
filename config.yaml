@@ -4,7 +4,7 @@
 # 监控配置
 monitor:
   # 监控间隔时间（分钟）
-  interval: 15
+  interval: 5
   # 请求超时时间（秒）
   timeout: 10
   # 并发线程数

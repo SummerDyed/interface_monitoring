@@ -31,7 +31,7 @@ class AlertRule:
 def should_send_alert(report: MonitorReport) -> bool:
     """判断是否需要发送告警
 
-    只对404和500错误发送异常告警
+    对404、500错误和超时接口（超过3秒）发送异常告警
     其他情况发送正常报告
 
     Args:
@@ -41,9 +41,14 @@ def should_send_alert(report: MonitorReport) -> bool:
         bool: 是否需要发送告警（总是返回True，除非报告为空）
     """
 
+    # 首先检查是否有超时接口
+    if hasattr(report, 'timeout_interfaces') and report.timeout_interfaces:
+        logger.info(f"发现{len(report.timeout_interfaces)}个超时接口，触发异常告警")
+        return True
+
     if not report.errors:
-        # 无错误，仍然发送正常报告
-        logger.info("无错误，发送正常监控报告")
+        # 无错误和超时接口，发送正常报告
+        logger.info("无错误和超时接口，发送正常监控报告")
         return True
 
     # 检查是否有404或500错误（触发异常告警）
@@ -63,8 +68,8 @@ def should_send_alert(report: MonitorReport) -> bool:
             logger.info(f"发现404状态码，触发异常告警: {error.interface_name}")
             return True
 
-    # 无404/500错误，发送正常报告（包含401、400等业务错误信息）
-    logger.info("无404/500错误，发送正常监控报告")
+    # 无404/500错误且无超时接口，发送正常报告（包含401、400等业务错误信息）
+    logger.info("无404/500错误和超时接口，发送正常监控报告")
     return True
 
 
@@ -210,8 +215,10 @@ def get_alert_summary(report: MonitorReport) -> str:
     Returns:
         str: 告警摘要
     """
-    if not report.errors:
-        return "无告警"
+    # 统计超时接口数量
+    timeout_count = 0
+    if hasattr(report, 'timeout_interfaces') and report.timeout_interfaces:
+        timeout_count = len(report.timeout_interfaces)
 
     # 统计404和500错误数量
     error_404_count = sum(
@@ -226,6 +233,10 @@ def get_alert_summary(report: MonitorReport) -> str:
 
     summary_parts = []
 
+    # 先添加超时接口（如果存在）
+    if timeout_count > 0:
+        summary_parts.append(f"{timeout_count}个超时接口")
+
     if error_500_count > 0:
         summary_parts.append(f"{error_500_count}个500错误")
 
@@ -235,13 +246,14 @@ def get_alert_summary(report: MonitorReport) -> str:
     return "，".join(summary_parts) if summary_parts else "未知错误"
 
 
-def get_detailed_alert_content(alert_errors: List[ErrorInfo]) -> str:
+def get_detailed_alert_content(alert_errors: List[ErrorInfo], report=None) -> str:
     """获取详细的告警内容
 
     包含异常状态、接口信息、请求响应详情、文件路径等
 
     Args:
         alert_errors: 需要告警的错误列表
+        report: 监控报告对象（可选）
 
     Returns:
         str: 详细的告警内容
@@ -250,6 +262,18 @@ def get_detailed_alert_content(alert_errors: List[ErrorInfo]) -> str:
         return "无告警错误"
 
     content_parts = []
+
+    # 检查报告是否有超时接口信息
+    timeout_interfaces = []
+    if hasattr(report, 'timeout_interfaces') and report.timeout_interfaces:
+        timeout_interfaces = report.timeout_interfaces
+
+    # 如果有超时接口，先显示超时接口列表
+    if timeout_interfaces:
+        content_parts.append("=== 超时接口（响应时间超过3秒） ===")
+        for i, url in enumerate(timeout_interfaces, 1):
+            content_parts.append(f"{i}. {url}")
+        content_parts.append("")
 
     for i, error in enumerate(alert_errors, 1):
         # 构建单个错误的详细内容
@@ -349,17 +373,25 @@ def _get_interface_file_path(error: ErrorInfo) -> str:
     return possible_paths[0] if possible_paths else f"interfaces/{service}/"
 
 
-def get_alert_content(alert_errors: List[ErrorInfo]) -> str:
+def get_alert_content(alert_errors: List[ErrorInfo], report=None) -> str:
     """获取告警内容（简化版）
 
     用于企业微信等平台推送的简洁告警内容
 
     Args:
         alert_errors: 需要告警的错误列表
+        report: 监控报告对象（可选）
 
     Returns:
         str: 告警内容
     """
+    # 如果没有错误但有超时接口，只显示超时接口信息
+    if not alert_errors and report and hasattr(report, 'timeout_interfaces') and report.timeout_interfaces:
+        content = f"发现 {len(report.timeout_interfaces)} 个超时接口（响应时间超过3秒）:\n\n"
+        for i, url in enumerate(report.timeout_interfaces, 1):
+            content += f"超时接口 #{i}: {url}\n"
+        return content
+
     if not alert_errors:
         return "无告警错误"
 
@@ -367,6 +399,7 @@ def get_alert_content(alert_errors: List[ErrorInfo]) -> str:
 
     for i, error in enumerate(alert_errors, 1):
         file_path = _get_interface_file_path(error)
+
         content += f"""告警 #{i}:
 - 接口: {error.interface_name} ({error.interface_method} {error.interface_url})
 - 异常: {error.error_type} (HTTP {error.status_code or 'N/A'})
@@ -445,19 +478,21 @@ def process_alert(report: MonitorReport) -> Dict[str, Any]:
     # 过滤出需要告警的错误（404/500/401）
     alert_errors = filter_alert_errors(report)
 
-    # 构建摘要 - 只有两个场景
-    if alert_errors:
-        # 有404/500错误 → 异常告警
+    # 检查是否有超时接口
+    has_timeout_interfaces = hasattr(report, 'timeout_interfaces') and report.timeout_interfaces
+
+    # 构建摘要 - 有404/500错误或有超时接口 → 异常告警
+    if alert_errors or has_timeout_interfaces:
         summary = get_alert_summary(report)
         alert_type = 'error'
     else:
-        # 无404/500错误 → 正常报告（即使有400/401也不显示）
+        # 无404/500错误且无超时接口 → 正常报告
         summary = f"[OK] 监控正常 - 共监控{report.total_count}个接口"
         alert_type = 'normal'
 
     # 获取详细告警内容
-    detailed_content = get_detailed_alert_content(alert_errors)
-    simple_content = get_alert_content(alert_errors) if alert_errors else "所有接口监控正常"
+    detailed_content = get_detailed_alert_content(alert_errors, report)
+    simple_content = get_alert_content(alert_errors, report)
 
     # 构建告警信息
     alert_info = {
