@@ -1,0 +1,12 @@
+{
+  "POST /admin/api/v1/users/batch/{operation}": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/users/batch/{operation}",
+    "method": "POST",
+    "path": "/admin/api/v1/users/batch/{operation}",
+    "parameters": {
+      "operation": "freeze",
+      "userIds": "1,2,3",
+      "reason": "违规操作"
+    }
+  }
+}

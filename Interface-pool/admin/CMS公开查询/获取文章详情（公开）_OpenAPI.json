@@ -1,0 +1,11 @@
+{
+  "GET /api/v1/cms/articles/{id}": {
+    "url": "http://120.79.173.8:8201/maiban-admin/api/v1/cms/articles/{id}",
+    "method": "GET",
+    "path": "/api/v1/cms/articles/{id}",
+    "parameters": {
+      "id": 1,
+      "X-Tenant-Id": 1
+    }
+  }
+}

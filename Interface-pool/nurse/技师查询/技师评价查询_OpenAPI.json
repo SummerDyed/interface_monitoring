@@ -1,0 +1,16 @@
+{
+  "GET /api/v1/nurse/{nurseId}/reviews": {
+    "url": "http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/{nurseId}/reviews",
+    "method": "GET",
+    "path": "/api/v1/nurse/{nurseId}/reviews",
+    "parameters": {
+      "nurseId": 1001,
+      "rating": 1,
+      "hasImages": false,
+      "sortBy": "comprehensive",
+      "sortOrder": "",
+      "page": 1,
+      "pageSize": 20
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "POST /api/v1/admin/certificate/audit/resubmit": {
+    "url": "http://120.79.173.8:8201/maiban-nurse/api/v1/admin/certificate/audit/resubmit",
+    "method": "POST",
+    "path": "/api/v1/admin/certificate/audit/resubmit",
+    "parameters": {
+      "certId": 1003,
+      "certPhotoUrl": "https://oss.example.com/certificates/123456/front_new.jpg"
+    }
+  }
+}

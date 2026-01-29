@@ -1,0 +1,11 @@
+{
+  "DELETE /admin/api/v1/nurse/{nurseId}/service-category/{categoryId}": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/nurse/{nurseId}/service-category/{categoryId}",
+    "method": "DELETE",
+    "path": "/admin/api/v1/nurse/{nurseId}/service-category/{categoryId}",
+    "parameters": {
+      "nurseId": 1001,
+      "categoryId": 1
+    }
+  }
+}

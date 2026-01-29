@@ -1,0 +1,10 @@
+{
+  "DELETE /api/v1/nurse/qualification/{id}": {
+    "url": "http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/qualification/{id}",
+    "method": "DELETE",
+    "path": "/api/v1/nurse/qualification/{id}",
+    "parameters": {
+      "id": 1001
+    }
+  }
+}

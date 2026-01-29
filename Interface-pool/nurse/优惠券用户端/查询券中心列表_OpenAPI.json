@@ -1,0 +1,12 @@
+{
+  "GET /api/v1/coupons/center": {
+    "url": "http://120.79.173.8:8201/maiban-nurse/api/v1/coupons/center",
+    "method": "GET",
+    "path": "/api/v1/coupons/center",
+    "parameters": {
+      "tab": "",
+      "page": 1,
+      "pageSize": 20
+    }
+  }
+}

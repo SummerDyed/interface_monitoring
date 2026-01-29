@@ -1,0 +1,10 @@
+{
+  "GET /admin/api/v1/audit/health/{certId}": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/audit/health/{certId}",
+    "method": "GET",
+    "path": "/admin/api/v1/audit/health/{certId}",
+    "parameters": {
+      "certId": 1
+    }
+  }
+}

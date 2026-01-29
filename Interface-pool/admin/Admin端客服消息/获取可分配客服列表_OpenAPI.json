@@ -1,0 +1,8 @@
+{
+  "GET /api/v1/admin/customer-service/admins/available": {
+    "url": "http://120.79.173.8:8201/maiban-admin/api/v1/admin/customer-service/admins/available",
+    "method": "GET",
+    "path": "/api/v1/admin/customer-service/admins/available",
+    "parameters": {}
+  }
+}

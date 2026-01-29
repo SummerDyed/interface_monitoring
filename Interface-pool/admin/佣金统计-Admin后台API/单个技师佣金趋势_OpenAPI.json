@@ -1,0 +1,13 @@
+{
+  "GET /api/v1/admin/commission/statistics/nurse/{nurseId}/trend": {
+    "url": "http://120.79.173.8:8201/maiban-admin/api/v1/admin/commission/statistics/nurse/{nurseId}/trend",
+    "method": "GET",
+    "path": "/api/v1/admin/commission/statistics/nurse/{nurseId}/trend",
+    "parameters": {
+      "nurseId": 1001,
+      "startDate": "2024-01-01",
+      "endDate": "2024-01-01",
+      "granularity": ""
+    }
+  }
+}

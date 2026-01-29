@@ -1,0 +1,8 @@
+{
+  "POST /api/v1/nurse/qualification": {
+    "url": "http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/qualification",
+    "method": "POST",
+    "path": "/api/v1/nurse/qualification",
+    "parameters": {}
+  }
+}

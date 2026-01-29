@@ -1,0 +1,10 @@
+{
+  "PUT /admin/api/v1/coupons/templates/{id}": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/coupons/templates/{id}",
+    "method": "PUT",
+    "path": "/admin/api/v1/coupons/templates/{id}",
+    "parameters": {
+      "id": 1
+    }
+  }
+}

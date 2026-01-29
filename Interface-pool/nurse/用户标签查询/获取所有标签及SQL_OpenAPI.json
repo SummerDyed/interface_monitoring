@@ -1,0 +1,8 @@
+{
+  "GET /api/v1/nurse/tags/all-with-sql": {
+    "url": "http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/tags/all-with-sql",
+    "method": "GET",
+    "path": "/api/v1/nurse/tags/all-with-sql",
+    "parameters": {}
+  }
+}

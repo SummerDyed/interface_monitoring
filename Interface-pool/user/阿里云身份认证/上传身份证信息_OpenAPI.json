@@ -1,0 +1,8 @@
+{
+  "POST /api/v1/user/idv/upload-idcard-info": {
+    "url": "http://120.79.173.8:8201/maiban-user/api/v1/user/idv/upload-idcard-info",
+    "method": "POST",
+    "path": "/api/v1/user/idv/upload-idcard-info",
+    "parameters": {}
+  }
+}

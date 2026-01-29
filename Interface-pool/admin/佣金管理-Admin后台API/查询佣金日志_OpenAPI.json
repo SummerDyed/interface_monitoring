@@ -1,0 +1,16 @@
+{
+  "GET /api/v1/admin/commission/logs": {
+    "url": "http://120.79.173.8:8201/maiban-admin/api/v1/admin/commission/logs",
+    "method": "GET",
+    "path": "/api/v1/admin/commission/logs",
+    "parameters": {
+      "nurseId": 1001,
+      "serviceCategoryId": 1,
+      "settlementStatus": 1,
+      "startDate": "2024-01-01",
+      "endDate": "2024-01-01",
+      "pageNum": 1,
+      "pageSize": 20
+    }
+  }
+}

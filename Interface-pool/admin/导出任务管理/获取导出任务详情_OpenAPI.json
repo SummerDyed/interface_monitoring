@@ -1,0 +1,10 @@
+{
+  "GET /admin/api/v1/export-tasks/{taskId}": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/export-tasks/{taskId}",
+    "method": "GET",
+    "path": "/admin/api/v1/export-tasks/{taskId}",
+    "parameters": {
+      "taskId": "export_1701234567890"
+    }
+  }
+}

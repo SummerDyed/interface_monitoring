@@ -24,6 +24,6 @@ mkdir -p logs
 
 # 启动服务
 echo "启动监控服务..."
-python -m src.main
+PYTHONPATH=src python src/main.py
 
 echo "服务已停止"

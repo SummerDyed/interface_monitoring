@@ -1,0 +1,8 @@
+{
+  "POST /api/v1/nurse/professional/consult": {
+    "url": "http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/professional/consult",
+    "method": "POST",
+    "path": "/api/v1/nurse/professional/consult",
+    "parameters": {}
+  }
+}

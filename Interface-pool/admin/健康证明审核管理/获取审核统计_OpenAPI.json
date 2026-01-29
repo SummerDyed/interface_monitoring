@@ -1,0 +1,8 @@
+{
+  "GET /admin/api/v1/audit/health/statistics": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/audit/health/statistics",
+    "method": "GET",
+    "path": "/admin/api/v1/audit/health/statistics",
+    "parameters": {}
+  }
+}

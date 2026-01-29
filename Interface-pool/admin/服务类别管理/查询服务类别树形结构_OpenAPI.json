@@ -1,0 +1,8 @@
+{
+  "GET /admin/api/v1/service-category/tree": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/service-category/tree",
+    "method": "GET",
+    "path": "/admin/api/v1/service-category/tree",
+    "parameters": {}
+  }
+}

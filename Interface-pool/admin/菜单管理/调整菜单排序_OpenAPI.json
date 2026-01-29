@@ -1,0 +1,10 @@
+{
+  "PUT /admin/api/v1/menus/{id}/sort": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/menus/{id}/sort",
+    "method": "PUT",
+    "path": "/admin/api/v1/menus/{id}/sort",
+    "parameters": {
+      "id": 1
+    }
+  }
+}

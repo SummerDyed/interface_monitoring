@@ -1,0 +1,10 @@
+{
+  "GET /admin/api/v1/order/{orderId}": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/order/{orderId}",
+    "method": "GET",
+    "path": "/admin/api/v1/order/{orderId}",
+    "parameters": {
+      "orderId": 1001
+    }
+  }
+}

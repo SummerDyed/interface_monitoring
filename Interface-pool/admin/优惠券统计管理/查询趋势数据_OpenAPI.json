@@ -1,0 +1,12 @@
+{
+  "GET /admin/api/v1/coupons/statistics/trend": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/coupons/statistics/trend",
+    "method": "GET",
+    "path": "/admin/api/v1/coupons/statistics/trend",
+    "parameters": {
+      "startTime": "2024-01-01T00:00:00",
+      "endTime": "2024-12-31T23:59:59",
+      "dimension": ""
+    }
+  }
+}

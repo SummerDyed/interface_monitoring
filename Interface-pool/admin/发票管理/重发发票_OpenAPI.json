@@ -1,0 +1,10 @@
+{
+  "POST /admin/api/v1/invoice/{invoiceId}/resend": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/invoice/{invoiceId}/resend",
+    "method": "POST",
+    "path": "/admin/api/v1/invoice/{invoiceId}/resend",
+    "parameters": {
+      "invoiceId": 1001
+    }
+  }
+}

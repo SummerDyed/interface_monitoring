@@ -1,0 +1,12 @@
+{
+  "GET /api/v1/cms/pages/config": {
+    "url": "http://120.79.173.8:8201/maiban-admin/api/v1/cms/pages/config",
+    "method": "GET",
+    "path": "/api/v1/cms/pages/config",
+    "parameters": {
+      "path": "/",
+      "language": "zh",
+      "domain": "example.com"
+    }
+  }
+}

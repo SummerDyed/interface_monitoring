@@ -1,0 +1,14 @@
+{
+  "GET /api/v1/nurse/{nurseId}/certificates": {
+    "url": "http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/{nurseId}/certificates",
+    "method": "GET",
+    "path": "/api/v1/nurse/{nurseId}/certificates",
+    "parameters": {
+      "nurseId": 123456,
+      "certType": 1,
+      "verifyStatus": 1,
+      "page": 1,
+      "pageSize": 20
+    }
+  }
+}

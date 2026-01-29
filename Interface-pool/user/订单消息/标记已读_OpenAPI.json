@@ -1,0 +1,10 @@
+{
+  "POST /api/v1/user/orders/{orderId}/messages/read": {
+    "url": "http://120.79.173.8:8201/maiban-user/api/v1/user/orders/{orderId}/messages/read",
+    "method": "POST",
+    "path": "/api/v1/user/orders/{orderId}/messages/read",
+    "parameters": {
+      "orderId": 1001
+    }
+  }
+}

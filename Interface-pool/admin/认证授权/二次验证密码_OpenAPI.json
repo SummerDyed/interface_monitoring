@@ -1,0 +1,8 @@
+{
+  "POST /admin/api/v1/auth/verify-password": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/auth/verify-password",
+    "method": "POST",
+    "path": "/admin/api/v1/auth/verify-password",
+    "parameters": {}
+  }
+}

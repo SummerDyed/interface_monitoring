@@ -1,0 +1,14 @@
+{
+  "GET /admin/api/v1/statistics/export": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/statistics/export",
+    "method": "GET",
+    "path": "/admin/api/v1/statistics/export",
+    "parameters": {
+      "type": "user_growth",
+      "dimension": "day",
+      "startDate": "2025-12-01",
+      "endDate": "2025-12-31",
+      "format": "excel"
+    }
+  }
+}

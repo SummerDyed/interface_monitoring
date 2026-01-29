@@ -1,0 +1,10 @@
+{
+  "POST /admin/api/v1/tenants/{id}/admin": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/tenants/{id}/admin",
+    "method": "POST",
+    "path": "/admin/api/v1/tenants/{id}/admin",
+    "parameters": {
+      "id": 1
+    }
+  }
+}

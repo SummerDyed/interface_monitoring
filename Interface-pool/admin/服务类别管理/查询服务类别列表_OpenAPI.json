@@ -1,0 +1,13 @@
+{
+  "GET /admin/api/v1/service-category/list": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/service-category/list",
+    "method": "GET",
+    "path": "/admin/api/v1/service-category/list",
+    "parameters": {
+      "status": 1,
+      "categoryLevel": 1,
+      "parentId": 1,
+      "keyword": "示例关键词"
+    }
+  }
+}

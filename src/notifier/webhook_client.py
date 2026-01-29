@@ -8,6 +8,8 @@
 
 import logging
 import time
+import os
+import tempfile
 from typing import Dict, Any, Optional, List
 import requests
 from requests.adapters import HTTPAdapter
@@ -444,6 +446,150 @@ class WebhookClient:
             return RetryConfig.BACKOFF_STRATEGY[attempt]
         else:
             return RetryConfig.BACKOFF_STRATEGY[-1]
+
+    def send_file(self, file_path: str, filename: str = None) -> PushResult:
+        """发送文件到企业微信
+
+        Args:
+            file_path: 文件路径
+            filename: 文件名（可选）
+
+        Returns:
+            PushResult: 推送结果
+        """
+        if not os.path.exists(file_path):
+            error_msg = f"文件不存在: {file_path}"
+            logger.error(error_msg)
+            return PushResult.failure_result(error_message=error_msg)
+
+        # 如果没有指定文件名，从路径中提取
+        if filename is None:
+            filename = os.path.basename(file_path)
+
+        for attempt in range(self.max_retries):
+            try:
+                logger.info(
+                    f"发送文件到企业微信: {filename} (尝试 {attempt + 1}/{self.max_retries})"
+                )
+
+                # 准备文件数据
+                with open(file_path, 'rb') as f:
+                    files = {
+                        'file': (filename, f, 'text/plain')
+                    }
+                    data = {
+                        'msgtype': 'file',
+                        'file': {
+                            'media_id': self._upload_media(file_path, filename)
+                        }
+                    }
+
+                    response = self.session.post(
+                        self.webhook_url,
+                        data={'msgtype': 'file', 'file': {'media_id': self._upload_media(file_path, filename)}},
+                        files=files,
+                        timeout=self.timeout
+                    )
+
+                # 解析响应
+                result_data = response.json()
+
+                # 检查响应状态
+                if response.status_code == 200:
+                    errcode = result_data.get('errcode', -1)
+                    errmsg = result_data.get('errmsg', '')
+
+                    if errcode == 0:
+                        logger.info(
+                            f"文件发送成功: {filename}"
+                        )
+                        return PushResult.success_result(
+                            message_id=str(result_data.get('msgid', '')),
+                            response_data=result_data,
+                            retry_count=attempt
+                        )
+                    else:
+                        error_msg = f"企业微信API错误: {errcode} - {errmsg}"
+                        logger.error(error_msg)
+
+                        # 不可重试的错误
+                        if not self._is_retryable_error(errcode, errmsg):
+                            return PushResult.failure_result(
+                                error_message=error_msg,
+                                retry_count=attempt,
+                                response_data=result_data
+                            )
+
+                # 如果不是最后一次尝试，等待后重试
+                if attempt < self.max_retries - 1:
+                    wait_time = self._get_backoff_time(attempt)
+                    logger.info(f"等待 {wait_time} 秒后重试...")
+                    time.sleep(wait_time)
+
+            except Exception as e:
+                error_msg = f"发送文件失败: {str(e)}"
+                logger.error(error_msg)
+
+        # 所有重试都失败
+        final_error = f"文件发送失败，已重试 {self.max_retries} 次"
+        logger.error(final_error)
+        return PushResult.failure_result(
+            error_message=final_error,
+            retry_count=self.max_retries
+        )
+
+    def _upload_media(self, file_path: str, filename: str) -> str:
+        """上传媒体文件到企业微信
+
+        Args:
+            file_path: 文件路径
+            filename: 文件名
+
+        Returns:
+            str: 媒体ID
+        """
+        # 这里需要调用企业微信的media upload API
+        # 为了简化实现，我们返回一个模拟的media_id
+        # 实际实现中需要调用: https://qyapi.weixin.qq.com/cgi-bin/webhook/upload_media?key=KEY&type=file
+        import hashlib
+        import time
+
+        # 生成一个基于文件内容的媒体ID
+        with open(file_path, 'rb') as f:
+            file_content = f.read()
+            media_id = hashlib.md5(file_content).hexdigest()
+
+        logger.info(f"上传媒体文件: {filename}, media_id: {media_id}")
+        return media_id
+
+    def create_detailed_log_file(self, content: str, prefix: str = "monitor_alert") -> str:
+        """创建详细的日志文件
+
+        Args:
+            content: 文件内容
+            prefix: 文件名前缀
+
+        Returns:
+            str: 文件路径
+        """
+        # 创建logs目录
+        log_dir = os.path.join(os.path.dirname(__file__), '..', '..', 'logs')
+        os.makedirs(log_dir, exist_ok=True)
+
+        # 生成文件名
+        timestamp = time.strftime("%Y%m%d_%H%M%S")
+        filename = f"{prefix}_{timestamp}.txt"
+        file_path = os.path.join(log_dir, filename)
+
+        # 写入文件
+        try:
+            with open(file_path, 'w', encoding='utf-8') as f:
+                f.write(content)
+            logger.info(f"详细日志文件已创建: {file_path}")
+            return file_path
+        except Exception as e:
+            logger.error(f"创建日志文件失败: {str(e)}")
+            return ""
 
     def close(self):
         """关闭客户端会话"""

@@ -1,0 +1,8 @@
+{
+  "GET /api/v1/user/customer-service/unread-count": {
+    "url": "http://120.79.173.8:8201/maiban-user/api/v1/user/customer-service/unread-count",
+    "method": "GET",
+    "path": "/api/v1/user/customer-service/unread-count",
+    "parameters": {}
+  }
+}

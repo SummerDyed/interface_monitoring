@@ -1,0 +1,11 @@
+{
+  "DELETE /admin/api/v1/nurse/{nurseId}/certificate/{certId}": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/nurse/{nurseId}/certificate/{certId}",
+    "method": "DELETE",
+    "path": "/admin/api/v1/nurse/{nurseId}/certificate/{certId}",
+    "parameters": {
+      "nurseId": 1001,
+      "certId": 1
+    }
+  }
+}

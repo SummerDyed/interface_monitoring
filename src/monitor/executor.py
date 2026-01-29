@@ -67,10 +67,11 @@ class HTTPExecutor:
 
             # 发送HTTP请求
             logger.debug(f"发送请求: {interface.method} {request_params['url']}")
+            request_params['timeout'] = self.http_handler.timeout
             response = requests.request(**request_params)
 
-            # 计算响应时间
-            response_time = (time.time() - start_time) * 1000
+            # 计算响应时间（秒）
+            response_time = time.time() - start_time
 
             # 解析响应
             (

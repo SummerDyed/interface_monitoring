@@ -1,0 +1,8 @@
+{
+  "POST /api/v1/user/pricing/calculate-distance-fee": {
+    "url": "http://120.79.173.8:8201/maiban-user/api/v1/user/pricing/calculate-distance-fee",
+    "method": "POST",
+    "path": "/api/v1/user/pricing/calculate-distance-fee",
+    "parameters": {}
+  }
+}

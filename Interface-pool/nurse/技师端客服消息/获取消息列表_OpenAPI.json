@@ -1,0 +1,12 @@
+{
+  "GET /api/v1/nurse/customer-service/messages": {
+    "url": "http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/customer-service/messages",
+    "method": "GET",
+    "path": "/api/v1/nurse/customer-service/messages",
+    "parameters": {
+      "sessionId": 1,
+      "lastMessageId": 1,
+      "limit": 100
+    }
+  }
+}

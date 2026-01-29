@@ -1,0 +1,8 @@
+{
+  "PUT /api/v1/nurse/profile/introduction": {
+    "url": "http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/profile/introduction",
+    "method": "PUT",
+    "path": "/api/v1/nurse/profile/introduction",
+    "parameters": {}
+  }
+}

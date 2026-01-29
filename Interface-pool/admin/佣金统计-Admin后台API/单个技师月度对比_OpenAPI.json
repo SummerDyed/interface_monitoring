@@ -1,0 +1,11 @@
+{
+  "GET /api/v1/admin/commission/statistics/nurse/{nurseId}/monthly-comparison": {
+    "url": "http://120.79.173.8:8201/maiban-admin/api/v1/admin/commission/statistics/nurse/{nurseId}/monthly-comparison",
+    "method": "GET",
+    "path": "/api/v1/admin/commission/statistics/nurse/{nurseId}/monthly-comparison",
+    "parameters": {
+      "nurseId": 1001,
+      "months": 1
+    }
+  }
+}

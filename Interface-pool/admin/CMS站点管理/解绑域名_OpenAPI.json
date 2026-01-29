@@ -1,0 +1,11 @@
+{
+  "DELETE /admin/api/v1/cms/sites/{siteId}/domains/{id}": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/cms/sites/{siteId}/domains/{id}",
+    "method": "DELETE",
+    "path": "/admin/api/v1/cms/sites/{siteId}/domains/{id}",
+    "parameters": {
+      "siteId": 1,
+      "id": 1
+    }
+  }
+}

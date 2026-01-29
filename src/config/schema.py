@@ -69,6 +69,11 @@ CONFIG_SCHEMA = {
             'choices': ['simple', 'detail'],
             'default': 'simple',
             'description': '通知内容格式'
+        },
+        'max_message_length': {
+            'type': int,
+            'default': 4000,
+            'description': '最大消息长度（字节）'
         }
     },
     'logging': {

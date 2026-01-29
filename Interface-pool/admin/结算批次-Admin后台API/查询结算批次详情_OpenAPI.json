@@ -1,0 +1,10 @@
+{
+  "GET /api/v1/admin/commission/settlement/batch/{batchId}": {
+    "url": "http://120.79.173.8:8201/maiban-admin/api/v1/admin/commission/settlement/batch/{batchId}",
+    "method": "GET",
+    "path": "/api/v1/admin/commission/settlement/batch/{batchId}",
+    "parameters": {
+      "batchId": 1
+    }
+  }
+}

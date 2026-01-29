@@ -1,0 +1,10 @@
+{
+  "GET /api/v1/user/payment/alipay/status/{paymentNo}": {
+    "url": "http://120.79.173.8:8201/maiban-user/api/v1/user/payment/alipay/status/{paymentNo}",
+    "method": "GET",
+    "path": "/api/v1/user/payment/alipay/status/{paymentNo}",
+    "parameters": {
+      "paymentNo": "PAY202511281001"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "GET /admin/api/v1/service-materials": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/service-materials",
+    "method": "GET",
+    "path": "/admin/api/v1/service-materials",
+    "parameters": {
+      "serviceItemId": 1,
+      "status": 1,
+      "page": 1,
+      "size": 20
+    }
+  }
+}

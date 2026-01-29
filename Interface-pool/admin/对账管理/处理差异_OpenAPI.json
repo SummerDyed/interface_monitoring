@@ -1,0 +1,10 @@
+{
+  "POST /admin/api/v1/reconciliation/differences/{detailId}/handle": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/reconciliation/differences/{detailId}/handle",
+    "method": "POST",
+    "path": "/admin/api/v1/reconciliation/differences/{detailId}/handle",
+    "parameters": {
+      "detailId": 1
+    }
+  }
+}

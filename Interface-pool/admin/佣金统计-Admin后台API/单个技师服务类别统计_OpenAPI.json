@@ -1,0 +1,12 @@
+{
+  "GET /api/v1/admin/commission/statistics/nurse/{nurseId}/by-category": {
+    "url": "http://120.79.173.8:8201/maiban-admin/api/v1/admin/commission/statistics/nurse/{nurseId}/by-category",
+    "method": "GET",
+    "path": "/api/v1/admin/commission/statistics/nurse/{nurseId}/by-category",
+    "parameters": {
+      "nurseId": 1001,
+      "startDate": "2024-01-01",
+      "endDate": "2024-01-01"
+    }
+  }
+}

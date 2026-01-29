@@ -1,0 +1,8 @@
+{
+  "GET /admin/api/v1/auth/info": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/auth/info",
+    "method": "GET",
+    "path": "/admin/api/v1/auth/info",
+    "parameters": {}
+  }
+}

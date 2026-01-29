@@ -1,0 +1,10 @@
+{
+  "PUT /admin/api/v1/privacy-policies/{id}": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/privacy-policies/{id}",
+    "method": "PUT",
+    "path": "/admin/api/v1/privacy-policies/{id}",
+    "parameters": {
+      "id": 1
+    }
+  }
+}

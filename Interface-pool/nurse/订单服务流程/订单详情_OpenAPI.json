@@ -1,0 +1,10 @@
+{
+  "GET /api/v1/nurse/orders/{orderId}": {
+    "url": "http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/orders/{orderId}",
+    "method": "GET",
+    "path": "/api/v1/nurse/orders/{orderId}",
+    "parameters": {
+      "orderId": 1001
+    }
+  }
+}

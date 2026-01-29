@@ -1,0 +1,10 @@
+{
+  "GET /api/v1/user/districts/code/{code}": {
+    "url": "http://120.79.173.8:8201/maiban-user/api/v1/user/districts/code/{code}",
+    "method": "GET",
+    "path": "/api/v1/user/districts/code/{code}",
+    "parameters": {
+      "code": 110000
+    }
+  }
+}

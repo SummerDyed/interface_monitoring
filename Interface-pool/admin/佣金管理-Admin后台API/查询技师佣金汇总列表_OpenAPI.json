@@ -1,0 +1,14 @@
+{
+  "GET /api/v1/admin/commission/nurse/summary": {
+    "url": "http://120.79.173.8:8201/maiban-admin/api/v1/admin/commission/nurse/summary",
+    "method": "GET",
+    "path": "/api/v1/admin/commission/nurse/summary",
+    "parameters": {
+      "nurseId": 1001,
+      "nurseName": "示例名称",
+      "affiliationType": 1,
+      "pageNum": 1,
+      "pageSize": 20
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "POST /api/v1/nurse/orders/{orderId}/cancel": {
+    "url": "http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/orders/{orderId}/cancel",
+    "method": "POST",
+    "path": "/api/v1/nurse/orders/{orderId}/cancel",
+    "parameters": {
+      "orderId": 1001
+    }
+  }
+}

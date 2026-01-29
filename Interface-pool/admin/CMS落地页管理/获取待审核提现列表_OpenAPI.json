@@ -1,0 +1,11 @@
+{
+  "GET /api/v1/admin/withdraw/pending": {
+    "url": "http://120.79.173.8:8201/maiban-admin/api/v1/admin/withdraw/pending",
+    "method": "GET",
+    "path": "/api/v1/admin/withdraw/pending",
+    "parameters": {
+      "pageNum": 1,
+      "pageSize": 20
+    }
+  }
+}

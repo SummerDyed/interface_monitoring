@@ -1,0 +1,12 @@
+{
+  "GET /api/v1/admin/customer-service/sessions/mine": {
+    "url": "http://120.79.173.8:8201/maiban-admin/api/v1/admin/customer-service/sessions/mine",
+    "method": "GET",
+    "path": "/api/v1/admin/customer-service/sessions/mine",
+    "parameters": {
+      "status": 1,
+      "page": 1,
+      "size": 20
+    }
+  }
+}

@@ -49,6 +49,7 @@ class MonitorEngine:
         self.concurrency = self.config.get('concurrency', 5)
         self.timeout = self.config.get('timeout', 10)
         self.base_url = self.config.get('base_url')
+        self.request_interval = self.config.get('request_interval', 0) / 1000  # 转换为秒
 
         # 验证并发数
         if self.concurrency <= 0:
@@ -93,6 +94,8 @@ class MonitorEngine:
             return []
 
         logger.info(f"开始执行监控: {len(interfaces)}个接口，{self.concurrency}线程并发")
+        if self.request_interval > 0:
+            logger.info(f"请求间隔: {self.request_interval*1000:.0f}ms")
 
         # 记录性能指标
         if self.monitor:
@@ -112,17 +115,10 @@ class MonitorEngine:
                 service = interface.service
                 token = token_map.get(service) if token_map else None
 
-                future = executor.submit(
-                    self._execute_single,
-                    interface,
-                    token,
-                )
-                futures.append((future, interface))
-
-            # 收集结果
-            for future, interface in futures:
-                try:
-                    result = future.result()
+                # 如果设置了请求间隔，则串行执行
+                if self.request_interval > 0 and self.concurrency == 1:
+                    # 串行执行并添加等待间隔
+                    result = self._execute_single(interface, token)
                     results.append(result)
 
                     # 收集响应时间
@@ -142,22 +138,58 @@ class MonitorEngine:
                         self.monitor.record_response_time(result.response_time, interface.name)
                         self.monitor.record_success_rate(success_count, success_count + failed_count)
 
-                except Exception as e:
-                    logger.error(f"接口监控异常: {interface.name} - {e}")
-                    failed_count += 1
-
-                    # 创建错误结果
-                    error_result = MonitorResult(
-                        interface=interface,
-                        status='FAILED',
-                        status_code=None,
-                        response_time=0.0,
-                        error_type=ErrorType.UNKNOWN_ERROR,
-                        error_message=f"监控执行异常: {e}",
-                        request_data={},
-                        response_data={},
+                    # 添加等待间隔
+                    if self.request_interval > 0:
+                        time.sleep(self.request_interval)
+                else:
+                    # 并发执行
+                    future = executor.submit(
+                        self._execute_single,
+                        interface,
+                        token,
                     )
-                    results.append(error_result)
+                    futures.append((future, interface))
+            # 收集并发执行的结果
+            if futures:
+                for future, interface in futures:
+                    try:
+                        # 设置超时，避免无限等待
+                        result = future.result(timeout=self.timeout * 2)
+                        results.append(result)
+
+                        # 收集响应时间
+                        if result.response_time > 0:
+                            response_times.append(result.response_time)
+
+                        # 统计成功/失败
+                        if result.is_success():
+                            success_count += 1
+                        else:
+                            failed_count += 1
+
+                        logger.debug(f"接口监控完成: {interface.name} - {result.status}")
+
+                        # 记录性能指标
+                        if self.monitor:
+                            self.monitor.record_response_time(result.response_time, interface.name)
+                            self.monitor.record_success_rate(success_count, success_count + failed_count)
+
+                    except Exception as e:
+                        logger.error(f"接口监控异常: {interface.name} - {e}")
+                        failed_count += 1
+
+                        # 创建错误结果
+                        error_result = MonitorResult(
+                            interface=interface,
+                            status='FAILED',
+                            status_code=None,
+                            response_time=0.0,
+                            error_type=ErrorType.UNKNOWN_ERROR,
+                            error_message=f"监控执行异常: {e}",
+                            request_data={},
+                            response_data={},
+                        )
+                        results.append(error_result)
 
         # 统计信息
         elapsed_time = time.time() - start_time

@@ -1,0 +1,10 @@
+{
+  "POST /admin/api/v1/nurse/{nurseId}/service-category": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/nurse/{nurseId}/service-category",
+    "method": "POST",
+    "path": "/admin/api/v1/nurse/{nurseId}/service-category",
+    "parameters": {
+      "nurseId": 1001
+    }
+  }
+}

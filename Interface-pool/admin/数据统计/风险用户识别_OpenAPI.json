@@ -1,0 +1,11 @@
+{
+  "GET /admin/api/v1/statistics/analytics/risk/users": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/statistics/analytics/risk/users",
+    "method": "GET",
+    "path": "/admin/api/v1/statistics/analytics/risk/users",
+    "parameters": {
+      "riskType": "1",
+      "severity": ""
+    }
+  }
+}

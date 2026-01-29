@@ -391,21 +391,36 @@ def filter_alert_errors(report: MonitorReport) -> List[ErrorInfo]:
     """
     alert_errors = []
 
-    for error in report.errors:
+    logger.info(f"开始过滤告警错误，总错误数: {len(report.errors)}")
+
+    for i, error in enumerate(report.errors):
+        logger.debug(f"检查错误 #{i+1}: {error.interface_name}, error_type={error.error_type}, status_code={error.status_code}")
+
         # 检查HTTP错误类型（只关注404、500）
         if error.error_type in ['HTTP_404', 'HTTP_500']:
+            logger.info(f"  -> 通过error_type匹配: {error.error_type}")
             alert_errors.append(error)
             continue
 
         # 检查HTTP状态码
         if error.status_code in [404, 500]:
+            logger.info(f"  -> 通过status_code匹配: {error.status_code}")
             alert_errors.append(error)
             continue
 
         # 检查业务码（只关注404、500）
         if _check_business_error_code(error):
+            logger.info(f"  -> 通过业务码匹配")
             alert_errors.append(error)
             continue
+
+    logger.info(f"过滤完成，告警错误数: {len(alert_errors)}")
+
+    # 详细记录所有被过滤出的错误
+    if alert_errors:
+        logger.info("被过滤的告警错误列表:")
+        for i, error in enumerate(alert_errors, 1):
+            logger.info(f"  {i}. {error.interface_name} - {error.error_type} (HTTP {error.status_code})")
 
     return alert_errors
 
@@ -437,7 +452,7 @@ def process_alert(report: MonitorReport) -> Dict[str, Any]:
         alert_type = 'error'
     else:
         # 无404/500错误 → 正常报告（即使有400/401也不显示）
-        summary = f"✅ 监控正常 - 共监控{report.stats.total_count}个接口"
+        summary = f"[OK] 监控正常 - 共监控{report.total_count}个接口"
         alert_type = 'normal'
 
     # 获取详细告警内容

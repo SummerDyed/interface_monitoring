@@ -1,0 +1,15 @@
+{
+  "GET /admin/api/v1/orders/workflow": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/orders/workflow",
+    "method": "GET",
+    "path": "/admin/api/v1/orders/workflow",
+    "parameters": {
+      "status": 1,
+      "nurseId": 1001,
+      "startDate": "2024-01-01",
+      "endDate": "2024-01-01",
+      "page": 1,
+      "size": 20
+    }
+  }
+}

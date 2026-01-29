@@ -1,0 +1,10 @@
+{
+  "GET /admin/api/v1/cms/landing/footer": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/cms/landing/footer",
+    "method": "GET",
+    "path": "/admin/api/v1/cms/landing/footer",
+    "parameters": {
+      "language": "zh"
+    }
+  }
+}

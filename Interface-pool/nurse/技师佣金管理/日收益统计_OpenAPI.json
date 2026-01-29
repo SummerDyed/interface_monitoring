@@ -1,0 +1,10 @@
+{
+  "GET /api/v1/nurse/commission/income/daily": {
+    "url": "http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/commission/income/daily",
+    "method": "GET",
+    "path": "/api/v1/nurse/commission/income/daily",
+    "parameters": {
+      "days": 7
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "POST /admin/api/v1/nurse/{nurseId}/album": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/nurse/{nurseId}/album",
+    "method": "POST",
+    "path": "/admin/api/v1/nurse/{nurseId}/album",
+    "parameters": {
+      "nurseId": 1001
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "DELETE /admin/api/v1/app-version/{id}": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/app-version/{id}",
+    "method": "DELETE",
+    "path": "/admin/api/v1/app-version/{id}",
+    "parameters": {
+      "id": 1
+    }
+  }
+}

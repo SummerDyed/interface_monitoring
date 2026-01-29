@@ -1,0 +1,10 @@
+{
+  "DELETE /api/v1/user/address/history/{addressId}": {
+    "url": "http://120.79.173.8:8201/maiban-user/api/v1/user/address/history/{addressId}",
+    "method": "DELETE",
+    "path": "/api/v1/user/address/history/{addressId}",
+    "parameters": {
+      "addressId": 1
+    }
+  }
+}

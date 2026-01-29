@@ -8,10 +8,10 @@
 
 import signal
 import sys
+import os
 import traceback
-import schedule
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional, Dict, Any
 
@@ -25,6 +25,92 @@ from monitor import MonitorEngine
 from analyzer import ResultAnalyzer
 from notifier import WechatNotifier
 
+# 进程锁文件路径
+PID_FILE = Path("monitor.pid")
+
+
+def check_process_lock() -> bool:
+    """检查进程锁，防止重复启动
+
+    Returns:
+        bool: True表示可以启动，False表示已有进程在运行
+    """
+    try:
+        if PID_FILE.exists():
+            with open(PID_FILE, 'r') as f:
+                old_pid = f.read().strip()
+            # 检查进程是否还在运行
+            try:
+                import psutil
+                if psutil.pid_exists(int(old_pid)):
+                    if _logger:
+                        _logger.error(f"监控程序已在运行 (PID: {old_pid})，请先停止该进程")
+                    else:
+                        print(f"错误: 监控程序已在运行 (PID: {old_pid})")
+                    return False
+                else:
+                    # 进程不存在，删除锁文件
+                    PID_FILE.unlink()
+                    if _logger:
+                        _logger.info(f"清理过期进程锁文件: {old_pid}")
+                    else:
+                        print(f"清理过期进程锁文件: {old_pid}")
+            except (psutil.NoSuchProcess, psutil.AccessDenied, ValueError, ImportError):
+                # psutil未安装或进程检查失败，删除锁文件
+                PID_FILE.unlink()
+                if _logger:
+                    _logger.info("清理无效进程锁文件")
+                else:
+                    print("清理无效进程锁文件")
+        return True
+    except Exception as e:
+        if _logger:
+            _logger.warning(f"检查进程锁时发生异常: {e}")
+        else:
+            print(f"警告: 检查进程锁时发生异常: {e}")
+        return True  # 发生异常时允许启动
+
+
+def acquire_process_lock() -> bool:
+    """获取进程锁
+
+    Returns:
+        bool: True表示获取成功，False表示失败
+    """
+    try:
+        with open(PID_FILE, 'w') as f:
+            f.write(str(os.getpid()))
+        return True
+    except Exception as e:
+        if _logger:
+            _logger.error(f"创建进程锁文件失败: {e}")
+        else:
+            print(f"错误: 创建进程锁文件失败: {e}")
+        return False
+
+
+def release_process_lock():
+    """释放进程锁"""
+    try:
+        if PID_FILE.exists():
+            PID_FILE.unlink()
+            if _logger:
+                _logger.info("已清理进程锁文件")
+            else:
+                print("已清理进程锁文件")
+    except Exception as e:
+        if _logger:
+            _logger.warning(f"清理进程锁文件失败: {e}")
+        else:
+            print(f"警告: 清理进程锁文件失败: {e}")
+
+
+def signal_handler(signum, frame):
+    """信号处理器，用于优雅关闭"""
+    global _should_stop
+    _logger.info(f"接收到信号 {signum}，准备优雅关闭...")
+    _should_stop = True
+
 # Global variables for graceful shutdown
 _config_manager: Optional[ConfigManager] = None
 _scanner: Optional[InterfaceScanner] = None
@@ -34,14 +120,6 @@ _analyzer: Optional[ResultAnalyzer] = None
 _notifier: Optional[WechatNotifier] = None
 _should_stop = False
 _logger = None
-
-
-def signal_handler(signum, frame):
-    """信号处理器，用于优雅关闭"""
-    global _should_stop, _logger
-    if _logger:
-        _logger.info(f"接收到信号 {signum}，开始优雅关闭...")
-    _should_stop = True
 
 
 def initialize_modules(config: Dict[str, Any]) -> bool:
@@ -95,8 +173,9 @@ def initialize_modules(config: Dict[str, Any]) -> bool:
         monitor_config = {
             'concurrency': config.get('monitor', {}).get('concurrent_threads', 5),
             'timeout': config.get('monitor', {}).get('timeout', 10),
+            'request_interval': config.get('monitor', {}).get('request_interval', 0),
         }
-        _monitor_engine = MonitorEngine(config=monitor_config)
+        _monitor_engine = MonitorEngine(config=monitor_config, enable_monitoring=False)
         _logger.info("监控引擎初始化完成")
 
         # 4. 初始化结果分析器
@@ -147,7 +226,7 @@ def run_monitoring_cycle(config: Dict[str, Any]) -> bool:
     try:
         # Step 1: 扫描接口文档
         _logger.info("Step 1: 扫描接口文档...")
-        interfaces = _scanner.scan()
+        interfaces = _scanner.scan(force=True)
         if not interfaces:
             _logger.warning("未发现任何接口，监控周期结束")
             return False
@@ -161,7 +240,8 @@ def run_monitoring_cycle(config: Dict[str, Any]) -> bool:
         services = ['user', 'nurse', 'admin']
         for service in services:
             try:
-                token = _token_manager.get_token(service)
+                # 强制刷新Token，确保每次监控周期都获取最新Token
+                token = _token_manager.get_token(service, force_refresh=True)
                 if token:
                     token_map[service] = token
                     _logger.debug(f"获取 {service} 服务Token成功")
@@ -293,6 +373,9 @@ def run_monitoring_cycle(config: Dict[str, Any]) -> bool:
         cycle_end = datetime.now()
         duration = (cycle_end - cycle_start).total_seconds()
 
+        # 统计状态码分布
+        status_code_stats = _get_status_code_statistics(results)
+
         _logger.info(f"=" * 60)
         _logger.info(f"监控周期完成: {cycle_end.strftime('%Y-%m-%d %H:%M:%S')}")
         _logger.info(f"总耗时: {duration:.2f}秒")
@@ -301,6 +384,14 @@ def run_monitoring_cycle(config: Dict[str, Any]) -> bool:
         _logger.info(f"失败: {stats['failed']}")
         _logger.info(f"成功率: {stats['success_rate']:.2f}%")
         _logger.info(f"平均响应时间: {stats['avg_response_time']:.2f}秒")
+
+        # 显示状态码统计
+        if status_code_stats:
+            _logger.info(f"状态码分布:")
+            for code, count in sorted(status_code_stats.items()):
+                percentage = (count / stats['total']) * 100
+                _logger.info(f"  HTTP {code}: {count}次 ({percentage:.1f}%)")
+
         _logger.info(f"=" * 60)
 
         return True
@@ -309,6 +400,31 @@ def run_monitoring_cycle(config: Dict[str, Any]) -> bool:
         _logger.error(f"监控周期执行失败: {e}")
         _logger.error(traceback.format_exc())
         return False
+
+
+def _get_status_code_statistics(results):
+    """统计状态码分布
+
+    Args:
+        results: 监控结果列表
+
+    Returns:
+        dict: {状态码: 数量} 的字典
+    """
+    from collections import Counter
+
+    status_codes = []
+    for result in results:
+        if result.status_code is not None:
+            status_codes.append(result.status_code)
+        else:
+            # 对于没有状态码的错误（如超时、网络错误），标记为"N/A"
+            status_codes.append("N/A")
+
+    if not status_codes:
+        return {}
+
+    return dict(Counter(status_codes))
 
 
 def cleanup():
@@ -326,6 +442,9 @@ def cleanup():
         if _config_manager:
             _config_manager.cleanup()
             _logger.info("配置管理器清理完成")
+
+        # 释放进程锁
+        release_process_lock()
 
         _logger.info("资源清理完成")
 
@@ -374,6 +493,15 @@ def main():
     signal.signal(signal.SIGTERM, signal_handler)
     signal.signal(signal.SIGINT, signal_handler)
 
+    # 检查进程锁，防止重复启动
+    if not check_process_lock():
+        _logger.error("检测到已有监控程序在运行，程序退出")
+        return 1
+
+    if not acquire_process_lock():
+        _logger.error("无法获取进程锁，程序退出")
+        return 1
+
     try:
         # 加载配置
         config = load_config("config.yaml")
@@ -390,23 +518,32 @@ def main():
             _logger.error("模块初始化失败，程序退出")
             return 1
 
-        # 启动定时任务
-        _logger.info(f"配置定时任务：每 {interval} 分钟执行一次监控")
-        schedule.every(interval).minutes.do(lambda: run_monitoring_cycle(config))
+        # 计算下次执行时间
+        interval_seconds = interval * 60
+        next_run_time = datetime.now() + timedelta(seconds=interval_seconds)
 
         # 立即执行一次监控
         _logger.info("立即执行一次监控周期...")
         run_monitoring_cycle(config)
 
         _logger.info("=" * 60)
-        _logger.info("监控调度器启动成功，开始等待...")
+        _logger.info(f"监控调度器启动成功，间隔 {interval} 分钟")
+        _logger.info(f"下次执行时间: {next_run_time.strftime('%Y-%m-%d %H:%M:%S')}")
         _logger.info("按 Ctrl+C 可优雅关闭程序")
         _logger.info("=" * 60)
 
-        # 主调度循环
+        # 主调度循环 - 使用精确时间控制
         while not _should_stop:
             try:
-                schedule.run_pending()
+                now = datetime.now()
+                if now >= next_run_time:
+                    _logger.info(f"开始执行监控周期: {now.strftime('%Y-%m-%d %H:%M:%S')}")
+                    run_monitoring_cycle(config)
+                    # 计算下次执行时间
+                    next_run_time = now + timedelta(seconds=interval_seconds)
+                    _logger.info(f"下次执行时间: {next_run_time.strftime('%Y-%m-%d %H:%M:%S')}")
+
+                # 等待1秒后检查
                 time.sleep(1)
             except KeyboardInterrupt:
                 _logger.info("接收到键盘中断信号")

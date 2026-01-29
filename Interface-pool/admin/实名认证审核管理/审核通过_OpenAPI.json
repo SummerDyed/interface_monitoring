@@ -1,0 +1,10 @@
+{
+  "POST /admin/api/v1/audit/realname/{authId}/approve": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/audit/realname/{authId}/approve",
+    "method": "POST",
+    "path": "/admin/api/v1/audit/realname/{authId}/approve",
+    "parameters": {
+      "authId": 1
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "GET /api/v1/nurse/commission/trend": {
+    "url": "http://120.79.173.8:8201/maiban-admin/api/v1/nurse/commission/trend",
+    "method": "GET",
+    "path": "/api/v1/nurse/commission/trend",
+    "parameters": {
+      "X-Nurse-Id": 1001,
+      "months": 1
+    }
+  }
+}

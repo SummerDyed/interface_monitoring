@@ -1,0 +1,10 @@
+{
+  "GET /admin/api/v1/cms/pages/{id}/preview": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/cms/pages/{id}/preview",
+    "method": "GET",
+    "path": "/admin/api/v1/cms/pages/{id}/preview",
+    "parameters": {
+      "id": 1
+    }
+  }
+}

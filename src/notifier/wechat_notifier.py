@@ -58,7 +58,8 @@ class WechatNotifier:
             f"企业微信推送器初始化完成: "
             f"webhook={webhook_url}, "
             f"mentioned_list={len(self.default_mentioned_list)}, "
-            f"mentioned_mobile_list={len(self.default_mentioned_mobile_list)}"
+            f"mentioned_mobile_list={len(self.default_mentioned_mobile_list)}, "
+            f"max_message_length={max_message_length}"
         )
 
     def send_report(
@@ -97,8 +98,41 @@ class WechatNotifier:
                 alert_info=alert_info
             )
 
-            # 发送消息
-            result = self.webhook_client.send_message(message)
+            # 检查消息长度，如果超过限制则创建详细日志文件
+            content = message.markdown['content']
+            if len(content) > self.message_formatter.max_message_length:
+                logger.warning(
+                    f"消息长度 ({len(content)}) 超过限制 ({self.message_formatter.max_message_length})，将创建详细日志文件"
+                )
+
+                # 创建包含详细信息的日志文件
+                detailed_content = self._generate_detailed_report(report, alert_info)
+                file_path = self.webhook_client.create_detailed_log_file(detailed_content)
+
+                # 创建简化的消息，包含文件说明
+                simple_content = self._create_simple_alert_message(report, alert_info, file_path)
+                simplified_message = WechatMessage(
+                    msgtype="markdown",
+                    markdown={"content": simple_content},
+                    mentioned_list=final_mentioned_list,
+                    mentioned_mobile_list=final_mentioned_mobile_list
+                )
+
+                # 发送简化消息
+                result = self.webhook_client.send_message(simplified_message)
+
+                # 如果文件创建成功，尝试发送文件
+                if file_path and os.path.exists(file_path):
+                    logger.info(f"尝试发送详细日志文件: {file_path}")
+                    file_result = self.webhook_client.send_file(file_path, os.path.basename(file_path))
+
+                    if file_result.success:
+                        logger.info("详细日志文件发送成功")
+                    else:
+                        logger.warning(f"详细日志文件发送失败: {file_result.error_message}")
+            else:
+                # 消息长度正常，直接发送
+                result = self.webhook_client.send_message(message)
 
             # 记录结果
             if result.success:
@@ -118,6 +152,138 @@ class WechatNotifier:
             error_msg = f"发送监控报告时发生异常: {str(e)}"
             logger.error(error_msg, exc_info=True)
             return PushResult.failure_result(error_message=error_msg)
+
+    def _generate_detailed_report(self, report: Any, alert_info: Optional[Dict[str, Any]] = None) -> str:
+        """生成详细的监控报告
+
+        Args:
+            report: 监控报告对象
+            alert_info: 告警信息
+
+        Returns:
+            str: 详细报告内容
+        """
+        try:
+            from datetime import datetime
+
+            content_parts = []
+
+            # 添加报告标题
+            content_parts.append("=" * 80)
+            content_parts.append("接口监控详细报告")
+            content_parts.append(f"生成时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+            content_parts.append("=" * 80)
+            content_parts.append("")
+
+            # 添加基本信息
+            content_parts.append("## 基本信息")
+            content_parts.append(f"总接口数: {getattr(report, 'total_count', 0)}")
+            content_parts.append(f"成功数: {getattr(report, 'success_count', 0)}")
+            content_parts.append(f"失败数: {getattr(report, 'failure_count', 0)}")
+            content_parts.append(f"成功率: {getattr(report, 'success_rate', 0):.2f}%")
+            content_parts.append("")
+
+            # 添加错误详情
+            if hasattr(report, 'errors') and report.errors:
+                content_parts.append("## 详细错误信息")
+                content_parts.append("")
+
+                for i, error in enumerate(report.errors, 1):
+                    content_parts.append(f"### 错误 #{i}")
+                    content_parts.append(f"接口名称: {getattr(error, 'interface_name', 'Unknown')}")
+                    content_parts.append(f"请求方法: {getattr(error, 'interface_method', 'Unknown')}")
+                    content_parts.append(f"接口地址: {getattr(error, 'interface_url', 'Unknown')}")
+                    content_parts.append(f"服务类型: {getattr(error, 'service', 'Unknown')}")
+                    content_parts.append(f"错误类型: {getattr(error, 'error_type', 'Unknown')}")
+                    content_parts.append(f"状态码: {getattr(error, 'status_code', 'Unknown')}")
+                    content_parts.append(f"错误信息: {getattr(error, 'error_message', 'Unknown')}")
+                    content_parts.append(f"发生次数: {getattr(error, 'count', 1)}")
+                    content_parts.append("")
+
+                    # 添加请求数据
+                    request_data = getattr(error, 'request_data', {})
+                    if request_data:
+                        content_parts.append("**请求数据:**")
+                        import json
+                        try:
+                            content_parts.append(json.dumps(request_data, indent=2, ensure_ascii=False))
+                        except:
+                            content_parts.append(str(request_data))
+                        content_parts.append("")
+
+                    # 添加响应数据
+                    response_data = getattr(error, 'response_data', {})
+                    if response_data:
+                        content_parts.append("**响应数据:**")
+                        import json
+                        try:
+                            content_parts.append(json.dumps(response_data, indent=2, ensure_ascii=False))
+                        except:
+                            content_parts.append(str(response_data))
+                        content_parts.append("")
+
+                    content_parts.append("-" * 40)
+                    content_parts.append("")
+
+            return "\n".join(content_parts)
+
+        except Exception as e:
+            logger.error(f"生成详细报告失败: {str(e)}")
+            return f"生成详细报告失败: {str(e)}"
+
+    def _create_simple_alert_message(self, report: Any, alert_info: Optional[Dict[str, Any]], file_path: str) -> str:
+        """创建简化的告警消息
+
+        Args:
+            report: 监控报告对象
+            alert_info: 告警信息
+            file_path: 详细日志文件路径
+
+        Returns:
+            str: 简化消息内容
+        """
+        try:
+            from datetime import datetime
+            import os
+
+            filename = os.path.basename(file_path)
+
+            # 创建简化的告警消息
+            message_parts = []
+
+            # 告警标题
+            if alert_info and alert_info.get('alert_type') == 'error':
+                message_parts.append("## 🔔 接口监控告警")
+            else:
+                message_parts.append("## ✅ 接口监控报告")
+
+            # 基本信息
+            message_parts.append(f"**监控时间**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+            message_parts.append(f"**总接口数**: {getattr(report, 'total_count', 0)}")
+            message_parts.append(f"**成功数**: {getattr(report, 'success_count', 0)}")
+            message_parts.append(f"**失败数**: {getattr(report, 'failure_count', 0)}")
+            message_parts.append(f"**成功率**: {getattr(report, 'success_rate', 0):.2f}%")
+
+            # 告警摘要
+            if alert_info and alert_info.get('summary'):
+                message_parts.append("")
+                message_parts.append(f"**告警摘要**: {alert_info['summary']}")
+
+            # 文件说明
+            message_parts.append("")
+            message_parts.append("## 📄 详细信息")
+            message_parts.append(f"由于消息长度限制，详细错误信息已保存到日志文件:")
+            message_parts.append(f"文件名: `{filename}`")
+            message_parts.append(f"文件路径: `{file_path}`")
+            message_parts.append("")
+            message_parts.append("---")
+            message_parts.append("*详细报告包含完整的请求/响应数据，便于问题诊断*")
+
+            return "\n".join(message_parts)
+
+        except Exception as e:
+            logger.error(f"创建简化消息失败: {str(e)}")
+            return f"告警消息生成失败: {str(e)}"
 
     def send_message(
         self,
@@ -311,6 +477,8 @@ def create_notifier_from_config(config: Dict[str, Any]) -> WechatNotifier:
     timeout = config.get('timeout', 10)
     max_retries = config.get('max_retries', RetryConfig.MAX_ATTEMPTS)
     max_message_length = config.get('max_message_length', 4000)
+
+    logger.info(f"配置读取: max_message_length={max_message_length}, config_keys={list(config.keys())}")
 
     return WechatNotifier(
         webhook_url=webhook_url,

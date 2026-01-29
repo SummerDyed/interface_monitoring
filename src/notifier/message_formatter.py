@@ -200,11 +200,11 @@ class MessageFormatter:
             if not errors:
                 return "✅ 暂无异常"
 
-            # 按HTTP状态码分组
+            # 按HTTP状态码分组，但只保留404和500错误
             status_groups = {}
             for error in errors:
                 status_code = getattr(error, 'status_code', None)
-                if status_code:
+                if status_code in [404, 500]:  # 只处理404和500错误
                     status_key = f"HTTP_{status_code}"
                     if status_key not in status_groups:
                         status_groups[status_key] = []
@@ -218,56 +218,16 @@ class MessageFormatter:
                 status_code = status_key.replace('HTTP_', '')
                 details.append(f"### {status_key} ({count}个)")
 
-                # 只显示前3个错误详情，避免消息过长
-                for error in error_list[:3]:
+                # 显示所有错误详情，压缩格式
+                for error in error_list:
                     interface_name = getattr(error, 'interface_name', 'Unknown')
-                    error_message = getattr(error, 'error_message', 'No message')
                     method = getattr(error, 'interface_method', 'GET')
                     url = getattr(error, 'interface_url', '')
-                    request_data = getattr(error, 'request_data', {})
-                    response_data = getattr(error, 'response_data', {})
 
-                    # 基本信息
-                    details.append(f"**{method} {interface_name}**")
-                    details.append(f"- URL: `{url}`")
-                    details.append(f"- 错误: {error_message}")
+                    # 压缩显示：一行显示
+                    details.append(f"- {method} {interface_name} | {url}")
 
-                    # 请求内容
-                    if request_data:
-                        details.append(f"- 请求内容:")
-                        details.append(f"  ```json")
-                        # 格式化请求数据
-                        import json
-                        try:
-                            if isinstance(request_data, dict):
-                                # 格式化JSON，保持缩进
-                                details.append(f"  {json.dumps(request_data, indent=2, ensure_ascii=False)}")
-                            else:
-                                details.append(f"  {str(request_data)}")
-                        except:
-                            details.append(f"  {str(request_data)}")
-                        details.append(f"  ```")
-
-                    # 响应内容
-                    if response_data:
-                        details.append(f"- 响应内容:")
-                        details.append(f"  ```json")
-                        # 格式化响应数据
-                        try:
-                            if isinstance(response_data, dict):
-                                details.append(f"  {json.dumps(response_data, indent=2, ensure_ascii=False)}")
-                            else:
-                                details.append(f"  {str(response_data)}")
-                        except:
-                            details.append(f"  {str(response_data)}")
-                        details.append(f"  ```")
-
-                    details.append("")
-
-                # 如果错误数量超过3个，显示省略提示
-                if count > 3:
-                    details.append(f"- ... 还有 {count - 3} 个类似错误")
-                    details.append("")
+                details.append("")
 
             return "\n".join(details).strip()
 

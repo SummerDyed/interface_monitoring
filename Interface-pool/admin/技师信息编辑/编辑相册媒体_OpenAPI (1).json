@@ -1,0 +1,11 @@
+{
+  "PUT /admin/api/v1/nurse/{nurseId}/album/{albumId}": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/nurse/{nurseId}/album/{albumId}",
+    "method": "PUT",
+    "path": "/admin/api/v1/nurse/{nurseId}/album/{albumId}",
+    "parameters": {
+      "nurseId": 1001,
+      "albumId": 1
+    }
+  }
+}

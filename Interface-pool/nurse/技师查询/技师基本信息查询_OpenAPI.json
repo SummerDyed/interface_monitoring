@@ -1,0 +1,12 @@
+{
+  "GET /api/v1/nurse/{nurseId}/basic": {
+    "url": "http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/{nurseId}/basic",
+    "method": "GET",
+    "path": "/api/v1/nurse/{nurseId}/basic",
+    "parameters": {
+      "nurseId": 1001,
+      "latitude": 39.9042,
+      "longitude": 116.4074
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "POST /api/v1/nurse/profile/albums": {
+    "url": "http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/profile/albums",
+    "method": "POST",
+    "path": "/api/v1/nurse/profile/albums",
+    "parameters": {
+      "albumType": 1,
+      "title": "测试标题",
+      "description": "测试内容"
+    }
+  }
+}

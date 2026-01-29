@@ -1,0 +1,10 @@
+{
+  "POST /admin/api/v1/cms/pages/{id}/rollback": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/cms/pages/{id}/rollback",
+    "method": "POST",
+    "path": "/admin/api/v1/cms/pages/{id}/rollback",
+    "parameters": {
+      "id": 1
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "POST /api/v1/nurse/withdraw/accounts": {
+    "url": "http://120.79.173.8:8201/maiban-admin/api/v1/nurse/withdraw/accounts",
+    "method": "POST",
+    "path": "/api/v1/nurse/withdraw/accounts",
+    "parameters": {
+      "X-Nurse-Id": 1001
+    }
+  }
+}

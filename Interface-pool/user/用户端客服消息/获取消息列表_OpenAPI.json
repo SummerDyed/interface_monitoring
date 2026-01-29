@@ -1,0 +1,12 @@
+{
+  "GET /api/v1/user/customer-service/messages": {
+    "url": "http://120.79.173.8:8201/maiban-user/api/v1/user/customer-service/messages",
+    "method": "GET",
+    "path": "/api/v1/user/customer-service/messages",
+    "parameters": {
+      "sessionId": 1,
+      "lastMessageId": 1,
+      "limit": 100
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "GET /api/v1/admin/commission/statistics/trend": {
+    "url": "http://120.79.173.8:8201/maiban-admin/api/v1/admin/commission/statistics/trend",
+    "method": "GET",
+    "path": "/api/v1/admin/commission/statistics/trend",
+    "parameters": {
+      "startDate": "2024-01-01",
+      "endDate": "2024-01-01",
+      "granularity": ""
+    }
+  }
+}

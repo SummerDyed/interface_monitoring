@@ -1,0 +1,11 @@
+{
+  "GET /admin/api/v1/statistics/analytics/login/frequency": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/statistics/analytics/login/frequency",
+    "method": "GET",
+    "path": "/admin/api/v1/statistics/analytics/login/frequency",
+    "parameters": {
+      "startDate": "2025-12-01",
+      "endDate": "2025-12-31"
+    }
+  }
+}

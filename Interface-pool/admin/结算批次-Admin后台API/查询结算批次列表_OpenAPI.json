@@ -1,0 +1,15 @@
+{
+  "GET /api/v1/admin/commission/settlement/batches": {
+    "url": "http://120.79.173.8:8201/maiban-admin/api/v1/admin/commission/settlement/batches",
+    "method": "GET",
+    "path": "/api/v1/admin/commission/settlement/batches",
+    "parameters": {
+      "batchType": 1,
+      "status": 1,
+      "startDate": "2024-01-01",
+      "endDate": "2024-01-01",
+      "pageNum": 1,
+      "pageSize": 20
+    }
+  }
+}

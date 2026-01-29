@@ -117,6 +117,12 @@ class InterfaceScanner:
                 if file_path.is_file() and file_path.suffix.lower() in self.supported_extensions:
                     file_paths.append(str(file_path))
 
+        self.logger.info(f"实际扫描到的文件: {len(file_paths)}")
+        for i, f in enumerate(file_paths[:5]):
+            self.logger.info(f"  {i+1}. {f}")
+        if len(file_paths) > 5:
+            self.logger.info(f"  ... 还有 {len(file_paths) - 5} 个文件")
+
         return file_paths
 
     def _parse_files_concurrent(self, file_paths: List[str], force: bool) -> List[Interface]:

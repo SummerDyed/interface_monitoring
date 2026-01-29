@@ -1,0 +1,10 @@
+{
+  "GET /admin/api/v1/audit/qualification/{certId}": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/audit/qualification/{certId}",
+    "method": "GET",
+    "path": "/admin/api/v1/audit/qualification/{certId}",
+    "parameters": {
+      "certId": 1
+    }
+  }
+}

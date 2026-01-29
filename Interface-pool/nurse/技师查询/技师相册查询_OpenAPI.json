@@ -1,0 +1,13 @@
+{
+  "GET /api/v1/nurse/{nurseId}/albums": {
+    "url": "http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/{nurseId}/albums",
+    "method": "GET",
+    "path": "/api/v1/nurse/{nurseId}/albums",
+    "parameters": {
+      "nurseId": 1001,
+      "albumId": 1,
+      "page": 1,
+      "pageSize": 20
+    }
+  }
+}

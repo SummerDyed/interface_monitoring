@@ -1,0 +1,10 @@
+{
+  "DELETE /admin/api/v1/agreements/{id}": {
+    "url": "http://120.79.173.8:8201/maiban-admin/admin/api/v1/agreements/{id}",
+    "method": "DELETE",
+    "path": "/admin/api/v1/agreements/{id}",
+    "parameters": {
+      "id": 1
+    }
+  }
+}

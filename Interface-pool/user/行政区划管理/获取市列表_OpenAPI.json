@@ -1,0 +1,10 @@
+{
+  "GET /api/v1/user/districts/cities": {
+    "url": "http://120.79.173.8:8201/maiban-user/api/v1/user/districts/cities",
+    "method": "GET",
+    "path": "/api/v1/user/districts/cities",
+    "parameters": {
+      "provinceCode": 440000
+    }
+  }
+}
