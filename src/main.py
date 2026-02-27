@@ -429,6 +429,54 @@ def cleanup():
             _logger.error(f"资源清理失败: {e}")
 
 
+def calculate_next_run_time(interval_minutes: int, execute_on_schedule: bool) -> datetime:
+    """计算下次执行时间
+
+    Args:
+        interval_minutes: 间隔时间（分钟）
+        execute_on_schedule: 是否按准点时间执行
+
+    Returns:
+        datetime: 下次执行时间
+    """
+    now = datetime.now()
+
+    if execute_on_schedule:
+        # 按准点时间执行
+        # 找到下一个对齐的时间点
+        current_minutes = now.minute
+        # 计算下一个对齐的分钟
+        next_minute = ((current_minutes // interval_minutes) + 1) * interval_minutes
+
+        # 如果跨越到下一天
+        if next_minute >= 60:
+            next_run = now.replace(
+                hour=now.hour + 1,
+                minute=next_minute - 60,
+                second=0,
+                microsecond=0
+            )
+        else:
+            next_run = now.replace(
+                minute=next_minute,
+                second=0,
+                microsecond=0
+            )
+
+        # 如果跨越到下一天
+        if next_run.hour >= 24:
+            next_run = next_run.replace(hour=next_run.hour - 24) + timedelta(days=1)
+
+        # 确保时间在未来
+        if next_run <= now:
+            next_run += timedelta(minutes=interval_minutes)
+    else:
+        # 按启动时间间隔执行
+        next_run = now + timedelta(minutes=interval_minutes)
+
+    return next_run
+
+
 def load_config(config_path="../config.yaml"):
     """加载配置文件
 
@@ -486,6 +534,8 @@ def main():
         # 验证配置
         monitor_config = config.get('monitor', {})
         interval = monitor_config.get('interval', 15)
+        execute_on_schedule = monitor_config.get('execute_on_schedule', True)
+
         if interval != 15:
             _logger.warning(f"监控间隔为 {interval} 分钟，但PRD要求为15分钟")
 
@@ -496,7 +546,7 @@ def main():
 
         # 计算下次执行时间
         interval_seconds = interval * 60
-        next_run_time = datetime.now() + timedelta(seconds=interval_seconds)
+        next_run_time = calculate_next_run_time(interval, execute_on_schedule)
 
         # 立即执行一次监控
         _logger.info("立即执行一次监控周期...")
@@ -504,6 +554,7 @@ def main():
 
         _logger.info("=" * 60)
         _logger.info(f"监控调度器启动成功，间隔 {interval} 分钟")
+        _logger.info(f"执行模式: {'准点时间执行' if execute_on_schedule else '间隔执行'}")
         _logger.info(f"下次执行时间: {next_run_time.strftime('%Y-%m-%d %H:%M:%S')}")
         _logger.info("按 Ctrl+C 可优雅关闭程序")
         _logger.info("=" * 60)
@@ -515,8 +566,8 @@ def main():
                 if now >= next_run_time:
                     _logger.info(f"开始执行监控周期: {now.strftime('%Y-%m-%d %H:%M:%S')}")
                     run_monitoring_cycle(config)
-                    # 计算下次执行时间
-                    next_run_time = now + timedelta(seconds=interval_seconds)
+                    # 重新计算下次执行时间（按准点或间隔）
+                    next_run_time = calculate_next_run_time(interval, execute_on_schedule)
                     _logger.info(f"下次执行时间: {next_run_time.strftime('%Y-%m-%d %H:%M:%S')}")
 
                 # 等待1秒后检查

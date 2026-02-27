@@ -5,8 +5,11 @@
 monitor:
   # 监控间隔时间（分钟）
   interval: 5
+  # 是否在准点时间执行（如 9:30, 9:35, 9:40 等）
+  # true=按准点间隔执行，false=按启动时间间隔执行
+  execute_on_schedule: true
   # 请求超时时间（秒）
-  timeout: 10
+  timeout: 3
   # 并发线程数
   concurrent_threads: 5
   # 请求间隔时间（毫秒）
