@@ -1,0 +1,8 @@
+{
+  "GET /api/v1/nurse/realname/status": {
+    "url": "http://172.20.0.14:8082/api/v1/nurse/realname/status",
+    "method": "GET",
+    "path": "/api/v1/nurse/realname/status",
+    "parameters": {}
+  }
+}

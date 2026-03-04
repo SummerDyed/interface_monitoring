@@ -1,0 +1,8 @@
+{
+  "GET /api/v1/nurse/category/overview": {
+    "url": "http://172.20.0.14:8082/api/v1/nurse/category/overview",
+    "method": "GET",
+    "path": "/api/v1/nurse/category/overview",
+    "parameters": {}
+  }
+}
