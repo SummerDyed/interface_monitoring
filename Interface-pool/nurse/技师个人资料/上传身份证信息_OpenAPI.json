@@ -1,0 +1,8 @@
+{
+  "POST /api/v1/nurse/profile/idcard-info": {
+    "url": "http://172.20.0.14:8082/api/v1/nurse/profile/idcard-info",
+    "method": "POST",
+    "path": "/api/v1/nurse/profile/idcard-info",
+    "parameters": {}
+  }
+}
