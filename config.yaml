@@ -104,7 +104,7 @@ services:
       Content-Type: "application/json"
       User-Agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
     # 认证数据
-    username: "admin005"
+    username: "admin"
     password: "Admin@123"
     # Token缓存时间（秒，设置为1秒实现每次都重新获取）
     cache_duration: 1

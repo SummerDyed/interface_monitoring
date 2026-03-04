@@ -239,6 +239,7 @@ def run_monitoring_cycle(config: Dict[str, Any]) -> bool:
         # Step 2: 获取Token
         _logger.info("Step 2: 获取认证Token...")
         token_map = {}
+        failed_services = []  # 记录获取Token失败的服务
         services = ['user', 'nurse', 'admin']
         for service in services:
             try:
@@ -249,8 +250,32 @@ def run_monitoring_cycle(config: Dict[str, Any]) -> bool:
                     _logger.debug(f"获取 {service} 服务Token成功")
                 else:
                     _logger.warning(f"获取 {service} 服务Token失败")
+                    failed_services.append(service)
             except Exception as e:
                 _logger.error(f"获取 {service} 服务Token异常: {e}")
+                failed_services.append(service)
+
+        # 如果有服务Token获取失败，发送告警并跳过后续流程
+        if failed_services and _notifier:
+            _logger.warning(f"以下服务Token获取失败: {failed_services}")
+            try:
+                alert_content = f"""## 🔴 接口监控告警 - 服务认证异常
+
+以下服务Token获取失败，接口将无法正常检测：
+
+> **{', '.join(failed_services)}**
+
+**发生时间**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+
+**服务异常！请及时排查！**"""
+                _notifier.send_message(alert_content)
+                _logger.info("服务异常告警已发送")
+            except Exception as e:
+                _logger.error(f"发送服务异常告警失败: {e}")
+
+            # 跳过后续的监控执行和报告发送
+            _logger.warning("由于服务认证异常，跳过本次监控")
+            return True
 
         # Step 3: 执行监控
         _logger.info("Step 3: 执行接口监控...")
