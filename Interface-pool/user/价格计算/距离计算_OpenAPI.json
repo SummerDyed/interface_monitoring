@@ -1,6 +1,6 @@
 {
   "POST /api/v1/user/pricing/calculate-distance": {
-    "url": "http://120.79.173.8:8201/maiban-user/api/v1/user/pricing/calculate-distance",
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/pricing/calculate-distance",
     "method": "POST",
     "path": "/api/v1/user/pricing/calculate-distance",
     "parameters": {}

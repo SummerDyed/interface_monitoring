@@ -1,0 +1,8 @@
+{
+  "GET /api/v1/user/legal/order-notice/current": {
+    "url": "https://maibanjk.com/api/v1/user/legal/order-notice/current",
+    "method": "GET",
+    "path": "/api/v1/user/legal/order-notice/current",
+    "parameters": {}
+  }
+}

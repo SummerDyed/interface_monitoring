@@ -1,0 +1,8 @@
+{
+  "GET /api/v1/user/legal/order-notice/page": {
+    "url": "https://maibanjk.com/api/v1/user/legal/order-notice/page",
+    "method": "GET",
+    "path": "/api/v1/user/legal/order-notice/page",
+    "parameters": {}
+  }
+}
