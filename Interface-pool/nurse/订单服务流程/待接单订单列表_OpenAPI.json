@@ -1,6 +1,6 @@
 {
   "GET /api/v1/nurse/orders/pending": {
-    "url": "http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/orders/pending",
+    "url": "https://maibanjk.com/maiban-nurse/api/v1/nurse/orders/pending",
     "method": "GET",
     "path": "/api/v1/nurse/orders/pending",
     "parameters": {

@@ -1,6 +1,6 @@
 {
   "POST /api/v1/nurse/realname/submit": {
-    "url": "http://172.20.0.14:8082/api/v1/nurse/realname/submit",
+    "url": "https://maibanjk.com/api/v1/nurse/realname/submit",
     "method": "POST",
     "path": "/api/v1/nurse/realname/submit",
     "parameters": {}

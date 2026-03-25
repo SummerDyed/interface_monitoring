@@ -1,0 +1,14 @@
+{
+  "GET /api/v1/nurse/categories/{categoryId}/items": {
+    "url": "https://maibanjk.com/api/v1/nurse/categories/{categoryId}/items",
+    "method": "GET",
+    "path": "/api/v1/nurse/categories/{categoryId}/items",
+    "parameters": {
+      "categoryId": {
+        "type": "path",
+        "required": true,
+        "description": "小类ID"
+      }
+    }
+  }
+}

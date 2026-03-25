@@ -1,6 +1,6 @@
 {
   "DELETE /api/v1/nurse/profile/albums/{albumId}": {
-    "url": "http://120.79.173.8:8201/maiban-nurse/api/v1/nurse/profile/albums/{albumId}",
+    "url": "https://maibanjk.com/maiban-nurse/api/v1/nurse/profile/albums/{albumId}",
     "method": "DELETE",
     "path": "/api/v1/nurse/profile/albums/{albumId}",
     "parameters": {
