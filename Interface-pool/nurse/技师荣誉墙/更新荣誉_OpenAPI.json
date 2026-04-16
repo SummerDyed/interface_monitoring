@@ -1,0 +1,8 @@
+{
+  "PUT /api/v1/nurse/honors/{id}": {
+    "url": "https://maibanjk.com/maiban-nurse/api/v1/nurse/honors/{id}",
+    "method": "PUT",
+    "path": "/api/v1/nurse/honors/{id}",
+    "parameters": {}
+  }
+}

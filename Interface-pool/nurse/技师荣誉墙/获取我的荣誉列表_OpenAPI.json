@@ -1,0 +1,8 @@
+{
+  "GET /api/v1/nurse/honors": {
+    "url": "https://maibanjk.com/maiban-nurse/api/v1/nurse/honors",
+    "method": "GET",
+    "path": "/api/v1/nurse/honors",
+    "parameters": {}
+  }
+}

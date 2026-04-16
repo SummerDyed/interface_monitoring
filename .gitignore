@@ -67,6 +67,9 @@ venv.bak/
 logs/
 *.log
 
+# Deployment docs (local only)
+DEPLOYMENT.md
+
 # Runtime
 monitor.pid
 *.pid

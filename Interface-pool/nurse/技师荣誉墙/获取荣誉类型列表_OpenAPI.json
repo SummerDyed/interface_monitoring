@@ -1,0 +1,8 @@
+{
+  "GET /api/v1/nurse/honor-types": {
+    "url": "https://maibanjk.com/maiban-nurse/api/v1/nurse/honor-types",
+    "method": "GET",
+    "path": "/api/v1/nurse/honor-types",
+    "parameters": {}
+  }
+}

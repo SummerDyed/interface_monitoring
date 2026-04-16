@@ -1,0 +1,8 @@
+{
+  "POST /api/v1/nurse/honors": {
+    "url": "https://maibanjk.com/maiban-nurse/api/v1/nurse/honors",
+    "method": "POST",
+    "path": "/api/v1/nurse/honors",
+    "parameters": {}
+  }
+}
