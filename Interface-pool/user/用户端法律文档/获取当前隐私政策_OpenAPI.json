@@ -1,8 +1,0 @@
-{
-  "GET /api/v1/user/legal/privacy/current": {
-    "url": "https://maibanjk.com/maiban-user/api/v1/user/legal/privacy/current",
-    "method": "GET",
-    "path": "/api/v1/user/legal/privacy/current",
-    "parameters": {}
-  }
-}

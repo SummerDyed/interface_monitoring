@@ -1,8 +1,0 @@
-{
-  "GET /admin/api/v1/district/tree": {
-    "url": "https://maibanjk.com/maiban-admin/admin/api/v1/district/tree",
-    "method": "GET",
-    "path": "/admin/api/v1/district/tree",
-    "parameters": {}
-  }
-}
