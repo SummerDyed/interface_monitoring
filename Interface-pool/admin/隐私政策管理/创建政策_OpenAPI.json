@@ -1,8 +1,0 @@
-{
-  "POST /admin/api/v1/privacy-policies": {
-    "url": "https://maibanjk.com/maiban-admin/admin/api/v1/privacy-policies",
-    "method": "POST",
-    "path": "/admin/api/v1/privacy-policies",
-    "parameters": {}
-  }
-}

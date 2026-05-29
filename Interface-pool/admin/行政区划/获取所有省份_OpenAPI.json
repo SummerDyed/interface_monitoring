@@ -1,8 +1,0 @@
-{
-  "GET /admin/api/v1/district/provinces": {
-    "url": "https://maibanjk.com/maiban-admin/admin/api/v1/district/provinces",
-    "method": "GET",
-    "path": "/admin/api/v1/district/provinces",
-    "parameters": {}
-  }
-}
