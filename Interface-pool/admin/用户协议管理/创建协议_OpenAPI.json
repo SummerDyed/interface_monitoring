@@ -1,8 +1,0 @@
-{
-  "POST /admin/api/v1/agreements": {
-    "url": "https://maibanjk.com/maiban-admin/admin/api/v1/agreements",
-    "method": "POST",
-    "path": "/admin/api/v1/agreements",
-    "parameters": {}
-  }
-}
