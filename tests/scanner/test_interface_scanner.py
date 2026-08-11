@@ -56,7 +56,8 @@ class TestInterfaceScanner:
 
             # 创建YAML文件
             yaml_file = service_path / "test.yaml"
-            yaml_file.write_text('POST /test:\n  url: http://test.com')
+            yaml_file.write_text('POST /test:\
+                                 n  url: http://test.com')
 
         # 查找文件
         file_paths = self.scanner._find_interface_files()

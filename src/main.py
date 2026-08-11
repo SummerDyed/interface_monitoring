@@ -297,29 +297,34 @@ def run_monitoring_cycle(config: Dict[str, Any]) -> bool:
         analyze_duration = (analyze_end - analyze_start).total_seconds()
         _logger.info(f"分析耗时: {analyze_duration:.2f}秒")
 
-        # Step 5: 推送监控报告（总是发送）
-        _logger.info("Step 5: 发送监控报告...")
-        if _notifier:
-            try:
-                # 构建通知信息
-                stats = _monitor_engine.get_statistics(results)
+        # Step 5: 推送监控报告（仅异常时发送）
+        _logger.info("Step 5: 检查是否需要发送监控报告...")
 
-                # 判断是否有严重错误（404/500）
-                has_critical_errors = any(
-                    error.error_type in {'HTTP_404', 'HTTP_500'} or
-                    error.status_code in [404, 500]
-                    for error in results
-                    if hasattr(error, 'error_type')
-                )
+        # 判断是否有严重错误（404/500）或超时接口
+        has_critical_errors = any(
+            error.error_type in {'HTTP_404', 'HTTP_500'} or
+            error.status_code in [404, 500]
+            for error in results
+            if hasattr(error, 'error_type')
+        )
+        has_timeout = bool(report.timeout_interfaces) if report.timeout_interfaces else False
 
-                if has_critical_errors:
-                    _logger.info("发现严重错误，发送告警通知")
-                    # 有严重错误，使用告警信息
+        # 仅在有异常时发送消息
+        if has_critical_errors or has_timeout:
+            _logger.info("发现异常，发送告警通知")
+            if _notifier:
+                try:
+                    # 构建通知信息
+                    stats = _monitor_engine.get_statistics(results)
+
+                    # 有严重错误或超时，使用告警信息
                     if report.alert_info:
                         alert_info = report.alert_info.copy()
                         alert_info['is_alert'] = True
                         alert_info['alert_type'] = 'error'
-                        alert_info['summary'] = f"🚨 接口监控告警 - 发现{len([e for e in results if hasattr(e, 'error_type') and (e.error_type in {'HTTP_404', 'HTTP_500'} or e.status_code in [404, 500])])}个严重错误"
+                        error_count = len([e for e in results if hasattr(e, 'error_type') and (e.error_type in {'HTTP_404', 'HTTP_500'} or e.status_code in [404, 500])])
+                        timeout_count = len(report.timeout_interfaces) if report.timeout_interfaces else 0
+                        alert_info['summary'] = f"🚨 接口监控告警 - 发现{error_count}个严重错误和{timeout_count}个超时接口"
                         alert_info['timeout_interfaces'] = report.timeout_interfaces
                         alert_info['statistics'] = {
                             'total': stats['total'],
@@ -329,45 +334,34 @@ def run_monitoring_cycle(config: Dict[str, Any]) -> bool:
                         alert_info = {
                             'is_alert': True,
                             'alert_type': 'error',
-                            'summary': f"🚨 接口监控告警 - 发现严重错误",
+                            'summary': f"🚨 接口监控告警 - 发现严重错误或超时",
                             'timeout_interfaces': report.timeout_interfaces,
                             'statistics': {
                                 'total': stats['total'],
                                 'duration': f"{monitor_duration:.2f}秒"
                             }
                         }
-                else:
-                    _logger.info("无严重错误，发送正常监控报告")
-                    # 无严重错误，发送简化正常报告
-                    alert_info = {
-                        'is_alert': False,
-                        'alert_type': 'normal',
-                        'summary': f"✅ 接口监控正常 - 共监控{stats['total']}个接口",
-                        'timeout_interfaces': report.timeout_interfaces,
-                        'statistics': {
-                            'total': stats['total'],
-                            'duration': f"{monitor_duration:.2f}秒"
-                        }
-                    }
 
-                # 发送通知
-                wechat_config = config.get('wechat', {})
-                push_result = _notifier.send_report(
-                    report=report,
-                    mentioned_list=wechat_config.get('at_users', []),
-                    mentioned_mobile_list=[],
-                    alert_info=alert_info
-                )
+                    # 发送通知
+                    wechat_config = config.get('wechat', {})
+                    push_result = _notifier.send_report(
+                        report=report,
+                        mentioned_list=wechat_config.get('at_users', []),
+                        mentioned_mobile_list=[],
+                        alert_info=alert_info
+                    )
 
-                if push_result.success:
-                    _logger.info("监控报告发送成功")
-                else:
-                    _logger.error(f"监控报告发送失败: {push_result.error_message}")
-            except Exception as e:
-                _logger.error(f"发送监控报告异常: {e}")
-                _logger.error(traceback.format_exc())
+                    if push_result.success:
+                        _logger.info("告警通知发送成功")
+                    else:
+                        _logger.error(f"告警通知发送失败: {push_result.error_message}")
+                except Exception as e:
+                    _logger.error(f"发送告警通知异常: {e}")
+                    _logger.error(traceback.format_exc())
+            else:
+                _logger.warning("企业微信推送器未初始化，跳过告警通知发送")
         else:
-            _logger.warning("企业微信推送器未初始化，跳过监控报告发送")
+            _logger.info("无异常，不发送消息")
 
         # 记录监控统计信息
         stats = _monitor_engine.get_statistics(results)
@@ -389,7 +383,7 @@ def run_monitoring_cycle(config: Dict[str, Any]) -> bool:
         # 显示状态码统计
         if status_code_stats:
             _logger.info(f"状态码分布:")
-            for code, count in sorted(status_code_stats.items()):
+            for code, count in sorted(status_code_stats.items(), key=lambda x: str(x[0])):
                 percentage = (count / stats['total']) * 100
                 _logger.info(f"  HTTP {code}: {count}次 ({percentage:.1f}%)")
 
