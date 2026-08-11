@@ -1,0 +1,16 @@
+{
+  "POST /api/v1/user/reviews/mall/{orderId}": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/reviews/mall/{orderId}",
+    "method": "POST",
+    "path": "/api/v1/user/reviews/mall/{orderId}",
+    "parameters": {
+      "orderId": {
+        "in": "path",
+        "description": "商城订单ID（mall_order.id）",
+        "required": true,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

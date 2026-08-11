@@ -1,0 +1,37 @@
+{
+  "GET /admin/api/v1/mall/after-sales": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/after-sales",
+    "method": "GET",
+    "path": "/admin/api/v1/mall/after-sales",
+    "parameters": {
+      "status": {
+        "in": "query",
+        "description": "售后状态：0待审核/1处理中/2已完成/3已拒绝",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      },
+      "type": {
+        "in": "query",
+        "description": "售后类型：1退货退款/2仅退款/3换货",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      },
+      "page": {
+        "in": "query",
+        "description": "页码",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      },
+      "pageSize": {
+        "in": "query",
+        "description": "每页条数",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

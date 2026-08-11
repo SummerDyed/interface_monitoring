@@ -1,0 +1,30 @@
+{
+  "GET /api/v1/user/group-buy/activities/{id}/reviews": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/group-buy/activities/{id}/reviews",
+    "method": "GET",
+    "path": "/api/v1/user/group-buy/activities/{id}/reviews",
+    "parameters": {
+      "id": {
+        "in": "path",
+        "description": "团购活动ID",
+        "required": true,
+        "type": "integer",
+        "example": ""
+      },
+      "page": {
+        "in": "query",
+        "description": "页码",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      },
+      "pageSize": {
+        "in": "query",
+        "description": "每页数量",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

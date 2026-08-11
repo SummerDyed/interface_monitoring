@@ -1,0 +1,30 @@
+{
+  "GET /admin/api/v1/mall/categories": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/categories",
+    "method": "GET",
+    "path": "/admin/api/v1/mall/categories",
+    "parameters": {
+      "status": {
+        "in": "query",
+        "description": "状态：0禁用/1启用",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      },
+      "page": {
+        "in": "query",
+        "description": "页码",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      },
+      "pageSize": {
+        "in": "query",
+        "description": "每页条数",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

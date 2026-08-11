@@ -1,0 +1,23 @@
+{
+  "POST /api/v1/user/mall/orders/{id}/pay": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/mall/orders/{id}/pay",
+    "method": "POST",
+    "path": "/api/v1/user/mall/orders/{id}/pay",
+    "parameters": {
+      "id": {
+        "in": "path",
+        "description": "订单ID",
+        "required": true,
+        "type": "integer",
+        "example": ""
+      },
+      "paymentMethod": {
+        "in": "query",
+        "description": "",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

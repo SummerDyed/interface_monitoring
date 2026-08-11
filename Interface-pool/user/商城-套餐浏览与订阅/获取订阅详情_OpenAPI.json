@@ -1,0 +1,16 @@
+{
+  "GET /api/v1/user/subscription/{id}/detail": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/subscription/{id}/detail",
+    "method": "GET",
+    "path": "/api/v1/user/subscription/{id}/detail",
+    "parameters": {
+      "id": {
+        "in": "path",
+        "description": "订阅ID",
+        "required": true,
+        "type": "integer",
+        "example": 6
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "GET /admin/api/v1/mall/package/compare": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/package/compare",
+    "method": "GET",
+    "path": "/admin/api/v1/mall/package/compare",
+    "parameters": {
+      "startDate": {
+        "in": "query",
+        "description": "统计开始日期，格式 YYYY-MM-DD",
+        "required": false,
+        "type": "string",
+        "example": "2026-05-01"
+      },
+      "endDate": {
+        "in": "query",
+        "description": "统计结束日期，格式 YYYY-MM-DD",
+        "required": false,
+        "type": "string",
+        "example": "2026-05-31"
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "POST /api/v1/user/mall/orders/{id}/refund": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/mall/orders/{id}/refund",
+    "method": "POST",
+    "path": "/api/v1/user/mall/orders/{id}/refund",
+    "parameters": {
+      "id": {
+        "in": "path",
+        "description": "订单ID",
+        "required": true,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

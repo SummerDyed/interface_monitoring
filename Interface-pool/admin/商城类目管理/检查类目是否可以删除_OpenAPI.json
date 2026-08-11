@@ -1,0 +1,16 @@
+{
+  "GET /admin/api/v1/mall/categories/{id}/can-delete": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/categories/{id}/can-delete",
+    "method": "GET",
+    "path": "/admin/api/v1/mall/categories/{id}/can-delete",
+    "parameters": {
+      "id": {
+        "in": "path",
+        "description": "类目ID",
+        "required": true,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

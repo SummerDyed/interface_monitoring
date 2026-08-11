@@ -1,0 +1,16 @@
+{
+  "GET /api/v1/user/subscription/{id}": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/subscription/{id}",
+    "method": "GET",
+    "path": "/api/v1/user/subscription/{id}",
+    "parameters": {
+      "id": {
+        "in": "path",
+        "description": "套餐ID",
+        "required": true,
+        "type": "integer",
+        "example": 1
+      }
+    }
+  }
+}

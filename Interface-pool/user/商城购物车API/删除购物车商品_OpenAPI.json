@@ -1,0 +1,16 @@
+{
+  "DELETE /api/v1/user/mall/cart/{itemId}": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/mall/cart/{itemId}",
+    "method": "DELETE",
+    "path": "/api/v1/user/mall/cart/{itemId}",
+    "parameters": {
+      "itemId": {
+        "in": "path",
+        "description": "购物车商品ID",
+        "required": true,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

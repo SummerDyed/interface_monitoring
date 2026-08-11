@@ -1,0 +1,23 @@
+{
+  "POST /api/v1/user/mall/points/calculate": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/mall/points/calculate",
+    "method": "POST",
+    "path": "/api/v1/user/mall/points/calculate",
+    "parameters": {
+      "orderAmount": {
+        "in": "query",
+        "description": "订单金额",
+        "required": true,
+        "type": "number",
+        "example": ""
+      },
+      "pointsToUse": {
+        "in": "query",
+        "description": "使用的积分数（可选）",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

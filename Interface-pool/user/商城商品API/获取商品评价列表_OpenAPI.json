@@ -1,0 +1,37 @@
+{
+  "GET /api/v1/user/mall/products/{id}/reviews": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/mall/products/{id}/reviews",
+    "method": "GET",
+    "path": "/api/v1/user/mall/products/{id}/reviews",
+    "parameters": {
+      "id": {
+        "in": "path",
+        "description": "",
+        "required": true,
+        "type": "integer",
+        "example": ""
+      },
+      "filter": {
+        "in": "query",
+        "description": "",
+        "required": false,
+        "type": "string",
+        "example": ""
+      },
+      "page": {
+        "in": "query",
+        "description": "",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      },
+      "pageSize": {
+        "in": "query",
+        "description": "",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

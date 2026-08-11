@@ -1,0 +1,16 @@
+{
+  "DELETE /admin/api/v1/mall/activities/{id}": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/activities/{id}",
+    "method": "DELETE",
+    "path": "/admin/api/v1/mall/activities/{id}",
+    "parameters": {
+      "id": {
+        "in": "path",
+        "description": "活动ID",
+        "required": true,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

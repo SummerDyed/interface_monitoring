@@ -1,0 +1,37 @@
+{
+  "GET /admin/api/v1/mall/package/export": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/package/export",
+    "method": "GET",
+    "path": "/admin/api/v1/mall/package/export",
+    "parameters": {
+      "startDate": {
+        "in": "query",
+        "description": "导出开始日期，格式 YYYY-MM-DD",
+        "required": false,
+        "type": "string",
+        "example": "2026-05-01"
+      },
+      "endDate": {
+        "in": "query",
+        "description": "导出结束日期，格式 YYYY-MM-DD",
+        "required": false,
+        "type": "string",
+        "example": "2026-05-31"
+      },
+      "packageType": {
+        "in": "query",
+        "description": "套餐类型/周期类型：0-周套餐，1-半月套餐，2-月套餐；不传表示全部",
+        "required": false,
+        "type": "integer",
+        "example": 2
+      },
+      "format": {
+        "in": "query",
+        "description": "导出格式：excel 或 csv，默认 excel",
+        "required": false,
+        "type": "string",
+        "example": "excel"
+      }
+    }
+  }
+}

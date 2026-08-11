@@ -1,0 +1,16 @@
+{
+  "POST /admin/api/v1/mall/outbound/{id}/sync-logistics": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/outbound/{id}/sync-logistics",
+    "method": "POST",
+    "path": "/admin/api/v1/mall/outbound/{id}/sync-logistics",
+    "parameters": {
+      "id": {
+        "in": "path",
+        "description": "",
+        "required": true,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

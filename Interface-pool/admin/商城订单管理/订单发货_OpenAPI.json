@@ -1,0 +1,16 @@
+{
+  "POST /admin/api/v1/mall/orders/{orderId}/ship": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/orders/{orderId}/ship",
+    "method": "POST",
+    "path": "/admin/api/v1/mall/orders/{orderId}/ship",
+    "parameters": {
+      "orderId": {
+        "in": "path",
+        "description": "订单ID",
+        "required": true,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

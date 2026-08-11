@@ -1,0 +1,8 @@
+{
+  "POST /admin/api/v1/mall/brands": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/brands",
+    "method": "POST",
+    "path": "/admin/api/v1/mall/brands",
+    "parameters": {}
+  }
+}

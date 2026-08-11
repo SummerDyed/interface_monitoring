@@ -1,0 +1,23 @@
+{
+  "GET /api/v1/user/subscription/{id}/delivery/{orderId}": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/subscription/{id}/delivery/{orderId}",
+    "method": "GET",
+    "path": "/api/v1/user/subscription/{id}/delivery/{orderId}",
+    "parameters": {
+      "id": {
+        "in": "path",
+        "description": "订阅ID",
+        "required": true,
+        "type": "integer",
+        "example": 6
+      },
+      "orderId": {
+        "in": "path",
+        "description": "配送订单ID",
+        "required": true,
+        "type": "integer",
+        "example": 10
+      }
+    }
+  }
+}

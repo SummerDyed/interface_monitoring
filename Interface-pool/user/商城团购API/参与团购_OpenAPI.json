@@ -1,0 +1,16 @@
+{
+  "POST /api/v1/user/group-buy/activities/{id}/join": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/group-buy/activities/{id}/join",
+    "method": "POST",
+    "path": "/api/v1/user/group-buy/activities/{id}/join",
+    "parameters": {
+      "id": {
+        "in": "path",
+        "description": "团购活动ID",
+        "required": true,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

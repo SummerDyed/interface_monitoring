@@ -1,0 +1,16 @@
+{
+  "GET /admin/api/v1/mall/products": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/products",
+    "method": "GET",
+    "path": "/admin/api/v1/mall/products",
+    "parameters": {
+      "request": {
+        "in": "query",
+        "description": "",
+        "required": true,
+        "type": "string",
+        "example": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "GET /admin/api/v1/mall/package/list": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/package/list",
+    "method": "GET",
+    "path": "/admin/api/v1/mall/package/list",
+    "parameters": {
+      "status": {
+        "in": "query",
+        "description": "套餐状态：0-下架，1-上架；不传表示全部",
+        "required": false,
+        "type": "integer",
+        "example": 1
+      },
+      "cycleUnit": {
+        "in": "query",
+        "description": "周期单位：WEEK/HALF_MONTH/MONTH/QUARTER/HALF_YEAR/YEAR",
+        "required": false,
+        "type": "string",
+        "example": "MONTH"
+      },
+      "keyword": {
+        "in": "query",
+        "description": "套餐名称关键字",
+        "required": false,
+        "type": "string",
+        "example": "营养组合"
+      },
+      "page": {
+        "in": "query",
+        "description": "页码，从1开始",
+        "required": false,
+        "type": "integer",
+        "example": 1
+      },
+      "pageSize": {
+        "in": "query",
+        "description": "每页条数，默认20，最大100",
+        "required": false,
+        "type": "integer",
+        "example": 20
+      }
+    }
+  }
+}

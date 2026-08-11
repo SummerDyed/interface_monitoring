@@ -1,0 +1,16 @@
+{
+  "PUT /admin/api/v1/mall/banners/{id}": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/banners/{id}",
+    "method": "PUT",
+    "path": "/admin/api/v1/mall/banners/{id}",
+    "parameters": {
+      "id": {
+        "in": "path",
+        "description": "BannerID",
+        "required": true,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

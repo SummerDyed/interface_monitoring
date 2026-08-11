@@ -1,0 +1,16 @@
+{
+  "DELETE /admin/api/v1/mall/brands/{id}": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/brands/{id}",
+    "method": "DELETE",
+    "path": "/admin/api/v1/mall/brands/{id}",
+    "parameters": {
+      "id": {
+        "in": "path",
+        "description": "品牌ID",
+        "required": true,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "PUT /api/v1/user/subscription/{id}/delivery-content": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/subscription/{id}/delivery-content",
+    "method": "PUT",
+    "path": "/api/v1/user/subscription/{id}/delivery-content",
+    "parameters": {
+      "id": {
+        "in": "path",
+        "description": "订阅ID",
+        "required": true,
+        "type": "integer",
+        "example": 6
+      }
+    }
+  }
+}

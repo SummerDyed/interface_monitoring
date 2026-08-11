@@ -1,0 +1,8 @@
+{
+  "POST /api/v1/user/mall/orders/test/sync-task/unlock": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/mall/orders/test/sync-task/unlock",
+    "method": "POST",
+    "path": "/api/v1/user/mall/orders/test/sync-task/unlock",
+    "parameters": {}
+  }
+}

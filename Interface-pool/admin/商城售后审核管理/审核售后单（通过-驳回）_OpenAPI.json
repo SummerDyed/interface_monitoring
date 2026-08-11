@@ -1,0 +1,16 @@
+{
+  "POST /admin/api/v1/mall/after-sales/{afterSaleId}/audit": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/after-sales/{afterSaleId}/audit",
+    "method": "POST",
+    "path": "/admin/api/v1/mall/after-sales/{afterSaleId}/audit",
+    "parameters": {
+      "afterSaleId": {
+        "in": "path",
+        "description": "售后单ID",
+        "required": true,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

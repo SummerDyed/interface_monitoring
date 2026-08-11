@@ -1,0 +1,30 @@
+{
+  "GET /api/v1/user/mall/recommend/personalized": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/mall/recommend/personalized",
+    "method": "GET",
+    "path": "/api/v1/user/mall/recommend/personalized",
+    "parameters": {
+      "memberId": {
+        "in": "query",
+        "description": "家庭成员ID，不传则基于所有成员",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      },
+      "page": {
+        "in": "query",
+        "description": "页码，默认1",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      },
+      "pageSize": {
+        "in": "query",
+        "description": "每页条数，默认20",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

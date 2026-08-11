@@ -1,0 +1,16 @@
+{
+  "GET /admin/api/v1/mall/subscription-template/{id}": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/subscription-template/{id}",
+    "method": "GET",
+    "path": "/admin/api/v1/mall/subscription-template/{id}",
+    "parameters": {
+      "id": {
+        "in": "path",
+        "description": "模板ID",
+        "required": true,
+        "type": "integer",
+        "example": 1
+      }
+    }
+  }
+}

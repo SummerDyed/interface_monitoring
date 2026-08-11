@@ -1,0 +1,86 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "麦瓣健康订单服务API文档",
+    "description": "麦瓣健康订单服务API接口文档，包含订单管理、支付、定价、地址管理等核心功能",
+    "contact": {
+      "name": "麦瓣健康技术团队",
+      "url": "https://github.com/qianmai-healthy/maiban-center",
+      "email": "support@maiban.com"
+    },
+    "license": {
+      "name": "MIT License",
+      "url": "https://opensource.org/licenses/MIT"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://172.20.0.12:8081",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/api/v1/user/group-buy/stat": {
+      "get": {
+        "tags": [
+          "商城团购API"
+        ],
+        "summary": "获取用户团购统计",
+        "operationId": "getUserGroupBuyStat",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResultUserGroupBuyStatVO"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "CommonResultUserGroupBuyStatVO": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/components/schemas/UserGroupBuyStatVO"
+        }
+      }
+    },
+    "UserGroupBuyStatVO": {
+      "type": "object",
+      "properties": {
+        "ongoingCount": {
+          "type": "integer",
+          "description": "进行中团购数量",
+          "format": "int32",
+          "refType": null
+        },
+        "totalParticipantTimes": {
+          "type": "integer",
+          "description": "累计参团人次",
+          "format": "int32",
+          "refType": null
+        },
+        "totalSavedAmount": {
+          "type": "number",
+          "description": "累计省钱金额",
+          "refType": null
+        }
+      },
+      "description": "用户团购统计"
+    }
+  }
+}

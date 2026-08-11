@@ -1,0 +1,8 @@
+{
+  "POST /admin/api/v1/mall/outbound": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/outbound",
+    "method": "POST",
+    "path": "/admin/api/v1/mall/outbound",
+    "parameters": {}
+  }
+}

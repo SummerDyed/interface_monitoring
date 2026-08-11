@@ -1,0 +1,8 @@
+{
+  "POST /admin/api/v1/mall/products/batch-status": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/products/batch-status",
+    "method": "POST",
+    "path": "/admin/api/v1/mall/products/batch-status",
+    "parameters": {}
+  }
+}

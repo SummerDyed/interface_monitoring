@@ -1,0 +1,16 @@
+{
+  "POST /api/v1/user/subscription/{id}/cancel": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/subscription/{id}/cancel",
+    "method": "POST",
+    "path": "/api/v1/user/subscription/{id}/cancel",
+    "parameters": {
+      "id": {
+        "in": "path",
+        "description": "订阅ID",
+        "required": true,
+        "type": "integer",
+        "example": 6
+      }
+    }
+  }
+}

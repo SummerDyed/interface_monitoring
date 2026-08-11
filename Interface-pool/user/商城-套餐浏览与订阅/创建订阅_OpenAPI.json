@@ -1,0 +1,8 @@
+{
+  "POST /api/v1/user/subscription/create": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/subscription/create",
+    "method": "POST",
+    "path": "/api/v1/user/subscription/create",
+    "parameters": {}
+  }
+}

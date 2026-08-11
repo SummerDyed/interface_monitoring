@@ -1,0 +1,8 @@
+{
+  "GET /api/v1/user/mall/orders/points/balance": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/mall/orders/points/balance",
+    "method": "GET",
+    "path": "/api/v1/user/mall/orders/points/balance",
+    "parameters": {}
+  }
+}

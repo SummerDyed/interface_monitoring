@@ -1,0 +1,8 @@
+{
+  "POST /api/v1/user/mall/orders/calculate-discount": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/mall/orders/calculate-discount",
+    "method": "POST",
+    "path": "/api/v1/user/mall/orders/calculate-discount",
+    "parameters": {}
+  }
+}

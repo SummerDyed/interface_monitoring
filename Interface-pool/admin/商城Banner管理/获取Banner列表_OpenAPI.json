@@ -1,0 +1,30 @@
+{
+  "GET /admin/api/v1/mall/banners": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/banners",
+    "method": "GET",
+    "path": "/admin/api/v1/mall/banners",
+    "parameters": {
+      "status": {
+        "in": "query",
+        "description": "状态",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      },
+      "page": {
+        "in": "query",
+        "description": "页码",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      },
+      "pageSize": {
+        "in": "query",
+        "description": "每页条数",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

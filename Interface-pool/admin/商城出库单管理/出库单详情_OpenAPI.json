@@ -1,0 +1,16 @@
+{
+  "GET /admin/api/v1/mall/outbound/{id}": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/outbound/{id}",
+    "method": "GET",
+    "path": "/admin/api/v1/mall/outbound/{id}",
+    "parameters": {
+      "id": {
+        "in": "path",
+        "description": "",
+        "required": true,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

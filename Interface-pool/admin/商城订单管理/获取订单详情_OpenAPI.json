@@ -1,0 +1,16 @@
+{
+  "GET /admin/api/v1/mall/orders/{orderId}": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/orders/{orderId}",
+    "method": "GET",
+    "path": "/admin/api/v1/mall/orders/{orderId}",
+    "parameters": {
+      "orderId": {
+        "in": "path",
+        "description": "订单ID",
+        "required": true,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

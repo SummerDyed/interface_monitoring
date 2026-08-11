@@ -1,0 +1,30 @@
+{
+  "GET /admin/api/v1/mall/package/chart": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/package/chart",
+    "method": "GET",
+    "path": "/admin/api/v1/mall/package/chart",
+    "parameters": {
+      "type": {
+        "in": "query",
+        "description": "图表类型：subscription-套餐订阅，group-buy-团购，all-全部；不传默认全部",
+        "required": false,
+        "type": "string",
+        "example": "all"
+      },
+      "startDate": {
+        "in": "query",
+        "description": "统计开始日期，格式 YYYY-MM-DD",
+        "required": false,
+        "type": "string",
+        "example": "2026-05-01"
+      },
+      "endDate": {
+        "in": "query",
+        "description": "统计结束日期，格式 YYYY-MM-DD",
+        "required": false,
+        "type": "string",
+        "example": "2026-05-31"
+      }
+    }
+  }
+}

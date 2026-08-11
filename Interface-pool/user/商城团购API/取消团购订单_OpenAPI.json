@@ -1,0 +1,16 @@
+{
+  "POST /api/v1/user/group-buy/orders/{orderId}/cancel": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/group-buy/orders/{orderId}/cancel",
+    "method": "POST",
+    "path": "/api/v1/user/group-buy/orders/{orderId}/cancel",
+    "parameters": {
+      "orderId": {
+        "in": "path",
+        "description": "订单ID",
+        "required": true,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

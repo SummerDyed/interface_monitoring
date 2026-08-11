@@ -1,0 +1,30 @@
+{
+  "GET /api/v1/user/subscription/{id}/deliveries": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/subscription/{id}/deliveries",
+    "method": "GET",
+    "path": "/api/v1/user/subscription/{id}/deliveries",
+    "parameters": {
+      "id": {
+        "in": "path",
+        "description": "订阅ID",
+        "required": true,
+        "type": "integer",
+        "example": 6
+      },
+      "page": {
+        "in": "query",
+        "description": "页码，从1开始",
+        "required": false,
+        "type": "integer",
+        "example": 1
+      },
+      "pageSize": {
+        "in": "query",
+        "description": "每页数量，默认20，最大100",
+        "required": false,
+        "type": "integer",
+        "example": 20
+      }
+    }
+  }
+}

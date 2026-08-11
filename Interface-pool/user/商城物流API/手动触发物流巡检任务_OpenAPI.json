@@ -1,0 +1,16 @@
+{
+  "POST /api/v1/user/mall/orders/test/sync-task/trigger": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/mall/orders/test/sync-task/trigger",
+    "method": "POST",
+    "path": "/api/v1/user/mall/orders/test/sync-task/trigger",
+    "parameters": {
+      "force": {
+        "in": "query",
+        "description": "",
+        "required": false,
+        "type": "boolean",
+        "example": ""
+      }
+    }
+  }
+}

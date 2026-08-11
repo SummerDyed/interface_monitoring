@@ -1,0 +1,16 @@
+{
+  "PUT /api/v1/user/mall/orders/{id}/address": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/mall/orders/{id}/address",
+    "method": "PUT",
+    "path": "/api/v1/user/mall/orders/{id}/address",
+    "parameters": {
+      "id": {
+        "in": "path",
+        "description": "订单ID",
+        "required": true,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

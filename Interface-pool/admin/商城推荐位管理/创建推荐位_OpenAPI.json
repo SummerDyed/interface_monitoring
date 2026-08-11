@@ -1,0 +1,8 @@
+{
+  "POST /admin/api/v1/mall/recommend-positions": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/recommend-positions",
+    "method": "POST",
+    "path": "/admin/api/v1/mall/recommend-positions",
+    "parameters": {}
+  }
+}

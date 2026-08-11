@@ -1,0 +1,16 @@
+{
+  "PUT /admin/api/v1/mall/outbound/{id}/cancel": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/outbound/{id}/cancel",
+    "method": "PUT",
+    "path": "/admin/api/v1/mall/outbound/{id}/cancel",
+    "parameters": {
+      "id": {
+        "in": "path",
+        "description": "",
+        "required": true,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

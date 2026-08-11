@@ -1,0 +1,51 @@
+{
+  "GET /api/v1/user/subscription/list": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/subscription/list",
+    "method": "GET",
+    "path": "/api/v1/user/subscription/list",
+    "parameters": {
+      "cycleUnit": {
+        "in": "query",
+        "description": "周期单位编码（day/week/month，区分大小写但枚举 of() 大小写不敏感）。合法值应从配套接口 GET /api/v1/user/subscription/cycle-units 动态获取当前在售套餐实际使用的选项；不传或传空表示全部。",
+        "required": false,
+        "type": "string",
+        "example": "month"
+      },
+      "crowd": {
+        "in": "query",
+        "description": "适用人群标签，例如产后、老人、健身、儿童、高血压",
+        "required": false,
+        "type": "string",
+        "example": "老人"
+      },
+      "keyword": {
+        "in": "query",
+        "description": "套餐名称关键词，支持模糊搜索",
+        "required": false,
+        "type": "string",
+        "example": "降压"
+      },
+      "sort": {
+        "in": "query",
+        "description": "排序字段：sales-销量，price-价格，rating-评分；不传使用默认排序",
+        "required": false,
+        "type": "string",
+        "example": "sales"
+      },
+      "page": {
+        "in": "query",
+        "description": "页码，从1开始",
+        "required": false,
+        "type": "integer",
+        "example": 1
+      },
+      "pageSize": {
+        "in": "query",
+        "description": "每页数量，默认20，最大100",
+        "required": false,
+        "type": "integer",
+        "example": 20
+      }
+    }
+  }
+}

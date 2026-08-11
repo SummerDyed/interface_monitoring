@@ -1,0 +1,16 @@
+{
+  "GET /api/v1/user/group-buy/activities/{id}/share-image": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/group-buy/activities/{id}/share-image",
+    "method": "GET",
+    "path": "/api/v1/user/group-buy/activities/{id}/share-image",
+    "parameters": {
+      "id": {
+        "in": "path",
+        "description": "团购活动ID",
+        "required": true,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

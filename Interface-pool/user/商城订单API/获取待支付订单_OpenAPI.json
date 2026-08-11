@@ -1,0 +1,8 @@
+{
+  "GET /api/v1/user/mall/orders/pending": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/mall/orders/pending",
+    "method": "GET",
+    "path": "/api/v1/user/mall/orders/pending",
+    "parameters": {}
+  }
+}

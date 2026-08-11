@@ -1,0 +1,16 @@
+{
+  "GET /admin/api/v1/mall/after-sales/{afterSaleId}": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/after-sales/{afterSaleId}",
+    "method": "GET",
+    "path": "/admin/api/v1/mall/after-sales/{afterSaleId}",
+    "parameters": {
+      "afterSaleId": {
+        "in": "path",
+        "description": "售后单ID",
+        "required": true,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

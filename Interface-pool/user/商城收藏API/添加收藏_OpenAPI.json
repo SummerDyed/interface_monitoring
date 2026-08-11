@@ -1,0 +1,16 @@
+{
+  "POST /api/v1/user/mall/favorites/{productId}": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/mall/favorites/{productId}",
+    "method": "POST",
+    "path": "/api/v1/user/mall/favorites/{productId}",
+    "parameters": {
+      "productId": {
+        "in": "path",
+        "description": "商品ID",
+        "required": true,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

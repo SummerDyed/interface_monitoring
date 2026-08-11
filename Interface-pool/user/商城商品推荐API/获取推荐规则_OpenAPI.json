@@ -1,0 +1,8 @@
+{
+  "GET /api/v1/user/mall/recommend/rules": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/mall/recommend/rules",
+    "method": "GET",
+    "path": "/api/v1/user/mall/recommend/rules",
+    "parameters": {}
+  }
+}

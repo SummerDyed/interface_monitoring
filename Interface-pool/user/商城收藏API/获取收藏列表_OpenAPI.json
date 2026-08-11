@@ -1,0 +1,8 @@
+{
+  "GET /api/v1/user/mall/favorites": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/mall/favorites",
+    "method": "GET",
+    "path": "/api/v1/user/mall/favorites",
+    "parameters": {}
+  }
+}

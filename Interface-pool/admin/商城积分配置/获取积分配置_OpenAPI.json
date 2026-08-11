@@ -1,0 +1,8 @@
+{
+  "GET /admin/api/v1/mall/points-config": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/points-config",
+    "method": "GET",
+    "path": "/admin/api/v1/mall/points-config",
+    "parameters": {}
+  }
+}

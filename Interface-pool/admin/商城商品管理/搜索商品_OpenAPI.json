@@ -1,0 +1,23 @@
+{
+  "GET /admin/api/v1/mall/products/search": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/products/search",
+    "method": "GET",
+    "path": "/admin/api/v1/mall/products/search",
+    "parameters": {
+      "keyword": {
+        "in": "query",
+        "description": "搜索关键词",
+        "required": true,
+        "type": "string",
+        "example": ""
+      },
+      "categoryId": {
+        "in": "query",
+        "description": "类目ID（可选）",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

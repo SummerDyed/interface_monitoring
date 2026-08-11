@@ -1,0 +1,51 @@
+{
+  "GET /admin/api/v1/mall/products/stats": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/products/stats",
+    "method": "GET",
+    "path": "/admin/api/v1/mall/products/stats",
+    "parameters": {
+      "productId": {
+        "in": "query",
+        "description": "商品ID",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      },
+      "startDate": {
+        "in": "query",
+        "description": "开始日期 (yyyy-MM-dd)",
+        "required": false,
+        "type": "string",
+        "example": ""
+      },
+      "endDate": {
+        "in": "query",
+        "description": "结束日期 (yyyy-MM-dd)",
+        "required": false,
+        "type": "string",
+        "example": ""
+      },
+      "categoryId": {
+        "in": "query",
+        "description": "类目ID",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      },
+      "page": {
+        "in": "query",
+        "description": "页码",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      },
+      "pageSize": {
+        "in": "query",
+        "description": "每页条数",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

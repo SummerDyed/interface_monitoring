@@ -1,0 +1,8 @@
+{
+  "POST /api/v1/user/coupons/mall/available": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/coupons/mall/available",
+    "method": "POST",
+    "path": "/api/v1/user/coupons/mall/available",
+    "parameters": {}
+  }
+}

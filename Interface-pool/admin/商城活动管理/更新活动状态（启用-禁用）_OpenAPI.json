@@ -1,0 +1,16 @@
+{
+  "PUT /admin/api/v1/mall/activities/{id}/status": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/activities/{id}/status",
+    "method": "PUT",
+    "path": "/admin/api/v1/mall/activities/{id}/status",
+    "parameters": {
+      "id": {
+        "in": "path",
+        "description": "活动ID",
+        "required": true,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

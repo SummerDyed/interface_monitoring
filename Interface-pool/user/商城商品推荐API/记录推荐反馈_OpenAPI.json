@@ -1,0 +1,23 @@
+{
+  "POST /api/v1/user/mall/recommend/feedback": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/mall/recommend/feedback",
+    "method": "POST",
+    "path": "/api/v1/user/mall/recommend/feedback",
+    "parameters": {
+      "productId": {
+        "in": "query",
+        "description": "商品ID",
+        "required": true,
+        "type": "integer",
+        "example": ""
+      },
+      "feedbackType": {
+        "in": "query",
+        "description": "反馈类型：not_interested/more_like_this",
+        "required": true,
+        "type": "string",
+        "example": ""
+      }
+    }
+  }
+}

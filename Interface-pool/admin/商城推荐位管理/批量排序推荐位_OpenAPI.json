@@ -1,0 +1,8 @@
+{
+  "PUT /admin/api/v1/mall/recommend-positions/sort": {
+    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/recommend-positions/sort",
+    "method": "PUT",
+    "path": "/admin/api/v1/mall/recommend-positions/sort",
+    "parameters": {}
+  }
+}

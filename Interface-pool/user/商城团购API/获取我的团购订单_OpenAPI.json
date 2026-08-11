@@ -1,0 +1,30 @@
+{
+  "GET /api/v1/user/group-buy/orders": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/group-buy/orders",
+    "method": "GET",
+    "path": "/api/v1/user/group-buy/orders",
+    "parameters": {
+      "status": {
+        "in": "query",
+        "description": "订单状态：0-待支付/1-待成团/2-已成团/3-已退款",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      },
+      "page": {
+        "in": "query",
+        "description": "页码",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      },
+      "pageSize": {
+        "in": "query",
+        "description": "每页数量",
+        "required": false,
+        "type": "integer",
+        "example": ""
+      }
+    }
+  }
+}

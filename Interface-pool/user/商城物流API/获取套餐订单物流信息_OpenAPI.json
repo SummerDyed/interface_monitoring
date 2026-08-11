@@ -1,0 +1,16 @@
+{
+  "GET /api/v1/user/mall/orders/subscription/{id}/logistics": {
+    "url": "https://maibanjk.com/maiban-user/api/v1/user/mall/orders/subscription/{id}/logistics",
+    "method": "GET",
+    "path": "/api/v1/user/mall/orders/subscription/{id}/logistics",
+    "parameters": {
+      "id": {
+        "in": "path",
+        "description": "套餐订单ID",
+        "required": true,
+        "type": "integer",
+        "example": 123456
+      }
+    }
+  }
+}
