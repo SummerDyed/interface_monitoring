@@ -1,6 +1,6 @@
 {
   "POST /admin/api/v1/mall/activities": {
-    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/activities",
+    "url": "https://maibanjk.com/maiban-admin/admin/api/v1/mall/activities",
     "method": "POST",
     "path": "/admin/api/v1/mall/activities",
     "parameters": {}

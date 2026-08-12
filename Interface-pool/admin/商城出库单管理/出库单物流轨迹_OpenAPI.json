@@ -1,6 +1,6 @@
 {
   "GET /admin/api/v1/mall/outbound/{id}/tracks": {
-    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/outbound/{id}/tracks",
+    "url": "https://maibanjk.com/maiban-admin/admin/api/v1/mall/outbound/{id}/tracks",
     "method": "GET",
     "path": "/admin/api/v1/mall/outbound/{id}/tracks",
     "parameters": {

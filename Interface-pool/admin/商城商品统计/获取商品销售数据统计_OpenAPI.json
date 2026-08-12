@@ -1,6 +1,6 @@
 {
   "GET /admin/api/v1/mall/products/stats": {
-    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/products/stats",
+    "url": "https://maibanjk.com/maiban-admin/admin/api/v1/mall/products/stats",
     "method": "GET",
     "path": "/admin/api/v1/mall/products/stats",
     "parameters": {

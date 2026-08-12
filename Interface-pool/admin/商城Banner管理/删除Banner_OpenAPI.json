@@ -1,6 +1,6 @@
 {
   "DELETE /admin/api/v1/mall/banners/{id}": {
-    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/banners/{id}",
+    "url": "https://maibanjk.com/maiban-admin/admin/api/v1/mall/banners/{id}",
     "method": "DELETE",
     "path": "/admin/api/v1/mall/banners/{id}",
     "parameters": {

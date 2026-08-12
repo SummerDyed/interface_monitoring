@@ -1,6 +1,6 @@
 {
   "PUT /admin/api/v1/mall/recommend-positions/{id}": {
-    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/recommend-positions/{id}",
+    "url": "https://maibanjk.com/maiban-admin/admin/api/v1/mall/recommend-positions/{id}",
     "method": "PUT",
     "path": "/admin/api/v1/mall/recommend-positions/{id}",
     "parameters": {

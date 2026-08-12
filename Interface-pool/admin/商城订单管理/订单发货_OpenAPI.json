@@ -1,6 +1,6 @@
 {
   "POST /admin/api/v1/mall/orders/{orderId}/ship": {
-    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/orders/{orderId}/ship",
+    "url": "https://maibanjk.com/maiban-admin/admin/api/v1/mall/orders/{orderId}/ship",
     "method": "POST",
     "path": "/admin/api/v1/mall/orders/{orderId}/ship",
     "parameters": {

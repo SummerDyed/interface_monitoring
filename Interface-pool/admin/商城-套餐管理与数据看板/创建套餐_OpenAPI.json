@@ -1,6 +1,6 @@
 {
   "POST /admin/api/v1/mall/package": {
-    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/package",
+    "url": "https://maibanjk.com/maiban-admin/admin/api/v1/mall/package",
     "method": "POST",
     "path": "/admin/api/v1/mall/package",
     "parameters": {}

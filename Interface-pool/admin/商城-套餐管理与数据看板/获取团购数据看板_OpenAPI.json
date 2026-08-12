@@ -1,6 +1,6 @@
 {
   "GET /admin/api/v1/mall/package/group-buy/statistics": {
-    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/package/group-buy/statistics",
+    "url": "https://maibanjk.com/maiban-admin/admin/api/v1/mall/package/group-buy/statistics",
     "method": "GET",
     "path": "/admin/api/v1/mall/package/group-buy/statistics",
     "parameters": {

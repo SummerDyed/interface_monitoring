@@ -1,6 +1,6 @@
 {
   "PUT /admin/api/v1/mall/products/{id}/status": {
-    "url": "https://maibanjk.com/maiban-user/admin/api/v1/mall/products/{id}/status",
+    "url": "https://maibanjk.com/maiban-admin/admin/api/v1/mall/products/{id}/status",
     "method": "PUT",
     "path": "/admin/api/v1/mall/products/{id}/status",
     "parameters": {
