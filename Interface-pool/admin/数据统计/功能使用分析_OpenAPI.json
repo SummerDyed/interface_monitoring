@@ -1,8 +1,0 @@
-{
-  "GET /admin/api/v1/statistics/analytics/features/usage": {
-    "url": "https://maibanjk.com/maiban-admin/admin/api/v1/statistics/analytics/features/usage",
-    "method": "GET",
-    "path": "/admin/api/v1/statistics/analytics/features/usage",
-    "parameters": {}
-  }
-}
